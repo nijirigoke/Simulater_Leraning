@@ -4,8 +4,25 @@
 
 #include <iostream>
 
-int main(int argc, char const *argv[])
-{
+#define ROBO_R 5
+
+typedef struct {
+    double r;/*本体の半径*/
+    double x, y;/*本体の位置*/
+    double dir;/*本体の進行方向*/
+} ROBO;
+
+
+ROBO robo;
+
+void robo_init() {
+    robo.x = 0;
+    robo.y = 0;
+    robo.dir = 0;
+    robo.r = ROBO_R;
+}
+
+int main(int argc, char const *argv[]) {
     /* code */
     std::cout << "hello";
 

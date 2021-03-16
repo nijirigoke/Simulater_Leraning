@@ -38,19 +38,19 @@ NULL=nul
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\T118029\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\T118029\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\T118029\CLionProjects\Simulater_Leraning
+CMAKE_SOURCE_DIR = C:\Users\nijir\CLionProjects\Simulater_Leraning
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\T118029\CLionProjects\Simulater_Leraning\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles\Simulater_Leraning.dir\depend.make
@@ -63,21 +63,21 @@ include CMakeFiles\Simulater_Leraning.dir\flags.make
 
 CMakeFiles\Simulater_Leraning.dir\test.cpp.obj: CMakeFiles\Simulater_Leraning.dir\flags.make
 CMakeFiles\Simulater_Leraning.dir\test.cpp.obj: ..\test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\T118029\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Simulater_Leraning.dir/test.cpp.obj"
-	C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Simulater_Leraning.dir\test.cpp.obj /FdCMakeFiles\Simulater_Leraning.dir\ /FS -c C:\Users\T118029\CLionProjects\Simulater_Leraning\test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Simulater_Leraning.dir/test.cpp.obj"
+	"C:\PROGRA~2\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\bin\Hostx86\x86\cl.exe" @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Simulater_Leraning.dir\test.cpp.obj /FdCMakeFiles\Simulater_Leraning.dir\ /FS -c C:\Users\nijir\CLionProjects\Simulater_Leraning\test.cpp
 <<
 
 CMakeFiles\Simulater_Leraning.dir\test.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Simulater_Leraning.dir/test.cpp.i"
-	C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\Hostx86\x86\cl.exe > CMakeFiles\Simulater_Leraning.dir\test.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\T118029\CLionProjects\Simulater_Leraning\test.cpp
+	"C:\PROGRA~2\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\bin\Hostx86\x86\cl.exe" > CMakeFiles\Simulater_Leraning.dir\test.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\nijir\CLionProjects\Simulater_Leraning\test.cpp
 <<
 
 CMakeFiles\Simulater_Leraning.dir\test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Simulater_Leraning.dir/test.cpp.s"
-	C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Simulater_Leraning.dir\test.cpp.s /c C:\Users\T118029\CLionProjects\Simulater_Leraning\test.cpp
+	"C:\PROGRA~2\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\bin\Hostx86\x86\cl.exe" @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Simulater_Leraning.dir\test.cpp.s /c C:\Users\nijir\CLionProjects\Simulater_Leraning\test.cpp
 <<
 
 # Object files for target Simulater_Leraning
@@ -90,9 +90,9 @@ Simulater_Leraning_EXTERNAL_OBJECTS =
 Simulater_Leraning.exe: CMakeFiles\Simulater_Leraning.dir\test.cpp.obj
 Simulater_Leraning.exe: CMakeFiles\Simulater_Leraning.dir\build.make
 Simulater_Leraning.exe: CMakeFiles\Simulater_Leraning.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\T118029\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Simulater_Leraning.exe"
-	C:\Users\T118029\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe -E vs_link_exe --intdir=CMakeFiles\Simulater_Leraning.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100162~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100162~1.0\x86\mt.exe --manifests  -- C:\PROGRA~2\MICROS~4\2017\COMMUN~1\VC\Tools\MSVC\1411~1.255\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\Simulater_Leraning.dir\objects1.rsp @<<
- /out:Simulater_Leraning.exe /implib:Simulater_Leraning.lib /pdb:C:\Users\T118029\CLionProjects\Simulater_Leraning\cmake-build-debug\Simulater_Leraning.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Simulater_Leraning.exe"
+	C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe -E vs_link_exe --intdir=CMakeFiles\Simulater_Leraning.dir --rc="C:\PROGRA~2\Windows Kits\10\bin\10.0.17763.0\x86\rc.exe" --mt="C:\PROGRA~2\Windows Kits\10\bin\10.0.17763.0\x86\mt.exe" --manifests  -- "C:\PROGRA~2\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\bin\Hostx86\x86\link.exe" /nologo @CMakeFiles\Simulater_Leraning.dir\objects1.rsp @<<
+ /out:Simulater_Leraning.exe /implib:Simulater_Leraning.lib /pdb:C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Simulater_Leraning.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<
 
 # Rule to build all files generated by this target.
@@ -105,6 +105,6 @@ CMakeFiles\Simulater_Leraning.dir\clean:
 .PHONY : CMakeFiles\Simulater_Leraning.dir\clean
 
 CMakeFiles\Simulater_Leraning.dir\depend:
-	$(CMAKE_COMMAND) -E cmake_depends "NMake Makefiles" C:\Users\T118029\CLionProjects\Simulater_Leraning C:\Users\T118029\CLionProjects\Simulater_Leraning C:\Users\T118029\CLionProjects\Simulater_Leraning\cmake-build-debug C:\Users\T118029\CLionProjects\Simulater_Leraning\cmake-build-debug C:\Users\T118029\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles\Simulater_Leraning.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "NMake Makefiles" C:\Users\nijir\CLionProjects\Simulater_Leraning C:\Users\nijir\CLionProjects\Simulater_Leraning C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles\Simulater_Leraning.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles\Simulater_Leraning.dir\depend
 
