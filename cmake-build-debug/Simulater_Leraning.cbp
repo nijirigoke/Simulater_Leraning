@@ -4,27 +4,71 @@
 	<Project>
 		<Option title="Simulater_Leraning"/>
 		<Option makefile_is_custom="1"/>
-		<Option compiler="msvc8"/>
+		<Option compiler="gcc"/>
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 all"/>
-					<CompileFile command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test.cpp">
+				<Option output="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/test.cpp.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/backward"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include-fixed"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 test.cpp"/>
+					<CompileFile command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test.cpp/fast">
+				<Option output="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/test.cpp.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/backward"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include-fixed"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 test.cpp/fast"/>
+					<CompileFile command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 edit_cache"/>
-					<CompileFile command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Simulater_Leraning">
@@ -32,22 +76,21 @@
 				<Option working_dir="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="msvc8"/>
+				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\ATLMFC\include"/>
-					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/backward"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include-fixed"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 Simulater_Leraning"/>
-					<CompileFile command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 Simulater_Leraning"/>
+					<CompileFile command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Simulater_Leraning/fast">
@@ -55,37 +98,39 @@
 				<Option working_dir="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="msvc8"/>
+				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\ATLMFC\include"/>
-					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
-					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include/c++/9.3.0/backward"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../include"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/include-fixed"/>
+					<Add directory="C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 Simulater_Leraning/fast"/>
-					<CompileFile command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 Simulater_Leraning/fast"/>
+					<CompileFile command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe -f &quot;C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/nijir/CLionProjects/Simulater_Leraning/test.cpp">
+		<Unit filename="C:/Users/nijir/CLionProjects/Simulater_Leraning/main.cpp">
 			<Option target="Simulater_Leraning"/>
+		</Unit>
+		<Unit filename="C:/Users/nijir/CLionProjects/Simulater_Leraning/test.cpp">
+			<Option target="test.cpp"/>
 		</Unit>
 		<Unit filename="C:/Users/nijir/CLionProjects/Simulater_Leraning/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

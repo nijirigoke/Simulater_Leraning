@@ -1,3 +1,4 @@
+C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/test.cpp.dir
 C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/Simulater_Leraning.dir
 C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/rebuild_cache.dir

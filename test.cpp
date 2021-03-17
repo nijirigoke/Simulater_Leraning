@@ -1,30 +1,34 @@
-//
-// Created by T118029 on 2021/03/15.
-//
-
 #include <iostream>
+#include <GL/glut.h>
 
-#define ROBO_R 5
-
-typedef struct {
-    double r;/*本体の半径*/
-    double x, y;/*本体の位置*/
-    double dir;/*本体の進行方向*/
-} ROBO;
-
-
-ROBO robo;
-
-void robo_init() {
-    robo.x = 0;
-    robo.y = 0;
-    robo.dir = 0;
-    robo.r = ROBO_R;
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_POLYGON);
+    glColor3d(1.0, 0.0, 0.0);
+    glVertex2d(-0.9, -0.9);
+    glColor3d(0.0, 1.0, 0.0);
+    glVertex2d(0.9, -0.9);
+    glColor3d(0.0, 0.0, 1.0);
+    glVertex2d(0.9, 0.9);
+    glColor3d(1.0, 1.0, 0.0);
+    glVertex2d(-0.9, 0.9);
+    glEnd();
+    glFlush();
 }
 
-int main(int argc, char const *argv[]) {
-    /* code */
-    std::cout << "hello";
+void init()
+{
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+}
 
+int main(int argc, char *argv[])
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGBA);
+    glutCreateWindow(argv[0]);
+    glutDisplayFunc(display);
+    init();
+    glutMainLoop();
     return 0;
 }
