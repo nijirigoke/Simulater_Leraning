@@ -50,13 +50,13 @@ void draw_circle( double x, double y, double r )//円図形の描画(座標p, �
     glPopMatrix();
 }
 
-void mouse(int button, int state, int x,int y)//マウスボタンの処理
-{
-    if(state==GLUT_DOWN){//ボタンが押されたら...
-        init();//初期化
-        fStart=1;
-    }
-}
+//void mouse(int button, int state, int x,int y)//マウスボタンの処理
+//{
+//    if(state==GLUT_DOWN){//ボタンが押されたら...
+//        init();//初期化
+//        fStart=1;
+//    }
+//}
 
 //void Initialize()//プログラム実行前の初期化
 //{
@@ -94,12 +94,12 @@ glOrtho( -255, 255, -255, 255, -1.0, 1.0 );
 //    glutSwapBuffers();
 //}
 
-void idle()
-{
-    if(fStart==0)return;
-    simstep();
-    display();
-}
+//void idle()
+//{
+//    if(fStart==0)return;
+//    simstep();
+//    display();
+//}
 
 //ここ以降に主要プログラムを書く
 

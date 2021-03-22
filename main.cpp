@@ -7,7 +7,7 @@
 //#include "simbase.h"
 #include "workspace.h"
 
-#define ROBO_R 5
+#define ROBO_R 15
 
 void robo_init();
 void robo_draw();
@@ -38,7 +38,15 @@ void Initialize()
 
 void robo_draw(void)
 {
+    double dx, dy;
+    dx = cos(robo.dir)*robo.r*2;
+    dy = sin(robo.dir)*robo.r*2;
+    glBegin(GL_LINES);
+    glVertex2d( robo.x, robo.y );
+    glVertex2d( robo.x+dx, robo.y+dy );
+    glEnd();
     draw_circle( robo.x, robo.y, robo.r );
+
 }
 
 void wall_draw(void)
@@ -66,18 +74,60 @@ void display()
     glutSwapBuffers();
 }
 
+void robo_forward( double v )
+{
+    robo.x = robo.x + cos(robo.dir)* v;
+    robo.y = robo.y + sin(robo.dir)* v;
+}
+
+void robo_turn( double q )
+{
+    robo.dir += q;
+}
+
+void robo_action( void )
+{
+    robo_turn( 0.1 );
+    robo_forward( 1.0 );
+
+}
+
+void idle(void)
+{
+    if(fStart==0) return;
+    robo_action( );
+    display( );
+}
+
+void mouse(int button, int state, int x,int y)//マウスボタンの処理
+{
+    if(state==GLUT_DOWN)
+    {//ボタンが押されたら...
+        if(fStart==1)fStart = 0;
+        else fStart = 1;
+        robo_init();
+    }
+}
+
+
+
+
 
 int main(int argc, char* argv[])
 {
     glutInit(&argc, argv);
-//    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-//    glutInitWindowSize(510,510);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+    glutInitWindowSize(510,510);
     graphics();
     glutCreateWindow(argv[0]);
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
+    glutIdleFunc(idle);
     glutMouseFunc(mouse);//マウスのボタンを検出
     Initialize();
     glutMainLoop();
+
+
+
     return 0;
 }
