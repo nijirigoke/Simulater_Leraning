@@ -72,8 +72,6 @@ CMAKE_BINARY_DIR = C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-d
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/test.cpp.dir/all
-all: CMakeFiles/simbase.cpp.dir/all
 all: CMakeFiles/Simulater_Leraning.dir/all
 
 .PHONY : all
@@ -84,65 +82,9 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/test.cpp.dir/clean
-clean: CMakeFiles/simbase.cpp.dir/clean
 clean: CMakeFiles/Simulater_Leraning.dir/clean
 
 .PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/test.cpp.dir
-
-# All Build rule for target.
-CMakeFiles/test.cpp.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.cpp.dir\build.make CMakeFiles/test.cpp.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.cpp.dir\build.make CMakeFiles/test.cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles --progress-num=5,6 "Built target test.cpp"
-.PHONY : CMakeFiles/test.cpp.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/test.cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/test.cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/test.cpp.dir/rule
-
-# Convenience name for target.
-test.cpp: CMakeFiles/test.cpp.dir/rule
-
-.PHONY : test.cpp
-
-# clean rule for target.
-CMakeFiles/test.cpp.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.cpp.dir\build.make CMakeFiles/test.cpp.dir/clean
-.PHONY : CMakeFiles/test.cpp.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/simbase.cpp.dir
-
-# All Build rule for target.
-CMakeFiles/simbase.cpp.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\simbase.cpp.dir\build.make CMakeFiles/simbase.cpp.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\simbase.cpp.dir\build.make CMakeFiles/simbase.cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles --progress-num=3,4 "Built target simbase.cpp"
-.PHONY : CMakeFiles/simbase.cpp.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/simbase.cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/simbase.cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/simbase.cpp.dir/rule
-
-# Convenience name for target.
-simbase.cpp: CMakeFiles/simbase.cpp.dir/rule
-
-.PHONY : simbase.cpp
-
-# clean rule for target.
-CMakeFiles/simbase.cpp.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\simbase.cpp.dir\build.make CMakeFiles/simbase.cpp.dir/clean
-.PHONY : CMakeFiles/simbase.cpp.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/Simulater_Leraning.dir

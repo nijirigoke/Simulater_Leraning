@@ -14,68 +14,36 @@
 
 #define ROBO_R 15
 
-void robo_init();
-
-void robo_draw();
-
-void Initialize();
-
-void resize(int w, int h);
-
-void wall_draw();
-
-int check_cross_wall(POSITION p1, POSITION p2);
-
-int check_cross_others(POSITION p);
-
 typedef struct {
-    double r;/*本体の半径*/
-    double x, y;/*本体の位置*/
-    double dir;/*本体の進行方向*/
+    double r;
+    double x, y;
+    double dir;
     POSITION tsensor[3];//構造体変数の追加
-//    この宣言は、ロボットのパラメータの追加なので、構造体ROBOに追加する。
 public:
     void draw();
-
     void action();
-
     void init();
-
-    void turn(double q);
-
-    void forward(double v);
-
+    void turn( double q );
+    void forward( double v );
     int touchsensor(int i);
 } ROBO;
 
-
+//void ROBO::init()
+//void ROBO::draw()
+//void ROBO::forward( double v )
+//void ROBO::turn( double q )
 ROBO robo;
 
-void robo_init() {
-    robo.x = 0;
-    robo.y = 0;
-    robo.dir = 0;
-    robo.r = ROBO_R;
-}
 
-void Initialize() {
-    make_circle();//円図形データの作成
-    robo_init();
-}
 
-void robo_draw(void) {
-    double dx, dy;
-    dx = cos(robo.dir) * robo.r * 2;
-    dy = sin(robo.dir) * robo.r * 2;
-    glBegin(GL_LINES);
-    glVertex2d(robo.x, robo.y);
-    glVertex2d(robo.x + dx, robo.y + dy);
-    glEnd();
-    draw_circle(robo.x, robo.y, robo.r);
+//void ROBO::action()
+void wall_draw();
+int check_cross_wall(POSITION p1, POSITION p2);
 
-}
 
-void wall_draw(void) {
+int check_cross_others(POSITION p);
+
+void wall_draw() {
     int i;
 
     glBegin(GL_LINES);
@@ -86,49 +54,70 @@ void wall_draw(void) {
     glEnd();
 }
 
-
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
-    graphics();
-    robo_draw();
     wall_draw();
+    robo.draw();
     glutSwapBuffers();
+
 }
 
-void robo_forward(double v) {
+void ROBO::forward(double v) {
     robo.x = robo.x + cos(robo.dir) * v;
     robo.y = robo.y + sin(robo.dir) * v;
 }
 
-void robo_turn(double q) {
+void ROBO::turn(double q) {
     robo.dir += q;
 }
 
-void robo_action(void) {
-    robo_turn(0.1);
-    robo_forward(1.0);
+void ROBO::action() {
+    int r;
+    int tc, tr, tl;
+
+    tc = touchsensor(CENTER);	//中央センサーの値
+    tr = touchsensor(RIGHT);	//右センサーの値
+    tl = touchsensor(LEFT);		//左センサーの値
+
+
+    r = rand()*3;
+    if(r==0)
+    {
+        turn(0.1);
+    }
+    else if(r==1)
+    {
+    }
+    forward(0.3);
+
+    if (tc || tr || tl == 1){
+        turn(0.5);
+
+    }
 
 }
 
-void idle(void) {
+
+void idle() {
     if (fStart == 0) return;
-    robo_action();
+    robo.action();
     display();
 }
 
 void mouse(int button, int state, int x, int y)//マウスボタンの処理
 {
-    if (state == GLUT_DOWN) {//ボタンが押されたら...
-        if (fStart == 1)fStart = 0;
-        else fStart = 1;
-        robo_init();
+    if(state==GLUT_DOWN){//ボタンが押されたら...
+        if(fStart==1)fStart=0;
+        else fStart=1;
+        robo.init();
     }
+
 }
 
 void ROBO::init() {
     dir = rand() * 360.0;
-    x = 250;
-    y = 250;
+    x = 0;
+    y = 0;
     r = 10;
     tsensor[CENTER].x = TRANGE * r;//タッチセンサーのレンジ（棒の長さ）
     tsensor[CENTER].y = 0;
@@ -139,7 +128,7 @@ void ROBO::init() {
 }
 
 
-void ROBO::draw(void) {
+void ROBO::draw() {
     glPushMatrix();    //現在の座標系の保存
 
     glTranslated(x, y, 0);        //ロボットの現在座標へ座標系をずらす
@@ -168,7 +157,8 @@ POSITION rotate(POSITION p, double dir) {
 
 
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
-int ROBO::touchsensor(int i)//構造体ROBOに所属している関数なので関数名の前に“ROBO::”とついている。
+int ROBO::touchsensor(int i)
+//構造体ROBOに所属している関数なので関数名の前に“ROBO::”とついている。
 {
     int fw;
     int fo;//他のロボットとの接触フラグ
@@ -199,6 +189,57 @@ int ROBO::touchsensor(int i)//構造体ROBOに所属している関数なので�
     return 0;//センサー反応なし
 }
 
+int check_cross_wall( POSITION p1, POSITION p2 )
+{
+    int i;
+
+    for(i=0;i<WALLS;i++)
+    {
+        double Wp1x, Wp1y, Wp2x, Wp2y;//線分の両端点
+        double Bvx, Bvy;//線分への垂線の方向ベクトル
+        double Bx, By, R;//球体の位置, 半径
+        double Vx, Vy;//球体の速度
+        double L;//単位ベクトル化のための一時変数
+        double det,a,b,c,d,e,f;//ベクトルの式の変数
+
+        //接触判定
+        Bx = p1.x;
+        By = p1.y;
+
+
+        Wp1x = pin[wall[i].p1].x;
+        Wp1y = pin[wall[i].p1].y;
+        Wp2x = pin[wall[i].p2].x;
+        Wp2y = pin[wall[i].p2].y;
+
+        Bvx = ( p2.x - p1.x);
+        Bvy = ( p2.y - p1.y);
+        L = sqrt(Bvx*Bvx + Bvy*Bvy);
+        Bvx /= L;//単位ベクトル化
+        Bvy /= L;
+        a = Wp2x - Wp1x;
+        b = -Bvx;
+        c = Wp2y - Wp1y;
+        d = -Bvy;
+        e = Bx - Wp1x;
+        f = By - Wp1y;
+        det = a*d - b*c;
+
+        if(det != 0)
+        {
+            double t, s;//接触条件処理の条件変数
+            s = 1.0/det*( d*e - b*f);
+            t = 1.0/det*(-c*e + a*f);
+            if( 0<t && t<1 && 0<s && s<1 )
+            {//交差あり
+                return 1;
+            }
+        }
+    }
+    return 0;//交差なし
+}
+
+
 int check_cross_others(POSITION p) {
 
     //   作成せよ
@@ -216,8 +257,9 @@ int main(int argc, char *argv[]) {
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
     glutMouseFunc(mouse);//マウスのボタンを検出
-    Initialize();
+    robo.init();
     glutMainLoop();
+
 
 
     return 0;

@@ -130,32 +130,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test.cpp
-
-# Build rule for target.
-test.cpp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test.cpp
-.PHONY : test.cpp
-
-# fast build rule for target.
-test.cpp/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.cpp.dir\build.make CMakeFiles/test.cpp.dir/build
-.PHONY : test.cpp/fast
-
-#=============================================================================
-# Target rules for targets named simbase.cpp
-
-# Build rule for target.
-simbase.cpp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 simbase.cpp
-.PHONY : simbase.cpp
-
-# fast build rule for target.
-simbase.cpp/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\simbase.cpp.dir\build.make CMakeFiles/simbase.cpp.dir/build
-.PHONY : simbase.cpp/fast
-
-#=============================================================================
 # Target rules for targets named Simulater_Leraning
 
 # Build rule for target.
@@ -195,60 +169,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-simbase.obj: simbase.cpp.obj
-
-.PHONY : simbase.obj
-
-# target to build an object file
-simbase.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\simbase.cpp.dir\build.make CMakeFiles/simbase.cpp.dir/simbase.cpp.obj
-.PHONY : simbase.cpp.obj
-
-simbase.i: simbase.cpp.i
-
-.PHONY : simbase.i
-
-# target to preprocess a source file
-simbase.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\simbase.cpp.dir\build.make CMakeFiles/simbase.cpp.dir/simbase.cpp.i
-.PHONY : simbase.cpp.i
-
-simbase.s: simbase.cpp.s
-
-.PHONY : simbase.s
-
-# target to generate assembly for a file
-simbase.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\simbase.cpp.dir\build.make CMakeFiles/simbase.cpp.dir/simbase.cpp.s
-.PHONY : simbase.cpp.s
-
-test.obj: test.cpp.obj
-
-.PHONY : test.obj
-
-# target to build an object file
-test.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.cpp.dir\build.make CMakeFiles/test.cpp.dir/test.cpp.obj
-.PHONY : test.cpp.obj
-
-test.i: test.cpp.i
-
-.PHONY : test.i
-
-# target to preprocess a source file
-test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.cpp.dir\build.make CMakeFiles/test.cpp.dir/test.cpp.i
-.PHONY : test.cpp.i
-
-test.s: test.cpp.s
-
-.PHONY : test.s
-
-# target to generate assembly for a file
-test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.cpp.dir\build.make CMakeFiles/test.cpp.dir/test.cpp.s
-.PHONY : test.cpp.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -258,17 +178,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
-	@echo ... simbase.cpp
-	@echo ... test.cpp
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... simbase.obj
-	@echo ... simbase.i
-	@echo ... simbase.s
-	@echo ... test.obj
-	@echo ... test.i
-	@echo ... test.s
 .PHONY : help
 
 

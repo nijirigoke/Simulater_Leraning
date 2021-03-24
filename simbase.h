@@ -104,16 +104,16 @@ glOrtho( -255, 255, -255, 255, -1.0, 1.0 );
 //ここ以降に主要プログラムを書く
 
 
-void init() //シミュレーションの初期条件
-{
-
-}
-
-void simstep()//シミュレーションのステップの計算
-{
-
-}
-
+//void init() //シミュレーションの初期条件
+//{
+//
+//}
+//
+//void simstep()//シミュレーションのステップの計算
+//{
+//
+//}
+//
 void graphics()//シミュレーション結果（状態）の表示
 {
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
