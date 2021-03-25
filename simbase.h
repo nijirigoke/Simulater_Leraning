@@ -50,35 +50,6 @@ void draw_circle( double x, double y, double r )//円図形の描画(座標p, �
     glPopMatrix();
 }
 
-//void mouse(int button, int state, int x,int y)//マウスボタンの処理
-//{
-//    if(state==GLUT_DOWN){//ボタンが押されたら...
-//        init();//初期化
-//        fStart=1;
-//    }
-//}
-
-//void Initialize()//プログラム実行前の初期化
-//{
-//    make_circle();//円図形データの作成
-//    init();//その他初期化
-//}
-
-//int main(int argc, char* argv[])
-//{
-//    glutInit(&argc, argv);
-//    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-//    glutCreateWindow(argv[0]);
-//    glutDisplayFunc(display);
-//    glutReshapeFunc(resize);
-//    glutMouseFunc(mouse);//マウスのボタンを検出
-//    glutIdleFunc(idle);
-//    glClearColor(0,0,0,0);
-//    Initialize();
-//    glutMainLoop();
-//    return 0;
-//}
-
 void resize(int w, int h)
 {
 glViewport(0,0,w,h);
@@ -87,33 +58,6 @@ glOrtho( -255, 255, -255, 255, -1.0, 1.0 );
 
 }
 
-//void display()
-//{
-//    glClear(GL_COLOR_BUFFER_BIT);
-//    graphics();
-//    glutSwapBuffers();
-//}
-
-//void idle()
-//{
-//    if(fStart==0)return;
-//    simstep();
-//    display();
-//}
-
-//ここ以降に主要プログラムを書く
-
-
-//void init() //シミュレーションの初期条件
-//{
-//
-//}
-//
-//void simstep()//シミュレーションのステップの計算
-//{
-//
-//}
-//
 void graphics()//シミュレーション結果（状態）の表示
 {
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);

@@ -79,7 +79,6 @@ void ROBO::action() {
     tr = touchsensor(RIGHT);	//右センサーの値
     tl = touchsensor(LEFT);		//左センサーの値
 
-
     r = rand()*3;
     if(r==0)
     {
@@ -88,10 +87,10 @@ void ROBO::action() {
     else if(r==1)
     {
     }
-    forward(0.3);
+    forward(0.15);
 
     if (tc || tr || tl == 1){
-        turn(0.5);
+        turn(1);
 
     }
 
