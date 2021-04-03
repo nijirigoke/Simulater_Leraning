@@ -2,6 +2,9 @@
 // Created by T118029 on 2021/03/15.
 //
 
+//todo ロボットがぐるぐる回っている
+//todo check_cross_othersを書きこむ
+
 #include <GL/glut.h>
 #include <iostream>
 //#include "simbase.h"
@@ -12,7 +15,11 @@
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
 
-#define ROBO_R 15
+#define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
+#define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
+#define ROBOS  1	//ロボット台数　10台
+
+
 
 typedef struct ROBO {
     double r;
@@ -32,7 +39,9 @@ public:
 
     int touchsensor(int i);
 } ROBO;
-ROBO robo;
+
+ROBO robo[ROBOS];	//要素数ROBOSで配列変数roboを定義
+
 
 void wall_draw();
 
@@ -53,42 +62,58 @@ void wall_draw() {
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
+    graphics();
     wall_draw();
-    robo.draw();
+    for(int i=0; i<ROBOS; i++ )
+    {
+        robo[i].draw( );
+    }
+
     glutSwapBuffers();
 }
 
 void ROBO::forward(double v) {
-    robo.x = robo.x + cos(robo.dir) * v;
-    robo.y = robo.y + sin(robo.dir) * v;
+    for(int i=0; i<ROBOS; i++ )
+    {
+        robo[i].x = robo[i].x + cos(robo[i].dir) * v;
+        robo[i].y = robo[i].y + sin(robo[i].dir) * v;
+    }
+
 }
 
-void ROBO::turn(double q) { robo.dir += q; }
+void ROBO::turn(double q) {   for(int i=0; i<ROBOS; i++ )
+    {robo[i].dir += q; }
+}
 
 void ROBO::action() {
-    int r;
-    int tc, tr, tl;
+    int tCenter, tRight, tLeft;
 
-    tc = touchsensor(CENTER); //中央センサーの値
-    tr = touchsensor(RIGHT);  //右センサーの値
-    tl = touchsensor(LEFT);   //左センサーの値
+    tCenter = touchsensor(CENTER);    //中央センサーの値
+    tRight = touchsensor(RIGHT);        //右センサーの値
+    tLeft = touchsensor(LEFT);        //左センサーの値
 
-    r = rand() * 3;
-    if (r == 0) {
-        turn(0.1);
-    } else if (r == 1) {
-    }
-    forward(0.15);
-
-    if (tc || tr || tl == 1) {
-        turn(1);
+    if (tLeft == 1)        //左チセンサ反応あり
+    {
+        turn(RIGHT_TURN);
+    } else if (tRight == 1)    //右センサ反応あり
+    {
+        turn(LEFT_TURN);
+    } else if (tCenter == 1) //正面センサ反応あり
+    {
+        turn(RIGHT_TURN);
+    } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
+    {
+        forward(0.01);//前進1.0ステップ
     }
 }
+
 
 void idle() {
     if (fStart == 0)
         return;
-    robo.action();
+    for(int i=0; i<ROBOS; i++ )
+    {
+    robo[i].action();}
     display();
 }
 
@@ -99,7 +124,9 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
             fStart = 0;
         else
             fStart = 1;
-        robo.init();
+        for(int i=0; i<ROBOS; i++ )
+        {
+        robo[i].init();}
     }
 }
 
@@ -121,8 +148,7 @@ void ROBO::draw() {
 
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
-    draw_circle(0, 0,
-                r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
+    draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
 
     glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
@@ -136,13 +162,7 @@ void ROBO::draw() {
     glPopMatrix(); //保存ておいた座標系へ戻す
 }
 
-//回転変換 点ｐをdir回転した座標を戻り値とする
-POSITION rotate(POSITION p, double dir) {
-    POSITION P;
-    P.x = p.x * cos(dir) - p.y * sin(dir);
-    P.y = p.x * sin(dir) + p.y * cos(dir);
-    return P;
-}
+
 
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
 int ROBO::touchsensor(int i)
@@ -229,16 +249,19 @@ int check_cross_others(POSITION p) {
 }
 
 int main(int argc, char *argv[]) {
+    make_circle();//円図形データの作成
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(510, 510);
-    graphics();
+
     glutCreateWindow(argv[0]);
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
     glutMouseFunc(mouse); //マウスのボタンを検出
-    robo.init();
+    for (int i = 0; i < ROBOS; ++i) {
+        robo[i].init();
+    }
     glutMainLoop();
 
     return 0;
