@@ -28,15 +28,15 @@ The CXX compiler identification is GNU, found in "C:/Users/nijir/CLionProjects/S
 Determining if the C compiler works passed with the following output:
 Change Dir: C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_7fb43/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_7fb43.dir\build.make CMakeFiles/cmTC_7fb43.dir/build
+Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_1716b/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_1716b.dir\build.make CMakeFiles/cmTC_1716b.dir/build
 mingw32-make[1]: Entering directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_7fb43.dir/testCCompiler.c.obj
-C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe    -o CMakeFiles\cmTC_7fb43.dir\testCCompiler.c.obj   -c C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c
-Linking C executable cmTC_7fb43.exe
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_7fb43.dir\link.txt --verbose=1
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_7fb43.dir/objects.a
-C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_7fb43.dir/objects.a @CMakeFiles\cmTC_7fb43.dir\objects1.rsp
-C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_7fb43.dir/objects.a -Wl,--no-whole-archive  -o cmTC_7fb43.exe -Wl,--out-implib,libcmTC_7fb43.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_7fb43.dir\linklibs.rsp
+Building C object CMakeFiles/cmTC_1716b.dir/testCCompiler.c.obj
+C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe    -o CMakeFiles\cmTC_1716b.dir\testCCompiler.c.obj   -c C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c
+Linking C executable cmTC_1716b.exe
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_1716b.dir\link.txt --verbose=1
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_1716b.dir/objects.a
+C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_1716b.dir/objects.a @CMakeFiles\cmTC_1716b.dir\objects1.rsp
+C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe      -Wl,--whole-archive CMakeFiles\cmTC_1716b.dir/objects.a -Wl,--no-whole-archive  -o cmTC_1716b.exe -Wl,--out-implib,libcmTC_1716b.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_1716b.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
@@ -44,18 +44,18 @@ mingw32-make[1]: Leaving directory 'C:/Users/nijir/CLionProjects/Simulater_Leran
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_0e835/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_0e835.dir\build.make CMakeFiles/cmTC_0e835.dir/build
+Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_bd602/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_bd602.dir\build.make CMakeFiles/cmTC_bd602.dir/build
 mingw32-make[1]: Entering directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0e835.dir/CMakeCCompilerABI.c.obj
-C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe   -v -o CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj   -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c
+Building C object CMakeFiles/cmTC_bd602.dir/CMakeCCompilerABI.c.obj
+C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe   -v -o CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj   -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c
 Using built-in specs.
 COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe
 Target: x86_64-w64-mingw32
 Configured with: ../gcc-9.3.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/x86_64-w64-mingw32/include --libexecdir=/mingw64/lib --enable-bootstrap --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++ --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts=yes --enable-libstdcxx-time=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --disable-isl-version-check --enable-lto --enable-libgomp --disable-multilib --enable-checking=release --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --enable-plugin --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev2, Built by MSYS2 project' --with-bugurl=https://sourceforge.net/projects/msys2 --with-gnu-as --with-gnu-ld
 Thread model: posix
 gcc version 9.3.0 (Rev2, Built by MSYS2 project) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64'
- C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj -version -o C:\Users\nijir\AppData\Local\Temp\ccu1QSuQ.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64'
+ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj -version -o C:\Users\nijir\AppData\Local\Temp\cc7Cpiqa.s
 GNU C17 (Rev2, Built by MSYS2 project) version 9.3.0 (x86_64-w64-mingw32)
 	compiled by GNU C version 9.3.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
 
@@ -78,17 +78,17 @@ GNU C17 (Rev2, Built by MSYS2 project) version 9.3.0 (x86_64-w64-mingw32)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 2f0422043ff3277c694ad7daedab413e
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64'
- C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj C:\Users\nijir\AppData\Local\Temp\ccu1QSuQ.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64'
+ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj C:\Users\nijir\AppData\Local\Temp\cc7Cpiqa.s
 GNU assembler version 2.34 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.34
 COMPILER_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64'
-Linking C executable cmTC_0e835.exe
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_0e835.dir\link.txt --verbose=1
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_0e835.dir/objects.a
-C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_0e835.dir/objects.a @CMakeFiles\cmTC_0e835.dir\objects1.rsp
-C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_0e835.dir/objects.a -Wl,--no-whole-archive  -o cmTC_0e835.exe -Wl,--out-implib,libcmTC_0e835.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64'
+Linking C executable cmTC_bd602.exe
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_bd602.dir\link.txt --verbose=1
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_bd602.dir/objects.a
+C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_bd602.dir/objects.a @CMakeFiles\cmTC_bd602.dir\objects1.rsp
+C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_bd602.dir/objects.a -Wl,--no-whole-archive  -o cmTC_bd602.exe -Wl,--out-implib,libcmTC_bd602.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
 Using built-in specs.
 COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe
 COLLECT_LTO_WRAPPER=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe
@@ -98,9 +98,9 @@ Thread model: posix
 gcc version 9.3.0 (Rev2, Built by MSYS2 project) 
 COMPILER_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0e835.exe' '-mtune=generic' '-march=x86-64'
- C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccqfHog8.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_0e835.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_0e835.dir/objects.a --no-whole-archive --out-implib libcmTC_0e835.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0e835.exe' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bd602.exe' '-mtune=generic' '-march=x86-64'
+ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccQnfgBE.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_bd602.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_bd602.dir/objects.a --no-whole-archive --out-implib libcmTC_bd602.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bd602.exe' '-mtune=generic' '-march=x86-64'
 mingw32-make[1]: Leaving directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
@@ -124,18 +124,18 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_0e835/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_0e835.dir\build.make CMakeFiles/cmTC_0e835.dir/build]
+  ignore line: [Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_bd602/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_bd602.dir\build.make CMakeFiles/cmTC_bd602.dir/build]
   ignore line: [mingw32-make[1]: Entering directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_0e835.dir/CMakeCCompilerABI.c.obj]
-  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe   -v -o CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj   -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c]
+  ignore line: [Building C object CMakeFiles/cmTC_bd602.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe   -v -o CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj   -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe]
   ignore line: [Target: x86_64-w64-mingw32]
   ignore line: [Configured with: ../gcc-9.3.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/x86_64-w64-mingw32/include --libexecdir=/mingw64/lib --enable-bootstrap --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++ --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts=yes --enable-libstdcxx-time=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --disable-isl-version-check --enable-lto --enable-libgomp --disable-multilib --enable-checking=release --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --enable-plugin --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev2, Built by MSYS2 project' --with-bugurl=https://sourceforge.net/projects/msys2 --with-gnu-as --with-gnu-ld]
   ignore line: [Thread model: posix]
   ignore line: [gcc version 9.3.0 (Rev2  Built by MSYS2 project) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj -version -o C:\Users\nijir\AppData\Local\Temp\ccu1QSuQ.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj -version -o C:\Users\nijir\AppData\Local\Temp\cc7Cpiqa.s]
   ignore line: [GNU C17 (Rev2  Built by MSYS2 project) version 9.3.0 (x86_64-w64-mingw32)]
   ignore line: [	compiled by GNU C version 9.3.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
   ignore line: []
@@ -158,8 +158,8 @@ Parsed C implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 2f0422043ff3277c694ad7daedab413e]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj C:\Users\nijir\AppData\Local\Temp\ccu1QSuQ.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj C:\Users\nijir\AppData\Local\Temp\cc7Cpiqa.s]
   ignore line: [GNU assembler version 2.34 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.34]
   ignore line: [COMPILER_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/]
@@ -170,12 +170,12 @@ Parsed C implicit link information from above output:
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_0e835.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [Linking C executable cmTC_0e835.exe]
-  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_0e835.dir\link.txt --verbose=1]
-  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_0e835.dir/objects.a]
-  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_0e835.dir/objects.a @CMakeFiles\cmTC_0e835.dir\objects1.rsp]
-  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe     -v -Wl --whole-archive CMakeFiles\cmTC_0e835.dir/objects.a -Wl --no-whole-archive  -o cmTC_0e835.exe -Wl --out-implib libcmTC_0e835.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_bd602.dir\CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking C executable cmTC_bd602.exe]
+  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_bd602.dir\link.txt --verbose=1]
+  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_bd602.dir/objects.a]
+  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_bd602.dir/objects.a @CMakeFiles\cmTC_bd602.dir\objects1.rsp]
+  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe     -v -Wl --whole-archive CMakeFiles\cmTC_bd602.dir/objects.a -Wl --no-whole-archive  -o cmTC_bd602.exe -Wl --out-implib libcmTC_bd602.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\gcc.exe]
   ignore line: [COLLECT_LTO_WRAPPER=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe]
@@ -192,13 +192,13 @@ Parsed C implicit link information from above output:
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0e835.exe' '-mtune=generic' '-march=x86-64']
-  link line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccqfHog8.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_0e835.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_0e835.dir/objects.a --no-whole-archive --out-implib libcmTC_0e835.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bd602.exe' '-mtune=generic' '-march=x86-64']
+  link line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccQnfgBE.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_bd602.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_bd602.dir/objects.a --no-whole-archive --out-implib libcmTC_bd602.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o]
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll] ==> ignore
     arg [-plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccqfHog8.res] ==> ignore
+    arg [-plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccQnfgBE.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
@@ -220,7 +220,7 @@ Parsed C implicit link information from above output:
     arg [i386pep] ==> ignore
     arg [-Bdynamic] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_0e835.exe] ==> ignore
+    arg [cmTC_bd602.exe] ==> ignore
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> ignore
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o] ==> ignore
     arg [-LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0] ==> dir [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0]
@@ -230,10 +230,10 @@ Parsed C implicit link information from above output:
     arg [-LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib] ==> dir [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib]
     arg [-LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../..] ==> dir [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../..]
     arg [--whole-archive] ==> ignore
-    arg [CMakeFiles\cmTC_0e835.dir/objects.a] ==> ignore
+    arg [CMakeFiles\cmTC_bd602.dir/objects.a] ==> ignore
     arg [--no-whole-archive] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_0e835.dll.a] ==> ignore
+    arg [libcmTC_bd602.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore
@@ -275,15 +275,15 @@ Parsed C implicit link information from above output:
 Determining if the CXX compiler works passed with the following output:
 Change Dir: C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_0c066/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_0c066.dir\build.make CMakeFiles/cmTC_0c066.dir/build
+Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_6368c/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_6368c.dir\build.make CMakeFiles/cmTC_6368c.dir/build
 mingw32-make[1]: Entering directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_0c066.dir/testCXXCompiler.cxx.obj
-C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe     -o CMakeFiles\cmTC_0c066.dir\testCXXCompiler.cxx.obj -c C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
-Linking CXX executable cmTC_0c066.exe
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_0c066.dir\link.txt --verbose=1
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_0c066.dir/objects.a
-C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_0c066.dir/objects.a @CMakeFiles\cmTC_0c066.dir\objects1.rsp
-C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_0c066.dir/objects.a -Wl,--no-whole-archive  -o cmTC_0c066.exe -Wl,--out-implib,libcmTC_0c066.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_0c066.dir\linklibs.rsp
+Building CXX object CMakeFiles/cmTC_6368c.dir/testCXXCompiler.cxx.obj
+C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe     -o CMakeFiles\cmTC_6368c.dir\testCXXCompiler.cxx.obj -c C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+Linking CXX executable cmTC_6368c.exe
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_6368c.dir\link.txt --verbose=1
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_6368c.dir/objects.a
+C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_6368c.dir/objects.a @CMakeFiles\cmTC_6368c.dir\objects1.rsp
+C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe      -Wl,--whole-archive CMakeFiles\cmTC_6368c.dir/objects.a -Wl,--no-whole-archive  -o cmTC_6368c.exe -Wl,--out-implib,libcmTC_6368c.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_6368c.dir\linklibs.rsp
 mingw32-make[1]: Leaving directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
@@ -291,18 +291,18 @@ mingw32-make[1]: Leaving directory 'C:/Users/nijir/CLionProjects/Simulater_Leran
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_99c2b/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_99c2b.dir\build.make CMakeFiles/cmTC_99c2b.dir/build
+Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_d943e/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_d943e.dir\build.make CMakeFiles/cmTC_d943e.dir/build
 mingw32-make[1]: Entering directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_99c2b.dir/CMakeCXXCompilerABI.cpp.obj
-C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe    -v -o CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp
+Building CXX object CMakeFiles/cmTC_d943e.dir/CMakeCXXCompilerABI.cpp.obj
+C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe    -v -o CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp
 Using built-in specs.
 COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe
 Target: x86_64-w64-mingw32
 Configured with: ../gcc-9.3.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/x86_64-w64-mingw32/include --libexecdir=/mingw64/lib --enable-bootstrap --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++ --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts=yes --enable-libstdcxx-time=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --disable-isl-version-check --enable-lto --enable-libgomp --disable-multilib --enable-checking=release --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --enable-plugin --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev2, Built by MSYS2 project' --with-bugurl=https://sourceforge.net/projects/msys2 --with-gnu-as --with-gnu-ld
 Thread model: posix
 gcc version 9.3.0 (Rev2, Built by MSYS2 project) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1plus.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj -version -o C:\Users\nijir\AppData\Local\Temp\ccLl3SH8.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1plus.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj -version -o C:\Users\nijir\AppData\Local\Temp\ccnpVbbE.s
 GNU C++14 (Rev2, Built by MSYS2 project) version 9.3.0 (x86_64-w64-mingw32)
 	compiled by GNU C version 9.3.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
 
@@ -331,17 +331,17 @@ GNU C++14 (Rev2, Built by MSYS2 project) version 9.3.0 (x86_64-w64-mingw32)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 4980d42c4570fe9465fba8358dfabc5a
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\nijir\AppData\Local\Temp\ccLl3SH8.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\nijir\AppData\Local\Temp\ccnpVbbE.s
 GNU assembler version 2.34 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.34
 COMPILER_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-Linking CXX executable cmTC_99c2b.exe
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_99c2b.dir\link.txt --verbose=1
-C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_99c2b.dir/objects.a
-C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_99c2b.dir/objects.a @CMakeFiles\cmTC_99c2b.dir\objects1.rsp
-C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_99c2b.dir/objects.a -Wl,--no-whole-archive  -o cmTC_99c2b.exe -Wl,--out-implib,libcmTC_99c2b.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+Linking CXX executable cmTC_d943e.exe
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_d943e.dir\link.txt --verbose=1
+C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_d943e.dir/objects.a
+C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_d943e.dir/objects.a @CMakeFiles\cmTC_d943e.dir\objects1.rsp
+C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe     -v -Wl,--whole-archive CMakeFiles\cmTC_d943e.dir/objects.a -Wl,--no-whole-archive  -o cmTC_d943e.exe -Wl,--out-implib,libcmTC_d943e.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
 Using built-in specs.
 COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe
 COLLECT_LTO_WRAPPER=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe
@@ -351,9 +351,9 @@ Thread model: posix
 gcc version 9.3.0 (Rev2, Built by MSYS2 project) 
 COMPILER_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/
 LIBRARY_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/;C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_99c2b.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccs7F3hc.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_99c2b.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_99c2b.dir/objects.a --no-whole-archive --out-implib libcmTC_99c2b.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_99c2b.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d943e.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccGuFwNa.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_d943e.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_d943e.dir/objects.a --no-whole-archive --out-implib libcmTC_d943e.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d943e.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
 mingw32-make[1]: Leaving directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
@@ -383,18 +383,18 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_99c2b/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_99c2b.dir\build.make CMakeFiles/cmTC_99c2b.dir/build]
+  ignore line: [Run Build Command(s):C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe cmTC_d943e/fast && C:/Users/nijir/scoop/apps/gcc/current/bin/mingw32-make.exe  -f CMakeFiles\cmTC_d943e.dir\build.make CMakeFiles/cmTC_d943e.dir/build]
   ignore line: [mingw32-make[1]: Entering directory 'C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_99c2b.dir/CMakeCXXCompilerABI.cpp.obj]
-  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe    -v -o CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp]
+  ignore line: [Building CXX object CMakeFiles/cmTC_d943e.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe    -v -o CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj -c C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe]
   ignore line: [Target: x86_64-w64-mingw32]
   ignore line: [Configured with: ../gcc-9.3.0/configure --prefix=/mingw64 --with-local-prefix=/mingw64/local --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --with-native-system-header-dir=/mingw64/x86_64-w64-mingw32/include --libexecdir=/mingw64/lib --enable-bootstrap --with-arch=x86-64 --with-tune=generic --enable-languages=c,lto,c++,fortran,ada,objc,obj-c++ --enable-shared --enable-static --enable-libatomic --enable-threads=posix --enable-graphite --enable-fully-dynamic-string --enable-libstdcxx-filesystem-ts=yes --enable-libstdcxx-time=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --disable-isl-version-check --enable-lto --enable-libgomp --disable-multilib --enable-checking=release --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --enable-plugin --with-libiconv --with-system-zlib --with-gmp=/mingw64 --with-mpfr=/mingw64 --with-mpc=/mingw64 --with-isl=/mingw64 --with-pkgversion='Rev2, Built by MSYS2 project' --with-bugurl=https://sourceforge.net/projects/msys2 --with-gnu-as --with-gnu-ld]
   ignore line: [Thread model: posix]
   ignore line: [gcc version 9.3.0 (Rev2  Built by MSYS2 project) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1plus.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj -version -o C:\Users\nijir\AppData\Local\Temp\ccLl3SH8.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/cc1plus.exe -quiet -v -iprefix C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/ -D_REENTRANT C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj -version -o C:\Users\nijir\AppData\Local\Temp\ccnpVbbE.s]
   ignore line: [GNU C++14 (Rev2  Built by MSYS2 project) version 9.3.0 (x86_64-w64-mingw32)]
   ignore line: [	compiled by GNU C version 9.3.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
   ignore line: []
@@ -423,8 +423,8 @@ Parsed CXX implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 4980d42c4570fe9465fba8358dfabc5a]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\nijir\AppData\Local\Temp\ccLl3SH8.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/bin/as.exe -v -o CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj C:\Users\nijir\AppData\Local\Temp\ccnpVbbE.s]
   ignore line: [GNU assembler version 2.34 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.34]
   ignore line: [COMPILER_PATH=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/]
@@ -435,12 +435,12 @@ Parsed CXX implicit link information from above output:
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_99c2b.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [Linking CXX executable cmTC_99c2b.exe]
-  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_99c2b.dir\link.txt --verbose=1]
-  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_99c2b.dir/objects.a]
-  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_99c2b.dir/objects.a @CMakeFiles\cmTC_99c2b.dir\objects1.rsp]
-  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe     -v -Wl --whole-archive CMakeFiles\cmTC_99c2b.dir/objects.a -Wl --no-whole-archive  -o cmTC_99c2b.exe -Wl --out-implib libcmTC_99c2b.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles\cmTC_d943e.dir\CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking CXX executable cmTC_d943e.exe]
+  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_d943e.dir\link.txt --verbose=1]
+  ignore line: [C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\cmTC_d943e.dir/objects.a]
+  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\ar.exe cr CMakeFiles\cmTC_d943e.dir/objects.a @CMakeFiles\cmTC_d943e.dir\objects1.rsp]
+  ignore line: [C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe     -v -Wl --whole-archive CMakeFiles\cmTC_d943e.dir/objects.a -Wl --no-whole-archive  -o cmTC_d943e.exe -Wl --out-implib libcmTC_d943e.dll.a -Wl --major-image-version 0 --minor-image-version 0 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=C:\Users\nijir\scoop\apps\gcc\current\bin\g++.exe]
   ignore line: [COLLECT_LTO_WRAPPER=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe]
@@ -457,13 +457,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/]
   ignore line: [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_99c2b.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccs7F3hc.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_99c2b.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_99c2b.dir/objects.a --no-whole-archive --out-implib libcmTC_99c2b.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d943e.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe -plugin C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll -plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccGuFwNa.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -m i386pep -Bdynamic -o cmTC_d943e.exe C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0 -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib -LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../.. --whole-archive CMakeFiles\cmTC_d943e.dir/objects.a --no-whole-archive --out-implib libcmTC_d943e.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/default-manifest.o C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtend.o]
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/collect2.exe] ==> ignore
     arg [-plugin] ==> ignore
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/liblto_plugin-0.dll] ==> ignore
     arg [-plugin-opt=C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/lto-wrapper.exe] ==> ignore
-    arg [-plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccs7F3hc.res] ==> ignore
+    arg [-plugin-opt=-fresolution=C:\Users\nijir\AppData\Local\Temp\ccGuFwNa.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
@@ -485,7 +485,7 @@ Parsed CXX implicit link information from above output:
     arg [i386pep] ==> ignore
     arg [-Bdynamic] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_99c2b.exe] ==> ignore
+    arg [cmTC_d943e.exe] ==> ignore
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> ignore
     arg [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/crtbegin.o] ==> ignore
     arg [-LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0] ==> dir [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0]
@@ -495,10 +495,10 @@ Parsed CXX implicit link information from above output:
     arg [-LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib] ==> dir [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../../../x86_64-w64-mingw32/lib]
     arg [-LC:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../..] ==> dir [C:/Users/nijir/scoop/apps/gcc/current/bin/../lib/gcc/x86_64-w64-mingw32/9.3.0/../../..]
     arg [--whole-archive] ==> ignore
-    arg [CMakeFiles\cmTC_99c2b.dir/objects.a] ==> ignore
+    arg [CMakeFiles\cmTC_d943e.dir/objects.a] ==> ignore
     arg [--no-whole-archive] ==> ignore
     arg [--out-implib] ==> ignore
-    arg [libcmTC_99c2b.dll.a] ==> ignore
+    arg [libcmTC_d943e.dll.a] ==> ignore
     arg [--major-image-version] ==> ignore
     arg [0] ==> ignore
     arg [--minor-image-version] ==> ignore

@@ -2,9 +2,7 @@
 // Created by T118029 on 2021/03/15.
 //
 
-//todo ロボットがぐるぐる回っている
-//todo check_cross_othersを書きこむ
-//todo なぜかロボのセンサー情報が旧友されている
+//todo 要修正：ロボットがぐるぐる回っている
 
 #include <GL/glut.h>
 #include <iostream>
@@ -18,10 +16,8 @@
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  4	//ロボット台数　10台
-#define NSENSORRANGE 100	//センサーの検出距離（絶対距離）
-
-
+#define ROBOS  7   //ロボット台数　10台
+#define NSENSORRANGE 100    //センサーの検出距離（絶対距離）
 
 
 typedef struct ROBO {
@@ -46,7 +42,7 @@ public:
 
 } ROBO;
 
-ROBO robo[ROBOS];	//要素数ROBOSで配列変数roboを定義
+ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
 
 
 void wall_draw();
@@ -55,7 +51,9 @@ int check_cross_wall(POSITION p1, POSITION p2);
 
 int check_cross_others(POSITION p);
 
-int SearchRobot( POSITION p, double range );
+int SearchRobot(POSITION p, double range);
+
+void Initialize();
 
 void wall_draw() {
     int i;
@@ -72,25 +70,25 @@ void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     graphics();
     wall_draw();
-    for(int i=0; i<ROBOS; i++ )
-    {
-        robo[i].draw( );
+    for (int i = 0; i < ROBOS; i++) {
+        robo[i].draw();
     }
 
     glutSwapBuffers();
 }
 
 void ROBO::forward(double v) {
-    for(int i=0; i<ROBOS; i++ )
-    {
+    for (int i = 0; i < ROBOS; i++) {
         robo[i].x = robo[i].x + cos(robo[i].dir) * v;
         robo[i].y = robo[i].y + sin(robo[i].dir) * v;
     }
 
 }
 
-void ROBO::turn(double q) {   for(int i=0; i<ROBOS; i++ )
-    {robo[i].dir += q; }
+void ROBO::turn(double q) {
+    for (int i = 0; i < ROBOS; i++) {
+        robo[i].dir += q;
+    }
 }
 
 void ROBO::action() {
@@ -99,6 +97,8 @@ void ROBO::action() {
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
+
+    //todo 要修正：どうもこの書き方だとデットロックがかかる可能性があるらしい
 
     if (tLeft == 1)        //左チセンサ反応あり
     {
@@ -111,7 +111,7 @@ void ROBO::action() {
         turn(RIGHT_TURN);
     } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
     {
-        forward(0.01);//前進1.0ステップ
+        forward(0.05);//前進1.0ステップ
     }
 }
 
@@ -119,9 +119,9 @@ void ROBO::action() {
 void idle() {
     if (fStart == 0)
         return;
-    for(int i=0; i<ROBOS; i++ )
-    {
-    robo[i].action();}
+    for (int i = 0; i < ROBOS; i++) {
+        robo[i].action();
+    }
     display();
 }
 
@@ -132,9 +132,9 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
             fStart = 0;
         else
             fStart = 1;
-        for(int i=0; i<ROBOS; i++ )
-        {
-        robo[i].init();}
+        for (int i = 0; i < ROBOS; i++) {
+            robo[i].init();
+        }
     }
 }
 
@@ -171,11 +171,12 @@ void ROBO::draw() {
 }
 
 
-
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
 int ROBO::touchsensor(int i)
 //構造体ROBOに所属している関数なので関数名の前に“ROBO::”とついている。
 {
+    //todo 要修正：なぜかロボのセンサー情報が共有されているようである。
+    //todo これが処理落ちなのかどうかについて調べる必要アリか
     int fw;
     int fo; //他のロボットとの接触フラグ
     POSITION p1, p2;
@@ -251,34 +252,52 @@ int check_cross_wall(POSITION p1, POSITION p2) {
 }
 
 int check_cross_others(POSITION p) {
+    double l;
+    double sensor_x;
+    double sensor_y;
+// 各ロボの座標 for:
+// 自他の区別 ？？？
+// 区別したらそいつとの距離を産出ること
+    sensor_x = p.x;
+    sensor_y = p.y;
+    for (int i = 0; i < ROBOS; ++i) {
+        double another_robo_x = robo[i].x;
+        double another_robo_y = robo[i].y;
+        double distance_x;
+        double distance_y;
 
-    //   作成せよ
+        distance_x = another_robo_x - sensor_x;
+        distance_y = another_robo_y - sensor_y;
+
+        l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+
+        if (l < robo[i].r) {
+            return 1;
+        }
+    }
     return 0;
 }
 
-int SearchRobot( POSITION p, double range )
-{
+int SearchRobot(POSITION p, double range) {
     int i;
-    double l;		//距離
-    double dx, dy;	//位置の差
-    double min = range;	//最も近い距離
-    int minid = -1;		//最も近い位置のロボット番号
+    double l;        //距離
+    double dx, dy;    //位置の差
+    double min = range;    //最も近い距離
+    int minid = -1;        //最も近い位置のロボット番号
 
-    for(i=0;i<ROBOS;i++)
-    {
+    for (i = 0; i < ROBOS; i++) {
         dx = robo[i].x - p.x;
         dy = robo[i].y - p.y;
-        l = sqrt(dx*dx+dy*dy);
+        l = sqrt(dx * dx + dy * dy);
 
-        if(l==0)
-        {
-            continue;	//距離0なので自分と見なし、スキップ
+        if (l == 0) {
+            continue;    //距離0なので自分と見なし、スキップ
         }
 
-        if( l < min )	//最短距離であったら
+        if (l < min)    //最短距離であったら
         {
-            min = l;	//最短距離の更新
-            minid = i;	//ロボット番号の更新
+            min = l;    //最短距離の更新
+            minid = i;    //ロボット番号の更新
         }
     }
     return minid;
@@ -299,11 +318,10 @@ double ROBO::nearrobotsensor()//構造体ROBOに所属している関数なの�
     p.x = x;
     p.y = y;
 
-    i = SearchRobot( p, NSENSORRANGE );
+    i = SearchRobot(p, NSENSORRANGE);
 
-    if( i<0 )
-    {
-        return 100;	//もしも該当ロボットが無かった場合は100(>π)
+    if (i < 0) {
+        return 100;    //もしも該当ロボットが無かった場合は100(>π)
     }
 
     //自分の正面ベクトル
@@ -313,25 +331,24 @@ double ROBO::nearrobotsensor()//構造体ROBOに所属している関数なの�
     //相手のベクトル
     nx = robo[i].x - x;
     ny = robo[i].y - y;
-    l = sqrt(nx*nx+ny*ny);
+    l = sqrt(nx * nx + ny * ny);
     nx /= l;
     ny /= l;
 
-    inner = mx*nx + my*nx;
-    outer = mx*ny - my*nx;
+    inner = mx * nx + my * nx;
+    outer = mx * ny - my * nx;
 
     q = acos(inner);
-    if(outer<0)//外積値が負なら
+    if (outer < 0)//外積値が負なら
     {
         q = -q;//負号反転
     }
-    return q;	//　－π～＋π
+    return q;    //　－π～＋π
 }
 
 
-
 int main(int argc, char *argv[]) {
-    make_circle();//円図形データの作成
+    Initialize();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(510, 510);
@@ -341,10 +358,15 @@ int main(int argc, char *argv[]) {
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
     glutMouseFunc(mouse); //マウスのボタンを検出
-    for (int i = 0; i < ROBOS; ++i) {
-        robo[i].init();
-    }
+
     glutMainLoop();
 
     return 0;
+}
+
+void Initialize() {
+    make_circle();//円図形データの作成
+    for (int i = 0; i < ROBOS; ++i) {
+        robo[i].init();
+    }
 }

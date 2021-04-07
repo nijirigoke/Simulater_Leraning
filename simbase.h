@@ -31,6 +31,7 @@ int fStart = 0; //シミュレーションの開始フラグ
 void TypeStr(int x, int y, char *str) //文字の表示
 {
     glRasterPos2i(x, y);
+    glRasterPos2i(x, y);
     while (*str != 0)
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, (int) *str++);
 }
