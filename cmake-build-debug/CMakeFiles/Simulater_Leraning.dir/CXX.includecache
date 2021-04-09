@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/nijir/CLionProjects/Simulater_Leraning/main.cpp
+C:/Users/T118024-K.Umeki/CLionProjects/sim_learn/main.cpp
 GL/glut.h
 -
 iostream
 -
 workspace.h
-C:/Users/nijir/CLionProjects/Simulater_Leraning/workspace.h
+C:/Users/T118024-K.Umeki/CLionProjects/sim_learn/workspace.h
 
-C:/Users/nijir/CLionProjects/Simulater_Leraning/simbase.h
+C:/Users/T118024-K.Umeki/CLionProjects/sim_learn/simbase.h
 GL/glut.h
 -
 math.h
@@ -22,7 +22,7 @@ math.h
 stdio.h
 -
 
-C:/Users/nijir/CLionProjects/Simulater_Leraning/workspace.h
+C:/Users/T118024-K.Umeki/CLionProjects/sim_learn/workspace.h
 simbase.h
-C:/Users/nijir/CLionProjects/Simulater_Leraning/simbase.h
+C:/Users/T118024-K.Umeki/CLionProjects/sim_learn/simbase.h
 
