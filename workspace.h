@@ -20,7 +20,7 @@ typedef struct {
 POSITION pin[PINN] = {{-250, 250},
                       {250,  250},
                       {250,  -250},
-                      {-250, -250}};
+                      {-0,   -250}};
 
 WALL wall[WALLS] = {{0, 1},
                     {1, 2},
