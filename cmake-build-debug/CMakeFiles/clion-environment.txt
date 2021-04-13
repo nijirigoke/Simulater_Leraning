@@ -1,4 +1,4 @@
-ToolSet: w64 9.0 (local)@C:\Users\T118024-K.Umeki\scoop\apps\msys2\current\mingw32
+ToolSet: w64 9.0 (local)@C:\Users\T118029a\scoop\apps\msys2\current\mingw64
 Options: 
 
 Options:

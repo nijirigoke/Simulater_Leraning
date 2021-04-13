@@ -41,6 +41,11 @@ public:
 
     double nearrobotsensor();
 
+    int check_cross_wall(POSITION p1, POSITION p2);
+
+    int check_cross_others(POSITION p);
+
+    int SearchRobot(POSITION p, double range);
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
@@ -48,11 +53,11 @@ ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
 
 void wall_draw();
 
-int check_cross_wall(POSITION p1, POSITION p2);
-
-int check_cross_others(POSITION p);
-
-int SearchRobot(POSITION p, double range);
+//int check_cross_wall(POSITION p1, POSITION p2);
+//
+//int check_cross_others(POSITION p);
+//
+//int SearchRobot(POSITION p, double range);
 
 void Initialize();
 
@@ -93,7 +98,7 @@ void ROBO::turn(double q) {
 }
 
 void ROBO::action() {
-    int tCenter, tRight, tLeft;
+    int tCenter=0, tRight=0, tLeft=0;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
@@ -112,7 +117,7 @@ void ROBO::action() {
         turn(RIGHT_TURN);
     } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
     {
-        forward(0.05);//前進1.0ステップ
+        forward(0.5);//前進1.0ステップ
     }
 }
 
@@ -141,8 +146,10 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 
 void ROBO::init() {
     dir = rand() * 360.0;
-    x = 0;
-    y = 0;
+//    x = rand() / 250;
+//    y = rand() / 250;
+    x =  250;
+    y =  250;
     r = 10;
     tsensor[CENTER].x = TRANGE * r; //タッチセンサーのレンジ（棒の長さ）
     tsensor[CENTER].y = 0;
@@ -178,8 +185,8 @@ int ROBO::touchsensor(int i)
 {
     //todo 要修正：なぜかロボのセンサー情報が共有されているようである。
     //todo これが処理落ちなのかどうかについて調べる必要アリか
-    int fw;
-    int fo; //他のロボットとの接触フラグ
+    int fw=0;
+    int fo=0; //他のロボットとの接触フラグ
     POSITION p1, p2;
     // p1はロボットの中心座標
     p1.x = x; //ロボットの中心座標　この関数は構造体の中の関数なので、ｘは構造体ROBOの中のｘを意味する。
@@ -207,10 +214,9 @@ int ROBO::touchsensor(int i)
     return 0; //センサー反応なし
 }
 
-int check_cross_wall(POSITION p1, POSITION p2) {
-    int i;
+int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
 
-    for (i = 0; i < WALLS; i++) {
+    for (int i = 0; i < WALLS; i++) {
         double Wp1x, Wp1y, Wp2x, Wp2y; //線分の両端点
         double Bvx, Bvy;               //線分への垂線の方向ベクトル
         double Bx, By, R;              //球体の位置, 半径
@@ -252,7 +258,7 @@ int check_cross_wall(POSITION p1, POSITION p2) {
     return 0; //交差なし
 }
 
-int check_cross_others(POSITION p) {
+int ROBO::check_cross_others(POSITION p) {
     double l;
     double sensor_x;
     double sensor_y;
@@ -279,7 +285,7 @@ int check_cross_others(POSITION p) {
     return 0;
 }
 
-int SearchRobot(POSITION p, double range) {
+int ROBO::SearchRobot(POSITION p, double range) {
     int i;
     double l;        //距離
     double dx, dy;    //位置の差
@@ -353,7 +359,6 @@ int main(int argc, char *argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(510, 510);
-
     glutCreateWindow(argv[0]);
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
