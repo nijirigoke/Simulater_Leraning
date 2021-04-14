@@ -2,9 +2,6 @@
 // Created by T118029 on 2021/03/15.
 //
 
-//test
-//todo 要修正：ロボットがぐるぐる回っている
-
 #include <GL/glut.h>
 #include <iostream>
 //#include "simbase.h"
@@ -114,7 +111,7 @@ void idle() {
     for (int i = 0; i < ROBOS; i++) {
         robo[i].action();
     }
-    Sleep(1* 10);
+    Sleep(1 * 5);
     display();
 }
 
