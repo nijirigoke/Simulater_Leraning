@@ -2,9 +2,6 @@
 // Created by T118029 on 2021/03/15.
 //
 
-//test
-//todo 要修正：ロボットがぐるぐる回っている
-
 #include <GL/glut.h>
 #include <iostream>
 //#include "simbase.h"
@@ -17,9 +14,8 @@
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  3   //ロボット台数　10台
+#define ROBOS  7   //ロボット台数　10台
 #define NSENSORRANGE 100    //センサーの検出距離（絶対距離）
-
 
 typedef struct ROBO {
     double r;
@@ -41,26 +37,23 @@ public:
 
     double nearrobotsensor();
 
+    int check_cross_wall(POSITION p1, POSITION p2);
+
+    int check_cross_others(POSITION p);
+
+    int SearchRobot(POSITION p, double range);
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
 
-
 void wall_draw();
-
-int check_cross_wall(POSITION p1, POSITION p2);
-
-int check_cross_others(POSITION p);
-
-int SearchRobot(POSITION p, double range);
 
 void Initialize();
 
 void wall_draw() {
-    int i;
 
     glBegin(GL_LINES);
-    for (i = 0; i < WALLS; i++) {
+    for (int i = 0; i < WALLS; i++) {
         glVertex2d(pin[wall[i].p1].x, pin[wall[i].p1].y);
         glVertex2d(pin[wall[i].p2].x, pin[wall[i].p2].y);
     }
@@ -79,21 +72,16 @@ void display() {
 }
 
 void ROBO::forward(double v) {
-    for (int i = 0; i < ROBOS; i++) {
-        robo[i].x = robo[i].x + cos(robo[i].dir) * v;
-        robo[i].y = robo[i].y + sin(robo[i].dir) * v;
-    }
-
+    x = x + cos(dir) * v;
+    y = y + sin(dir) * v;
 }
 
 void ROBO::turn(double q) {
-    for (int i = 0; i < ROBOS; i++) {
-        robo[i].dir += q;
-    }
+    dir += q;
 }
 
 void ROBO::action() {
-    int tCenter, tRight, tLeft;
+    int tCenter = 0, tRight = 0, tLeft = 0;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
@@ -112,7 +100,7 @@ void ROBO::action() {
         turn(RIGHT_TURN);
     } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
     {
-        forward(0.05);//前進1.0ステップ
+        forward(1);//前進1.0ステップ
     }
 }
 
@@ -123,6 +111,7 @@ void idle() {
     for (int i = 0; i < ROBOS; i++) {
         robo[i].action();
     }
+    Sleep(1 * 5);
     display();
 }
 
@@ -141,8 +130,10 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 
 void ROBO::init() {
     dir = rand() * 360.0;
-    x = 0;
-    y = 0;
+    x = rand() / 250;
+    y = rand() / 250;
+//    x =  250;
+//    y =  250;
     r = 10;
     tsensor[CENTER].x = TRANGE * r; //タッチセンサーのレンジ（棒の長さ）
     tsensor[CENTER].y = 0;
@@ -176,10 +167,8 @@ void ROBO::draw() {
 int ROBO::touchsensor(int i)
 //構造体ROBOに所属している関数なので関数名の前に“ROBO::”とついている。
 {
-    //todo 要修正：なぜかロボのセンサー情報が共有されているようである。
-    //todo これが処理落ちなのかどうかについて調べる必要アリか
-    int fw;
-    int fo; //他のロボットとの接触フラグ
+    int fw = 0;
+    int fo = 0; //他のロボットとの接触フラグ
     POSITION p1, p2;
     // p1はロボットの中心座標
     p1.x = x; //ロボットの中心座標　この関数は構造体の中の関数なので、ｘは構造体ROBOの中のｘを意味する。
@@ -207,10 +196,9 @@ int ROBO::touchsensor(int i)
     return 0; //センサー反応なし
 }
 
-int check_cross_wall(POSITION p1, POSITION p2) {
-    int i;
+int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
 
-    for (i = 0; i < WALLS; i++) {
+    for (int i = 0; i < WALLS; i++) {
         double Wp1x, Wp1y, Wp2x, Wp2y; //線分の両端点
         double Bvx, Bvy;               //線分への垂線の方向ベクトル
         double Bx, By, R;              //球体の位置, 半径
@@ -252,7 +240,7 @@ int check_cross_wall(POSITION p1, POSITION p2) {
     return 0; //交差なし
 }
 
-int check_cross_others(POSITION p) {
+int ROBO::check_cross_others(POSITION p) {
     double l;
     double sensor_x;
     double sensor_y;
@@ -279,7 +267,7 @@ int check_cross_others(POSITION p) {
     return 0;
 }
 
-int SearchRobot(POSITION p, double range) {
+int ROBO::SearchRobot(POSITION p, double range) {
     int i;
     double l;        //距離
     double dx, dy;    //位置の差
@@ -353,14 +341,13 @@ int main(int argc, char *argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(510, 510);
-
     glutCreateWindow(argv[0]);
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
     glutMouseFunc(mouse); //マウスのボタンを検出
-
     glutMainLoop();
+
 
     return 0;
 }

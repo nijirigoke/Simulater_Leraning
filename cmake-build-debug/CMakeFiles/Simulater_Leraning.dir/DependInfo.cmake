@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/T118024-K.Umeki/CLionProjects/sim_learn/main.cpp" "C:/Users/T118024-K.Umeki/CLionProjects/sim_learn/cmake-build-debug/CMakeFiles/Simulater_Leraning.dir/main.cpp.obj"
+  "C:/Users/nijir/CLionProjects/Simulater_Leraning/main.cpp" "C:/Users/nijir/CLionProjects/Simulater_Leraning/cmake-build-debug/CMakeFiles/Simulater_Leraning.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
