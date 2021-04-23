@@ -14,7 +14,7 @@
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  7   //ロボット台数　10台
+#define ROBOS  15  //ロボット台数　10台
 #define NSENSORRANGE 100    //センサーの検出距離（絶対距離）
 
 typedef struct ROBO {
