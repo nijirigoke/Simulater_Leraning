@@ -17,10 +17,10 @@ typedef struct {
     int p2;
 } WALL;
 
-POSITION pin[PINN] = {{-250, 250},
-                      {250,  250},
-                      {250,  -250},
-                      {-0,   -250}};
+POSITION pin[PINN] = {{0,   0},
+                      {0,   250},
+                      {250, 250},
+                      {-0,  -250}};
 
 WALL wall[WALLS] = {{0, 1},
                     {1, 2},

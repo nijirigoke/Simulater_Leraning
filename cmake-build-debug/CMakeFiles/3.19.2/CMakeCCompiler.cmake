@@ -1,4 +1,4 @@
-set(CMAKE_C_COMPILER "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/bin/gcc.exe")
+set(CMAKE_C_COMPILER "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/bin/gcc.exe")
 set(CMAKE_C_COMPILER_ARG1 "")
 set(CMAKE_C_COMPILER_ID "GNU")
 set(CMAKE_C_COMPILER_VERSION "10.2.0")
@@ -18,11 +18,11 @@ set(CMAKE_C_SIMULATE_VERSION "")
 
 
 
-set(CMAKE_AR "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/bin/ar.exe")
-set(CMAKE_C_COMPILER_AR "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/bin/gcc-ar.exe")
-set(CMAKE_RANLIB "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/bin/ranlib.exe")
-set(CMAKE_C_COMPILER_RANLIB "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/bin/gcc-ranlib.exe")
-set(CMAKE_LINKER "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/bin/ld.exe")
+set(CMAKE_AR "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/bin/ar.exe")
+set(CMAKE_C_COMPILER_AR "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/bin/gcc-ar.exe")
+set(CMAKE_RANLIB "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/bin/ranlib.exe")
+set(CMAKE_C_COMPILER_RANLIB "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/bin/gcc-ranlib.exe")
+set(CMAKE_LINKER "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/bin/ld.exe")
 set(CMAKE_MT "")
 set(CMAKE_COMPILER_IS_GNUCC 1)
 set(CMAKE_C_COMPILER_LOADED 1)
@@ -71,7 +71,7 @@ endif()
 
 
 
-set(CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/lib/gcc/x86_64-w64-mingw32/10.2.0/include;C:/Users/T118029a/scoop/apps/msys2/current/mingw64/include;C:/Users/T118029a/scoop/apps/msys2/current/mingw64/lib/gcc/x86_64-w64-mingw32/10.2.0/include-fixed;C:/Users/T118029a/scoop/apps/msys2/current/mingw64/x86_64-w64-mingw32/include")
+set(CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES "C:/Users/nijir/scoop/apps/nuwen-mingw-gcc/current/include;C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/lib/gcc/x86_64-w64-mingw32/10.2.0/include;C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/include;C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/lib/gcc/x86_64-w64-mingw32/10.2.0/include-fixed;C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/x86_64-w64-mingw32/include")
 set(CMAKE_C_IMPLICIT_LINK_LIBRARIES "mingw32;gcc;moldname;mingwex;kernel32;pthread;advapi32;shell32;user32;kernel32;mingw32;gcc;moldname;mingwex;kernel32")
-set(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "C:/Users/T118029a/scoop/apps/msys2/current/mingw64/lib/gcc/x86_64-w64-mingw32/10.2.0;C:/Users/T118029a/scoop/apps/msys2/current/mingw64/lib/gcc;C:/Users/T118029a/scoop/apps/msys2/current/mingw64/x86_64-w64-mingw32/lib;C:/Users/T118029a/scoop/apps/msys2/current/mingw64/lib")
+set(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/lib/gcc/x86_64-w64-mingw32/10.2.0;C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/lib/gcc;C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/x86_64-w64-mingw32/lib;C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/lib")
 set(CMAKE_C_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
