@@ -81,6 +81,7 @@ void ROBO::turn(double q) {
 }
 
 void ROBO::action() {
+    nearrobotsensor();
     int tCenter = 0, tRight = 0, tLeft = 0;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
@@ -88,19 +89,28 @@ void ROBO::action() {
     tLeft = touchsensor(LEFT);        //左センサーの値
 
     //todo 要修正：どうもこの書き方だとデットロックがかかる可能性があるらしい
-
-    if (tLeft == 1)        //左チセンサ反応あり
-    {
-        turn(RIGHT_TURN);
-    } else if (tRight == 1)    //右センサ反応あり
-    {
-        turn(LEFT_TURN);
-    } else if (tCenter == 1) //正面センサ反応あり
-    {
-        turn(RIGHT_TURN);
-    } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
-    {
-        forward(1);//前進1.0ステップ
+    if (stack < 10) {
+        if (tLeft == 1)        //左チセンサ反応あり
+        {
+            turn(RIGHT_TURN);
+            stack++;
+        } else if (tRight == 1)    //右センサ反応あり
+        {
+            turn(LEFT_TURN);
+            stack++;
+        } else if (tCenter == 1) //正面センサ反応あり
+        {
+            turn(RIGHT_TURN);
+            stack++;
+        } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
+        {
+            forward(0.1);//前進1.0ステップ
+            stack = 0;
+        }
+    } else {
+        turn(0.4 * PI);
+//        forward(1);
+        stack = 0;
     }
 }
 
@@ -111,7 +121,7 @@ void idle() {
     for (int i = 0; i < ROBOS; i++) {
         robo[i].action();
     }
-    Sleep(1 * 5);
+    Sleep(0.1);
     display();
 }
 
@@ -202,8 +212,6 @@ int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
         double Wp1x, Wp1y, Wp2x, Wp2y; //線分の両端点
         double Bvx, Bvy;               //線分への垂線の方向ベクトル
         double Bx, By, R;              //球体の位置, 半径
-        double Vx, Vy;                 //球体の速度
-        double L;                      //単位ベクトル化のための一時変数
         double det, a, b, c, d, e, f;  //ベクトルの式の変数
 
         //接触判定
@@ -217,9 +225,7 @@ int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
 
         Bvx = (p2.x - p1.x);
         Bvy = (p2.y - p1.y);
-        L = sqrt(Bvx * Bvx + Bvy * Bvy);
-        Bvx /= L; //単位ベクトル化
-        Bvy /= L;
+
         a = Wp2x - Wp1x;
         b = -Bvx;
         c = Wp2y - Wp1y;

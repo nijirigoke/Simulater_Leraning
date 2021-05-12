@@ -141,6 +141,19 @@ Simulater_Leraning/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/build
 .PHONY : Simulater_Leraning/fast
 
+#=============================================================================
+# Target rules for targets named pachinko.cpp
+
+# Build rule for target.
+pachinko.cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 pachinko.cpp
+.PHONY : pachinko.cpp
+
+# fast build rule for target.
+pachinko.cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/build
+.PHONY : pachinko.cpp/fast
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -168,6 +181,33 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+pachinko.obj: pachinko.cpp.obj
+
+.PHONY : pachinko.obj
+
+# target to build an object file
+pachinko.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/pachinko.cpp.obj
+.PHONY : pachinko.cpp.obj
+
+pachinko.i: pachinko.cpp.i
+
+.PHONY : pachinko.i
+
+# target to preprocess a source file
+pachinko.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/pachinko.cpp.i
+.PHONY : pachinko.cpp.i
+
+pachinko.s: pachinko.cpp.s
+
+.PHONY : pachinko.s
+
+# target to generate assembly for a file
+pachinko.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/pachinko.cpp.s
+.PHONY : pachinko.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -177,9 +217,13 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
+	@echo ... pachinko.cpp
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... pachinko.obj
+	@echo ... pachinko.i
+	@echo ... pachinko.s
 .PHONY : help
 
 
