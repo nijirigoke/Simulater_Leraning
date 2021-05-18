@@ -7,6 +7,9 @@
 //#include "simbase.h"
 #include "workspace.h"
 
+//pull request test
+#define RED 0
+
 #define LEFT   0
 #define CENTER 1
 #define RIGHT  2
