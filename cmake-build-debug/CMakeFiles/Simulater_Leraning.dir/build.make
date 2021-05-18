@@ -52,10 +52,10 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.6693.114\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -78,15 +78,15 @@ include CMakeFiles/Simulater_Leraning.dir/flags.make
 CMakeFiles/Simulater_Leraning.dir/main.cpp.obj: CMakeFiles/Simulater_Leraning.dir/flags.make
 CMakeFiles/Simulater_Leraning.dir/main.cpp.obj: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Simulater_Leraning.dir/main.cpp.obj"
-	C:\Users\nijir\scoop\apps\msys2\current\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Simulater_Leraning.dir\main.cpp.obj -c C:\Users\nijir\CLionProjects\Simulater_Leraning\main.cpp
+	C:\Users\nijir\scoop\apps\msys2\2021-02-28\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Simulater_Leraning.dir\main.cpp.obj -c C:\Users\nijir\CLionProjects\Simulater_Leraning\main.cpp
 
 CMakeFiles/Simulater_Leraning.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Simulater_Leraning.dir/main.cpp.i"
-	C:\Users\nijir\scoop\apps\msys2\current\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\nijir\CLionProjects\Simulater_Leraning\main.cpp > CMakeFiles\Simulater_Leraning.dir\main.cpp.i
+	C:\Users\nijir\scoop\apps\msys2\2021-02-28\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\nijir\CLionProjects\Simulater_Leraning\main.cpp > CMakeFiles\Simulater_Leraning.dir\main.cpp.i
 
 CMakeFiles/Simulater_Leraning.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Simulater_Leraning.dir/main.cpp.s"
-	C:\Users\nijir\scoop\apps\msys2\current\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\nijir\CLionProjects\Simulater_Leraning\main.cpp -o CMakeFiles\Simulater_Leraning.dir\main.cpp.s
+	C:\Users\nijir\scoop\apps\msys2\2021-02-28\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\nijir\CLionProjects\Simulater_Leraning\main.cpp -o CMakeFiles\Simulater_Leraning.dir\main.cpp.s
 
 # Object files for target Simulater_Leraning
 Simulater_Leraning_OBJECTS = \
