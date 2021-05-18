@@ -88,7 +88,6 @@ void ROBO::action() {
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
 
-    //todo 要修正：どうもこの書き方だとデットロックがかかる可能性があるらしい
     if (stack < 10) {
         if (tLeft == 1)        //左チセンサ反応あり
         {
@@ -104,12 +103,12 @@ void ROBO::action() {
             stack++;
         } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
         {
-            forward(0.1);//前進1.0ステップ
+            forward(0.5);//前進1.0ステップ
             stack = 0;
         }
     } else {
         turn(0.4 * PI);
-//        forward(1);
+        forward(1);
         stack = 0;
     }
 }
@@ -121,7 +120,7 @@ void idle() {
     for (int i = 0; i < ROBOS; i++) {
         robo[i].action();
     }
-    Sleep(0.1);
+    Sleep(1 * 5);
     display();
 }
 
@@ -271,74 +270,6 @@ int ROBO::check_cross_others(POSITION p) {
         }
     }
     return 0;
-}
-
-int ROBO::SearchRobot(POSITION p, double range) {
-    int i;
-    double l;        //距離
-    double dx, dy;    //位置の差
-    double min = range;    //最も近い距離
-    int minid = -1;        //最も近い位置のロボット番号
-
-    for (i = 0; i < ROBOS; i++) {
-        dx = robo[i].x - p.x;
-        dy = robo[i].y - p.y;
-        l = sqrt(dx * dx + dy * dy);
-
-        if (l == 0) {
-            continue;    //距離0なので自分と見なし、スキップ
-        }
-
-        if (l < min)    //最短距離であったら
-        {
-            min = l;    //最短距離の更新
-            minid = i;    //ロボット番号の更新
-        }
-    }
-    return minid;
-}
-
-double ROBO::nearrobotsensor()//構造体ROBOに所属している関数なので関数名の前に“ROBO::”とつく
-{
-    double q;
-    int i;
-
-    double mx, my;
-    double nx, ny;
-    double l;
-    double inner;
-    double outer;
-
-    POSITION p;
-    p.x = x;
-    p.y = y;
-
-    i = SearchRobot(p, NSENSORRANGE);
-
-    if (i < 0) {
-        return 100;    //もしも該当ロボットが無かった場合は100(>π)
-    }
-
-    //自分の正面ベクトル
-    mx = cos(dir);
-    my = sin(dir);
-
-    //相手のベクトル
-    nx = robo[i].x - x;
-    ny = robo[i].y - y;
-    l = sqrt(nx * nx + ny * ny);
-    nx /= l;
-    ny /= l;
-
-    inner = mx * nx + my * nx;
-    outer = mx * ny - my * nx;
-
-    q = acos(inner);
-    if (outer < 0)//外積値が負なら
-    {
-        q = -q;//負号反転
-    }
-    return q;    //　－π～＋π
 }
 
 
