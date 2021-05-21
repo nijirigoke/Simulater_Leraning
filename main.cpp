@@ -45,6 +45,8 @@ public:
     int check_cross_others(POSITION p);
 
     int SearchRobot(POSITION p, double range);
+
+    int stack =0;
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
@@ -84,7 +86,7 @@ void ROBO::turn(double q) {
 }
 
 void ROBO::action() {
-    nearrobotsensor();
+//    nearrobotsensor();
     int tCenter = 0, tRight = 0, tLeft = 0;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値

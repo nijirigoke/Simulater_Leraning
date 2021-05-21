@@ -57,19 +57,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\T118029a\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\T118029a\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\nijir\CLionProjects\Simulater_Leraning
+CMAKE_SOURCE_DIR = C:\Users\T118029a\CLionProjects\Simulater_Leraning
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\T118029a\CLionProjects\Simulater_Leraning\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -77,7 +77,7 @@ CMAKE_BINARY_DIR = C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-d
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	C:\Users\T118029a\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -88,7 +88,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	C:\Users\nijir\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	C:\Users\T118029a\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -98,9 +98,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\T118029a\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles C:\Users\T118029a\CLionProjects\Simulater_Leraning\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\nijir\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\T118029a\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -141,19 +141,6 @@ Simulater_Leraning/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/build
 .PHONY : Simulater_Leraning/fast
 
-#=============================================================================
-# Target rules for targets named pachinko.cpp
-
-# Build rule for target.
-pachinko.cpp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 pachinko.cpp
-.PHONY : pachinko.cpp
-
-# fast build rule for target.
-pachinko.cpp/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/build
-.PHONY : pachinko.cpp/fast
-
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -181,33 +168,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-pachinko.obj: pachinko.cpp.obj
-
-.PHONY : pachinko.obj
-
-# target to build an object file
-pachinko.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/pachinko.cpp.obj
-.PHONY : pachinko.cpp.obj
-
-pachinko.i: pachinko.cpp.i
-
-.PHONY : pachinko.i
-
-# target to preprocess a source file
-pachinko.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/pachinko.cpp.i
-.PHONY : pachinko.cpp.i
-
-pachinko.s: pachinko.cpp.s
-
-.PHONY : pachinko.s
-
-# target to generate assembly for a file
-pachinko.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\pachinko.cpp.dir\build.make CMakeFiles/pachinko.cpp.dir/pachinko.cpp.s
-.PHONY : pachinko.cpp.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -217,13 +177,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
-	@echo ... pachinko.cpp
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... pachinko.obj
-	@echo ... pachinko.i
-	@echo ... pachinko.s
 .PHONY : help
 
 
