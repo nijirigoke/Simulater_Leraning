@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Jun/CLionProjects/Simulater_Leraning
+# Install script for directory: C:/Users/T118029b/CLionProjects/Simulater_Leraning
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/Jun/scoop/apps/msys2/2021-04-19/mingw64/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Jun/CLionProjects/Simulater_Leraning/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

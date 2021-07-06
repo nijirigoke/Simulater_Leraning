@@ -17,7 +17,7 @@
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  15   //ロボット台数　10台
+#define ROBOS  100   //ロボット台数　10台
 #define NSENSORRANGE 100    //センサーの検出距離（絶対距離）
 
 typedef struct ROBO {
@@ -46,7 +46,7 @@ public:
 
     int SearchRobot(POSITION p, double range);
 
-    int stack =0;
+    int stack = 0;
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
@@ -58,7 +58,7 @@ void Initialize();
 void wall_draw() {
 
     glBegin(GL_LINES);
-    for (int i = 0; i < WALLS; i++) {
+    for (int i = 0; i < CIRCLEDIV; i++) {
         glVertex2d(pin[wall[i].p1].x, pin[wall[i].p1].y);
         glVertex2d(pin[wall[i].p2].x, pin[wall[i].p2].y);
     }
@@ -112,8 +112,8 @@ void ROBO::action() {
             stack = 0;
         }
     } else {
-        turn(0.4 * PI);
-        forward(1);
+//        turn(0.4 * PI);
+//        forward(1);
         stack = 0;
     }
 }
@@ -158,7 +158,6 @@ void ROBO::init() {
 }
 
 void ROBO::draw() {
-
     glPushMatrix(); //現在の座標系の保存
 
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
@@ -213,7 +212,7 @@ int ROBO::touchsensor(int i)
 
 int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
 
-    for (int i = 0; i < WALLS; i++) {
+    for (int i = 0; i < CIRCLEDIV; i++) {
         double Wp1x, Wp1y, Wp2x, Wp2y; //線分の両端点
         double Bvx, Bvy;               //線分への垂線の方向ベクトル
         double Bx, By, R;              //球体の位置, 半径
@@ -280,6 +279,24 @@ int ROBO::check_cross_others(POSITION p) {
 
 
 int main(int argc, char *argv[]) {
+    for (int i = 0; i < CIRCLEDIV; i++) {
+        pin[i] = {250 * sin(2*PI * (double) i / (double) CIRCLEDIV),
+                  250 * cos(2*PI * (double) i / (double) CIRCLEDIV)};
+
+//        printf("%f\n%f\n",pin[i].x,pin[i].y);
+//        printf("-------------------------\n");
+        wall[i] = {i + 0, i + 1};
+
+        if(i==CIRCLEDIV-1){
+            wall[i]={i,0};
+        }
+        printf("%d\n%d\n",wall[i].p1,wall[i].p2);
+        printf("-------------------------\n");
+
+    }
+//    pin[CIRCLEDIV-1] = {0,0};
+//    wall[CIRCLEDIV] = {CIRCLEDIV, 0};
+
     Initialize();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);

@@ -57,19 +57,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\T118029b\scoop\apps\clion\2021.1.2-211.7442.42\IDE\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\T118029b\scoop\apps\clion\2021.1.2-211.7442.42\IDE\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Jun\CLionProjects\Simulater_Leraning
+CMAKE_SOURCE_DIR = C:\Users\T118029b\CLionProjects\Simulater_Leraning
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -77,7 +77,7 @@ CMAKE_BINARY_DIR = C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-deb
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	C:\Users\T118029b\scoop\apps\clion\2021.1.2-211.7442.42\IDE\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -88,7 +88,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	C:\Users\T118029b\scoop\apps\clion\2021.1.2-211.7442.42\IDE\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -98,9 +98,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -141,6 +141,19 @@ Simulater_Leraning/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/build
 .PHONY : Simulater_Leraning/fast
 
+#=============================================================================
+# Target rules for targets named test
+
+# Build rule for target.
+test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test
+.PHONY : test
+
+# fast build rule for target.
+test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/build
+.PHONY : test/fast
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -168,6 +181,33 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+test.obj: test.cpp.obj
+
+.PHONY : test.obj
+
+# target to build an object file
+test.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.obj
+.PHONY : test.cpp.obj
+
+test.i: test.cpp.i
+
+.PHONY : test.i
+
+# target to preprocess a source file
+test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.i
+.PHONY : test.cpp.i
+
+test.s: test.cpp.s
+
+.PHONY : test.s
+
+# target to generate assembly for a file
+test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.s
+.PHONY : test.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -177,9 +217,13 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
+	@echo ... test
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... test.obj
+	@echo ... test.i
+	@echo ... test.s
 .PHONY : help
 
 
