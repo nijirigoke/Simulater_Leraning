@@ -2,6 +2,8 @@
 // Created by T118029 on 2021/03/15.
 //
 
+//todo 目標 通信の実装。通信の可視化。センサレンジの可視化。通信波及の可視化。
+
 #include <GL/glut.h>
 #include <iostream>
 //#include "simbase.h"
@@ -14,6 +16,8 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
+#define RANGE 30 //通信レンジ の半径
+
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
@@ -277,6 +281,39 @@ int ROBO::check_cross_others(POSITION p) {
     }
     return 0;
 }
+
+double ROBO:: nearrobotsensor(){
+    double l;
+    double distance_x;
+    double distance_y;
+
+    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
+    for (int i = 0; i < ROBOS; ++i) {
+
+        //他のロボットのちゃん座標
+        double another_robo_x = robo[i].x;
+        double another_robo_y = robo[i].y;
+
+
+        distance_x = another_robo_x - x;
+        distance_y = another_robo_y - y;
+
+        l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+
+        if (l < robo[i].r) {
+            return 1;
+        }
+    }
+
+}
+
+int SearchRobot(POSITION p, double range){
+
+
+
+    return 0;
+}
+
 
 
 int main(int argc, char *argv[]) {
