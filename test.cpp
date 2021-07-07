@@ -93,7 +93,7 @@ void ROBO::action() {
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
 
-    if (stack < 10) {
+    if (stack < 25) {
         if (tLeft == 1)        //左チセンサ反応あり
         {
             turn(RIGHT_TURN);
@@ -112,7 +112,7 @@ void ROBO::action() {
             stack = 0;
         }
     } else {
-//        turn(0.4 * PI);
+        turn(0.4 * PI);
 //        forward(1);
         stack = 0;
     }
@@ -144,8 +144,9 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 
 void ROBO::init() {
     dir = rand() * 360.0;
-    x = rand() / 250;
-    y = rand() / 250;
+    x = (rand() % 400)-200;
+    y = (rand() % 400)-200;
+
 //    x =  250;
 //    y =  250;
     r = 10;
