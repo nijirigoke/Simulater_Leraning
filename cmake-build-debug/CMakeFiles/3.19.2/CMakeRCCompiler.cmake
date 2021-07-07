@@ -1,4 +1,4 @@
-set(CMAKE_RC_COMPILER "C:/Users/nijir/scoop/apps/msys2/2021-02-28/mingw64/bin/windres.exe")
+set(CMAKE_RC_COMPILER "C:/Users/Jun/scoop/apps/msys2/2021-04-19/mingw64/bin/windres.exe")
 set(CMAKE_RC_COMPILER_ARG1 "")
 set(CMAKE_RC_COMPILER_LOADED 1)
 set(CMAKE_RC_SOURCE_FILE_EXTENSIONS rc;RC)
