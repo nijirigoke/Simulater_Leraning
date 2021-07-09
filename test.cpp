@@ -11,24 +11,27 @@
 #include <random>
 
 //pull request test
-#define RED 0
 
 #define LEFT   0
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 50 //通信レンジ の半径
-
+#define RANGE 80 //通信レンジ の半径
+#define TEST 10
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  3   //ロボット台数　10台
-#define NSENSORRANGE 100    //センサーの検出距離（絶対距離）
+#define ROBOS  40   //ロボット台数　10台
+
+std::random_device rnd;     // 非決定的な乱数生成器
+std::mt19937 mt(rnd());
 
 typedef struct ROBO {
     double r{};
     double x{}, y{};
     double dir{};
+    int receive_flag{};
+    int sens_flag{};
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
     void draw();
@@ -43,11 +46,11 @@ public:
 
     int touchsensor(int i);
 
-    double nearrobotsensor();
+    double nearrobotsensor() const;
 
-    int check_cross_wall(POSITION p1, POSITION p2);
+    static int check_cross_wall(POSITION p1, POSITION p2);
 
-    int check_cross_others(POSITION p);
+    static int check_cross_others(POSITION p);
 
 //    int SearchRobot(POSITION p, double range);
 
@@ -92,11 +95,18 @@ void ROBO::turn(double q) {
 
 void ROBO::action() {
 //    nearrobotsensor();
-    int tCenter = 0, tRight = 0, tLeft = 0;
+
+    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
+    int tCenter, tRight, tLeft;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
+
+    if (receive_flag == 1) nearrobotsensor();//発信者になるかどうか
+
+//    if(distr(mt)==TEST) receive_flag=mt()%2;
+    if (distr(mt) == TEST) receive_flag = 0;
 
     if (stack < 25) {
         if (tLeft == 1)        //左チセンサ反応あり
@@ -146,13 +156,12 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 }
 
 void ROBO::init() {
-    std::random_device rnd;     // 非決定的な乱数生成器
-    std::mt19937 mt(rnd());
+
     std::uniform_int_distribution<int> distr(-200, 200);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
 
     dir = dir_gen(mt);
-    printf("%f", dir);
+//    printf("%f", dir);
     x = distr(mt);
     y = distr(mt);
 
@@ -173,7 +182,10 @@ void ROBO::draw() {
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
+    if (receive_flag == 1) glColor3d(1.0, 0.0, 0.0);
+
     draw_circle(0, 0, RANGE); //通信範囲の描画
+    glColor3d(1.0, 1.0, 1.0);
 
     glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
@@ -267,7 +279,7 @@ int ROBO::check_cross_others(POSITION p) {
     double sensor_y;
 // 各ロボの座標 for:
 // 自他の区別 ？？？
-// 区別したらそいつとの距離を産出ること
+// 区別したらそいつとの距離を産出すること
     sensor_x = p.x;
     sensor_y = p.y;
     for (auto &i : robo) {
@@ -288,7 +300,7 @@ int ROBO::check_cross_others(POSITION p) {
     return 0;
 }
 
-double ROBO::nearrobotsensor() {
+double ROBO::nearrobotsensor() const {
     double l;
     double distance_x;
     double distance_y;
@@ -307,7 +319,8 @@ double ROBO::nearrobotsensor() {
         l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
 
         if (l < RANGE) {
-            return 1;
+//            printf("%f\n::%d",l,RANGE);
+            i.receive_flag = 1;
         }
     }
 
@@ -326,8 +339,9 @@ int main(int argc, char *argv[]) {
         pin[i] = {250 * sin(2 * PI * (double) i / (double) CIRCLEDIV),
                   250 * cos(2 * PI * (double) i / (double) CIRCLEDIV)};
 
-        printf("%f\n%f\n", pin[i].x, pin[i].y);
-        printf("-------------------------\n");
+        // debug
+//        printf("%f\n%f\n", pin[i].x, pin[i].y);
+//        printf("-------------------------\n");
         wall[i] = {i + 0, i + 1};
 
         if (i == CIRCLEDIV - 1) wall[i] = {i, 0};
@@ -335,10 +349,13 @@ int main(int argc, char *argv[]) {
 //        printf("-------------------------\n");
 
     }
+    // debug
 //    pin[CIRCLEDIV-1] = {0,0};
 //    wall[CIRCLEDIV] = {CIRCLEDIV, 0};
 
     Initialize();
+    robo[0].receive_flag = 1;
+    robo[0].sens_flag = 1;
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(510, 510);
