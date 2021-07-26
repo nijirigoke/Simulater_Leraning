@@ -57,10 +57,10 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7628.27\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7628.27\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -77,7 +77,7 @@ CMAKE_BINARY_DIR = C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-deb
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7628.27\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -88,7 +88,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	C:\Users\Jun\scoop\apps\JetBrains-Toolbox-RC\current\apps\CLion\ch-0\211.7628.27\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -154,6 +154,19 @@ test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
+#=============================================================================
+# Target rules for targets named time
+
+# Build rule for target.
+time: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 time
+.PHONY : time
+
+# fast build rule for target.
+time/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/build
+.PHONY : time/fast
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -208,6 +221,33 @@ test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.s
 .PHONY : test.cpp.s
 
+testtime.obj: testtime.cpp.obj
+
+.PHONY : testtime.obj
+
+# target to build an object file
+testtime.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/testtime.cpp.obj
+.PHONY : testtime.cpp.obj
+
+testtime.i: testtime.cpp.i
+
+.PHONY : testtime.i
+
+# target to preprocess a source file
+testtime.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/testtime.cpp.i
+.PHONY : testtime.cpp.i
+
+testtime.s: testtime.cpp.s
+
+.PHONY : testtime.s
+
+# target to generate assembly for a file
+testtime.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/testtime.cpp.s
+.PHONY : testtime.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -218,12 +258,16 @@ help:
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
 	@echo ... test
+	@echo ... time
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
 	@echo ... test.obj
 	@echo ... test.i
 	@echo ... test.s
+	@echo ... testtime.obj
+	@echo ... testtime.i
+	@echo ... testtime.s
 .PHONY : help
 
 

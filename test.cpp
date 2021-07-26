@@ -9,6 +9,7 @@
 //#include "simbase.h"
 #include "workspace.h"
 #include <random>
+#include <chrono>
 
 //pull request test
 
@@ -17,11 +18,12 @@
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
 #define RANGE 80 //通信レンジ の半径
+#define SENS_RANGE 150 //通信レンジ の半径
 #define TEST 10
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  40   //ロボット台数　10台
+#define ROBOS  10  //ロボット台数　10台
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -55,6 +57,12 @@ public:
 //    int SearchRobot(POSITION p, double range);
 
     int stack = 0;
+
+    void senser_action();
+
+    void flash_action();
+
+    double sens_nearrobotsensor() const;
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
@@ -103,10 +111,11 @@ void ROBO::action() {
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
 
-    if (receive_flag == 1) nearrobotsensor();//発信者になるかどうか
+    if (sens_flag == 1) {
+        sens_nearrobotsensor();//発信者になるかどうか
+        return;
+    }
 
-//    if(distr(mt)==TEST) receive_flag=mt()%2;
-    if (distr(mt) == TEST) receive_flag = 0;
 
     if (stack < 25) {
         if (tLeft == 1)        //左チセンサ反応あり
@@ -131,12 +140,22 @@ void ROBO::action() {
 //        forward(1);
         stack = 0;
     }
+
+//    if(distr(mt)==TEST) receive_flag=mt()%2;
+//    if (distr(mt) == TEST) receive_flag = 0;
+}
+
+void ROBO::flash_action() {
+//    nearrobotsensor();
+
+    nearrobotsensor();//発信者になるかどうか
+
 }
 
 
 void idle() {
-    if (fStart == 0)
-        return;
+    if (fStart == 0) return;
+
     for (auto &i : robo) i.action();
     Sleep(1 * 5);
     display();
@@ -160,14 +179,19 @@ void ROBO::init() {
     std::uniform_int_distribution<int> distr(-200, 200);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
 
-    dir = dir_gen(mt);
+    if (sens_flag == 1) {
+        dir = dir_gen(mt);
 //    printf("%f", dir);
-    x = distr(mt);
-    y = distr(mt);
-
-//    x =  250;
-//    y =  250;
-    r = 10;
+        x = 0;
+        y = 0;
+        r = 10;
+    } else {
+        dir = dir_gen(mt);
+//    printf("%f", dir);
+        x = distr(mt);
+        y = distr(mt);
+        r = 10;
+    }
     tsensor[CENTER].x = TRANGE * r; //タッチセンサーのレンジ（棒の長さ）
     tsensor[CENTER].y = 0;
     tsensor[LEFT].x = TRANGE * r * cos(60.0 / 180.0 * PI); //正面が０度なので、左は６０度
@@ -178,14 +202,18 @@ void ROBO::init() {
 
 void ROBO::draw() {
     glPushMatrix(); //現在の座標系の保存
-
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
+    if (receive_flag == 1) glColor3d(1.0, 1.0, 0.0);
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-    if (receive_flag == 1) glColor3d(1.0, 0.0, 0.0);
-
-    draw_circle(0, 0, RANGE); //通信範囲の描画
     glColor3d(1.0, 1.0, 1.0);
+    if (sens_flag == 1) {
+        draw_circle(0, 0, SENS_RANGE); //通信範囲の描画
+
+    } else {
+        draw_circle(0, 0, RANGE); //通信範囲の描画
+
+    }
 
     glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
@@ -198,7 +226,6 @@ void ROBO::draw() {
 
     glPopMatrix(); //保存ておいた座標系へ戻す
 }
-
 
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
 int ROBO::touchsensor(int i)
@@ -312,25 +339,39 @@ double ROBO::nearrobotsensor() const {
         double another_robo_x = i.x;
         double another_robo_y = i.y;
 
-
         distance_x = another_robo_x - x;
         distance_y = another_robo_y - y;
 
         l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
-
         if (l < RANGE) {
 //            printf("%f\n::%d",l,RANGE);
             i.receive_flag = 1;
         }
     }
-
 }
 
-//int SearchRobot(POSITION p, double range) {
-//
-//
-//    return 0;
-//}
+double ROBO::sens_nearrobotsensor() const {
+    double l;
+    double distance_x;
+    double distance_y;
+
+    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
+    for (auto &i : robo) {
+
+        //他のロボットのちゃん座標
+        double another_robo_x = i.x;
+        double another_robo_y = i.y;
+
+        distance_x = another_robo_x - x;
+        distance_y = another_robo_y - y;
+
+        l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+        if (l < SENS_RANGE) {
+//            printf("%f\n::%d",l,RANGE);
+            i.receive_flag = 1;
+        }
+    }
+}
 
 
 int main(int argc, char *argv[]) {
@@ -350,8 +391,6 @@ int main(int argc, char *argv[]) {
 
     }
     // debug
-//    pin[CIRCLEDIV-1] = {0,0};
-//    wall[CIRCLEDIV] = {CIRCLEDIV, 0};
 
     Initialize();
     robo[0].receive_flag = 1;
