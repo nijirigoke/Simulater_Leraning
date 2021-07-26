@@ -10,6 +10,9 @@
 #include "workspace.h"
 #include <random>
 #include <chrono>
+#include <iostream>
+#include <thread>
+#include <functional>
 
 //pull request test
 
@@ -23,10 +26,11 @@
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  10  //ロボット台数　10台
+#define ROBOS  30  //ロボット台数　10台
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
+
 
 typedef struct ROBO {
     double r{};
@@ -57,6 +61,8 @@ public:
 //    int SearchRobot(POSITION p, double range);
 
     int stack = 0;
+
+    int flash_memori = 0;
 
     void senser_action();
 
@@ -104,6 +110,7 @@ void ROBO::turn(double q) {
 void ROBO::action() {
 //    nearrobotsensor();
 
+
     std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
     int tCenter, tRight, tLeft;
 
@@ -112,7 +119,13 @@ void ROBO::action() {
     tLeft = touchsensor(LEFT);        //左センサーの値
 
     if (sens_flag == 1) {
-        sens_nearrobotsensor();//発信者になるかどうか
+//        std::cout << flash_memori << std::endl;
+        if (flash_memori >= 100) {
+            sens_nearrobotsensor();
+            flash_memori = 0;
+        }
+        flash_memori++;
+
         return;
     }
 
@@ -137,12 +150,18 @@ void ROBO::action() {
         }
     } else {
         turn(0.4 * PI);
-//        forward(1);
         stack = 0;
     }
 
-//    if(distr(mt)==TEST) receive_flag=mt()%2;
-//    if (distr(mt) == TEST) receive_flag = 0;
+    if (flash_memori >= 500) {
+        flash_memori = 0;
+        receive_flag = 0;
+    }
+//std::cout << flash_memori << std::endl;
+//std::cout << receive_flag << std::endl;
+    flash_memori++;
+
+
 }
 
 void ROBO::flash_action() {
@@ -155,7 +174,6 @@ void ROBO::flash_action() {
 
 void idle() {
     if (fStart == 0) return;
-
     for (auto &i : robo) i.action();
     Sleep(1 * 5);
     display();
@@ -354,8 +372,11 @@ double ROBO::sens_nearrobotsensor() const {
     double l;
     double distance_x;
     double distance_y;
-
+    std::chrono::system_clock::time_point start, end; // 型は auto で可
+    end = std::chrono::system_clock::now();  // 計測終了時間
+    start = std::chrono::system_clock::now(); // 計測開始時間
     //自身の座標から一定レンジを探索？ 計算量ちゃん…。
+
     for (auto &i : robo) {
 
         //他のロボットのちゃん座標
@@ -390,7 +411,6 @@ int main(int argc, char *argv[]) {
 //        printf("-------------------------\n");
 
     }
-    // debug
 
     Initialize();
     robo[0].receive_flag = 1;

@@ -1,16 +1,24 @@
-#include <chrono>
 #include <iostream>
 #include <thread>
+#include <chrono>
 
-int main() {
-    int i = 0;
-    for (;;) {
-        if (i == 10) {
-            std::cout << i << std::endl;
-            i = 0;
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        i++;
-    }
+using namespace std;
+
+
+int main(void) {
+    Timer tHello;
+    tHello.start(chrono::milliseconds(1000),
+
+                 {
+                         cout << "Hello!" << endl;
+                 });
+
+    thread th([&]() {
+        this_thread::sleep_for(chrono::seconds(2));
+        tHello.stop();
+    });
+
+    th.join();
+
     return 0;
 }
