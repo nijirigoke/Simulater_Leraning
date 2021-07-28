@@ -21,12 +21,12 @@
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
 #define RANGE 80 //通信レンジ の半径
-#define SENS_RANGE 150 //通信レンジ の半径
+#define SENS_RANGE 100 //通信レンジ の半径
 #define TEST 10
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  30  //ロボット台数　10台
+#define ROBOS  100  //ロボット台数　10台
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -129,6 +129,10 @@ void ROBO::action() {
         return;
     }
 
+    if (receive_flag == 1 && flash_memori <= 249) {
+        nearrobotsensor();
+    }
+
 
     if (stack < 25) {
         if (tLeft == 1)        //左チセンサ反応あり
@@ -153,7 +157,7 @@ void ROBO::action() {
         stack = 0;
     }
 
-    if (flash_memori >= 500) {
+    if (flash_memori >= 250) {
         flash_memori = 0;
         receive_flag = 0;
     }
@@ -222,7 +226,11 @@ void ROBO::draw() {
     glPushMatrix(); //現在の座標系の保存
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
-    if (receive_flag == 1) glColor3d(1.0, 1.0, 0.0);
+
+    if (receive_flag == 1) {
+        glColor3d(1.0, 1.0, 0.0);
+        draw_robo_circle(0, 0, r);
+    }
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
     glColor3d(0.5, 0.5, 0.5);
 
@@ -234,7 +242,6 @@ void ROBO::draw() {
 
     }
     glColor3d(1.0, 1.0, 1.0);
-
     glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
     glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);

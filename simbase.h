@@ -67,6 +67,18 @@ void draw_circle(double x, double y, double r) //円図形の描画(座標p, 半
     glPopMatrix();
 }
 
+void draw_robo_circle(double x, double y, double r) //円図形の描画(座標p, 半径r)
+{
+    int i;
+    glPushMatrix();
+    glTranslated(x, y, 0);
+    glBegin(GL_POLYGON);
+    for (i = 0; i < CIRCLEDIV; i++)
+        glVertex2d(circlepos[i].x * r, circlepos[i].y * r);
+    glEnd();
+    glPopMatrix();
+}
+
 void resize(int w, int h) {
     glViewport(0, 0, w, h);
     glLoadIdentity();
