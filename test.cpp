@@ -224,7 +224,8 @@ void ROBO::draw() {
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
     if (receive_flag == 1) glColor3d(1.0, 1.0, 0.0);
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-    glColor3d(1.0, 1.0, 1.0);
+    glColor3d(0.5, 0.5, 0.5);
+
     if (sens_flag == 1) {
         draw_circle(0, 0, SENS_RANGE); //通信範囲の描画
 
@@ -232,6 +233,7 @@ void ROBO::draw() {
         draw_circle(0, 0, RANGE); //通信範囲の描画
 
     }
+    glColor3d(1.0, 1.0, 1.0);
 
     glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
