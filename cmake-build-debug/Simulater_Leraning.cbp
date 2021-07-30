@@ -81,6 +81,50 @@
 					<DistClean command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="test2">
+				<Option output="C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/test2.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include/c++/10.3.0"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include/c++/10.3.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include/c++/10.3.0/backward"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include-fixed"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 test2"/>
+					<CompileFile command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test2/fast">
+				<Option output="C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/test2.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include/c++/10.3.0"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include/c++/10.3.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include/c++/10.3.0/backward"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include-fixed"/>
+					<Add directory="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 test2/fast"/>
+					<CompileFile command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="test">
 				<Option output="C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug/test.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/T118029b/CLionProjects/Simulater_Leraning/cmake-build-debug"/>
@@ -178,6 +222,9 @@
 		</Unit>
 		<Unit filename="C:/Users/T118029b/CLionProjects/Simulater_Leraning/test.cpp">
 			<Option target="test"/>
+		</Unit>
+		<Unit filename="C:/Users/T118029b/CLionProjects/Simulater_Leraning/test2.cpp">
+			<Option target="test2"/>
 		</Unit>
 		<Unit filename="C:/Users/T118029b/CLionProjects/Simulater_Leraning/testtime.cpp">
 			<Option target="time"/>

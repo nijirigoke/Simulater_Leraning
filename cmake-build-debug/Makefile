@@ -142,6 +142,19 @@ Simulater_Leraning/fast:
 .PHONY : Simulater_Leraning/fast
 
 #=============================================================================
+# Target rules for targets named test2
+
+# Build rule for target.
+test2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test2
+.PHONY : test2
+
+# fast build rule for target.
+test2/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/build
+.PHONY : test2/fast
+
+#=============================================================================
 # Target rules for targets named test
 
 # Build rule for target.
@@ -221,6 +234,33 @@ test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.s
 .PHONY : test.cpp.s
 
+test2.obj: test2.cpp.obj
+
+.PHONY : test2.obj
+
+# target to build an object file
+test2.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/test2.cpp.obj
+.PHONY : test2.cpp.obj
+
+test2.i: test2.cpp.i
+
+.PHONY : test2.i
+
+# target to preprocess a source file
+test2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/test2.cpp.i
+.PHONY : test2.cpp.i
+
+test2.s: test2.cpp.s
+
+.PHONY : test2.s
+
+# target to generate assembly for a file
+test2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/test2.cpp.s
+.PHONY : test2.cpp.s
+
 testtime.obj: testtime.cpp.obj
 
 .PHONY : testtime.obj
@@ -258,6 +298,7 @@ help:
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
 	@echo ... test
+	@echo ... test2
 	@echo ... time
 	@echo ... main.obj
 	@echo ... main.i
@@ -265,6 +306,9 @@ help:
 	@echo ... test.obj
 	@echo ... test.i
 	@echo ... test.s
+	@echo ... test2.obj
+	@echo ... test2.i
+	@echo ... test2.s
 	@echo ... testtime.obj
 	@echo ... testtime.i
 	@echo ... testtime.s
