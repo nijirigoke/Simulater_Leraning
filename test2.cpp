@@ -28,7 +28,7 @@
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  100  //ロボット台数　10台
+#define ROBOS  50  //ロボット台数　10台
 
 using namespace std;
 std::random_device rnd;     // 非決定的な乱数生成器
@@ -45,6 +45,8 @@ typedef struct ROBO {
 public:
     vector<double> line_memory_x;
     vector<double> line_memory_y;
+
+    void line_draw();
 
     void draw();
 
@@ -93,12 +95,31 @@ void wall_draw() {
     glEnd();
 }
 
+
+void ROBO::line_draw() {
+
+    glBegin(GL_LINE_STRIP);
+    glColor3d(0.5, 0.5, 0.5);
+
+//    std::cout<<line_memory_x.size()<<endl;
+    for (int i = 0; i < line_memory_x.size(); i++) {
+//        cout<<line_memory_x[i]<<endl;
+        glVertex2d(line_memory_x[i], line_memory_y[i]);
+    }
+//           glVertex2d(line_memory_x[1], line_memory_y[1]);
+//      glVertex2d(line_memory_x[0], line_memory_y[0]);
+
+    glEnd();
+
+}
+
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     graphics();
     wall_draw();
     for (auto &i : robo) {
         i.draw();
+//        i.line_draw();
     }
 
     glutSwapBuffers();
@@ -195,7 +216,9 @@ void ROBO::flash_action() {
 
 void idle() {
     if (fStart == 0) return;
-    for (auto &i : robo) i.action();
+    for (auto &i : robo) {
+        i.action();
+    }
     Sleep(1 * 1);
     display();
 }
@@ -217,6 +240,8 @@ void ROBO::init() {
 
     std::uniform_int_distribution<int> distr(-200, 200);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
+    line_memory_x.clear();//vecter の　中身を削除
+    line_memory_y.clear();
 
     if (sens_flag == 1) {
         dir = dir_gen(mt);
@@ -250,13 +275,13 @@ void ROBO::draw() {
 //    }
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
     glColor3d(0.5, 0.5, 0.5);
-
     if (sens_flag == 1) {
         draw_circle(0, 0, SENS_RANGE); //通信範囲の描画
 
     } else {
         draw_circle(0, 0, RANGE); //通信範囲の描画
     }
+
     glColor3d(1.0, 1.0, 1.0);
     glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
@@ -266,8 +291,10 @@ void ROBO::draw() {
     glVertex2d(0, 0); //右センサーの描画
     glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
     glEnd();
-
     glPopMatrix(); //保存ておいた座標系へ戻す
+    line_draw();
+    glColor3d(1, 1, 1);
+
 }
 
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
@@ -447,7 +474,10 @@ int main(int argc, char *argv[]) {
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
+
+//    glutMouseFunc(line_draw);
     glutMouseFunc(mouse); //マウスのボタンを検出
+
     glutMainLoop();
 
 
