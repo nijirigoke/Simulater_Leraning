@@ -20,8 +20,8 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 80 //通信レンジ の半径
-#define SENS_RANGE 100 //通信レンジ の半径
+#define RANGE 50 //通信レンジ の半径
+#define SENS_RANGE 50 //通信レンジ の半径
 #define TEST 10
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
@@ -110,6 +110,7 @@ void ROBO::turn(double q) {
 void ROBO::action() {
 //    nearrobotsensor();
 
+    int test = 20;
 
     std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
     int tCenter, tRight, tLeft;
@@ -119,22 +120,25 @@ void ROBO::action() {
     tLeft = touchsensor(LEFT);        //左センサーの値
 
     if (sens_flag == 1) {
-//        std::cout << flash_memori << std::endl;
-        if (flash_memori >= 100) {
+        std::cout << "flash::" << flash_memori << std::endl;
+        if (flash_memori >= test - 4) {
             sens_nearrobotsensor();
-            flash_memori = 0;
         }
-        flash_memori++;
+//        flash_memori++;
 
-        return;
     }
 
-    if (receive_flag == 1 && flash_memori <= 249) {
+    if (sens_flag == 0 && receive_flag == 1 && flash_memori < test) {
+        std::cout << flash_memori << std::endl;
         nearrobotsensor();
     }
+    if (flash_memori > test) {
+        flash_memori = 0;
+        receive_flag = 0;
+    }
 
 
-    if (stack < 25) {
+    if (stack < 25 && sens_flag == 0) {
         if (tLeft == 1)        //左チセンサ反応あり
         {
             turn(RIGHT_TURN);
@@ -157,10 +161,7 @@ void ROBO::action() {
         stack = 0;
     }
 
-    if (flash_memori >= 250) {
-        flash_memori = 0;
-        receive_flag = 0;
-    }
+
 //std::cout << flash_memori << std::endl;
 //std::cout << receive_flag << std::endl;
     flash_memori++;
@@ -179,7 +180,7 @@ void ROBO::flash_action() {
 void idle() {
     if (fStart == 0) return;
     for (auto &i : robo) i.action();
-    Sleep(1 * 5);
+    Sleep(1 * 100);
     display();
 }
 

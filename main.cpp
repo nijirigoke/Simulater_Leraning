@@ -125,7 +125,7 @@ void idle() {
     for (int i = 0; i < ROBOS; i++) {
         robo[i].action();
     }
-    Sleep(1 * 5);
+    Sleep(1 * 500);
     display();
 }
 
