@@ -7,7 +7,7 @@
 #include <GL/glut.h>
 #include <iostream>
 //#include "simbase.h"
-#include "workspace.h"
+#include "workspace_test.h"
 #include <random>
 #include <chrono>
 #include <iostream>
@@ -26,18 +26,33 @@
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  100  //ロボット台数　10台
+#define ROBOS  1000  //ロボット台数　10台
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
-
 
 typedef struct ROBO {
     double r{};
     double x{}, y{};
     double dir{};
+
+    //信号出力フラグ群
     int receive_flag{};
     int sens_flag{};
+
+    //反応拡散用パラメータ群
+    double activator = 0;
+    double inhibitor = 0;
+    double du = 0.08;
+    double dv = 0.48;
+    double Cu = 0.0001;
+    double Cv = 0.0000;
+    double a = 0.01;
+    double b = 0.011;
+    double c = 0.008;
+    double d = 0.009;
+
+
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
     void draw();
@@ -67,6 +82,8 @@ public:
     void senser_action();
 
     void flash_action();
+
+    void calculation_reaction_diffusion();
 
     double sens_nearrobotsensor() const;
 } ROBO;
@@ -120,7 +137,7 @@ void ROBO::action() {
     tLeft = touchsensor(LEFT);        //左センサーの値
 
     if (sens_flag == 1) {
-        std::cout << "flash::" << flash_memori << std::endl;
+//        std::cout << "flash::" << flash_memori << std::endl;
         if (flash_memori >= test - 4) {
             sens_nearrobotsensor();
         }
@@ -129,7 +146,7 @@ void ROBO::action() {
     }
 
     if (sens_flag == 0 && receive_flag == 1 && flash_memori < test) {
-        std::cout << flash_memori << std::endl;
+//        std::cout << flash_memori << std::endl;
         nearrobotsensor();
     }
     if (flash_memori > test) {
@@ -180,7 +197,7 @@ void ROBO::flash_action() {
 void idle() {
     if (fStart == 0) return;
     for (auto &i : robo) i.action();
-    Sleep(1 * 100);
+//    Sleep(1 * 100);
     display();
 }
 
@@ -199,8 +216,12 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 
 void ROBO::init() {
 
-    std::uniform_int_distribution<int> distr(-200, 200);    // 非決定的な乱数生成器
+    std::uniform_int_distribution<int> distr(-point, point);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
+    std::uniform_real_distribution<> rando(0.0, 1.0);
+
+    activator = rando(mt);
+    inhibitor = rando(mt);
 
     if (sens_flag == 1) {
         dir = dir_gen(mt);
@@ -228,10 +249,12 @@ void ROBO::draw() {
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
 
-    if (receive_flag == 1) {
-        glColor3d(1.0, 1.0, 0.0);
-        draw_robo_circle(0, 0, r);
-    }
+
+
+    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
+    draw_robo_circle(0, 0, r);
+
+
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
     glColor3d(0.5, 0.5, 0.5);
 
@@ -404,30 +427,34 @@ double ROBO::sens_nearrobotsensor() const {
     }
 }
 
+void ROBO::calculation_reaction_diffusion() {
+
+}
+
 
 int main(int argc, char *argv[]) {
 
-    for (int i = 0; i < CIRCLEDIV; i++) {
-        pin[i] = {250 * sin(2 * PI * (double) i / (double) CIRCLEDIV),
-                  250 * cos(2 * PI * (double) i / (double) CIRCLEDIV)};
-
-        // debug
-//        printf("%f\n%f\n", pin[i].x, pin[i].y);
-//        printf("-------------------------\n");
-        wall[i] = {i + 0, i + 1};
-
-        if (i == CIRCLEDIV - 1) wall[i] = {i, 0};
-//        printf("%d\n%d\n", wall[i].p1, wall[i].p2);
-//        printf("-------------------------\n");
-
-    }
+//    for (int i = 0; i < CIRCLEDIV; i++) {
+//        pin[i] = {250 * sin(2 * PI * (double) i / (double) CIRCLEDIV),
+//                  250 * cos(2 * PI * (double) i / (double) CIRCLEDIV)};
+//
+//        // debug
+////        printf("%f\n%f\n", pin[i].x, pin[i].y);
+////        printf("-------------------------\n");
+//        wall[i] = {i + 0, i + 1};
+//
+//        if (i == CIRCLEDIV - 1) wall[i] = {i, 0};
+////        printf("%d\n%d\n", wall[i].p1, wall[i].p2);
+////        printf("-------------------------\n");
+//
+//    }
 
     Initialize();
     robo[0].receive_flag = 1;
     robo[0].sens_flag = 1;
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-    glutInitWindowSize(510, 510);
+    glutInitWindowSize(point, point);
     glutCreateWindow(argv[0]);
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
