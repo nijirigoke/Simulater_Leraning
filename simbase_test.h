@@ -5,6 +5,9 @@
 #define PI        3.141592657
 #define CIRCLEDIV 24 //円図形　24角形
 
+int fStart = 0; //シミュレーションの開始フラグ
+int point = 500;
+
 typedef struct { //座標を表す構造体
     double x;
     double y;
@@ -29,7 +32,6 @@ void simstep();
 void TypeStr(int x, int y, char str[]);
 
 double WindowScale = 1; //画面の広角率（大きくなるほど広い範囲を描画）　１:１ピクセル→１　10:1ピクセル→10
-int fStart = 0; //シミュレーションの開始フラグ
 
 void TypeStr(int x, int y, char *str) //文字の表示
 {
@@ -39,6 +41,7 @@ void TypeStr(int x, int y, char *str) //文字の表示
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, (int) *str++);
 }
 
+
 POSITION circlepos[CIRCLEDIV]; //円図形データ
 //回転変換 点ｐをdir回転した座標を戻り値とする
 POSITION rotate(POSITION p, double dir) {
@@ -47,6 +50,7 @@ POSITION rotate(POSITION p, double dir) {
     P.y = p.x * sin(dir) + p.y * cos(dir);
     return P;
 }
+
 void make_circle() //円図形のデータ生成
 {
     int i;
@@ -83,11 +87,11 @@ void draw_robo_circle(double x, double y, double r) //円図形の描画(座標p
 void resize(int w, int h) {
     glViewport(0, 0, w, h);
     glLoadIdentity();
-    glOrtho(-255, 255, -255, 255, -1.0, 1.0);
+    glOrtho(-point, point, -point, point, -1.0, 1.0);
 }
 
 void graphics() //シミュレーション結果（状態）の表示
 {
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-    glutInitWindowSize(510, 510);
+    glutInitWindowSize(point, point);
 }
