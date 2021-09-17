@@ -2,6 +2,8 @@
 #include <math.h>
 #include <stdio.h>
 
+#define PINN  4
+#define WALLS 4
 #define PI        3.141592657
 #define CIRCLEDIV 24 //円図形　24角形
 
@@ -95,3 +97,22 @@ void graphics() //シミュレーション結果（状態）の表示
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(point, point);
 }
+
+
+typedef struct {
+    int p1;
+    int p2;
+
+} WALL;
+
+POSITION pin[PINN] = {{point,  point},
+                      {-point, point},
+                      {-point, -point},
+                      {point,  -point}};
+
+WALL wall[WALLS] = {{0, 1},
+                    {1, 2},
+                    {2, 3},
+                    {3, 0}};
+
+//POSITION DOTS
