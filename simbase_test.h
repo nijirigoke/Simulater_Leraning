@@ -2,6 +2,12 @@
 #include <math.h>
 #include <stdio.h>
 
+#define PI        3.141592657
+#define CIRCLEDIV 24 //円図形　24角形
+
+int fStart = 0; //シミュレーションの開始フラグ
+int point = 500;
+
 typedef struct { //座標を表す構造体
     double x;
     double y;
@@ -26,8 +32,6 @@ void simstep();
 void TypeStr(int x, int y, char str[]);
 
 double WindowScale = 1; //画面の広角率（大きくなるほど広い範囲を描画）　１:１ピクセル→１　10:1ピクセル→10
-int fStart = 0; //シミュレーションの開始フラグ
-int point = 1000;
 
 void TypeStr(int x, int y, char *str) //文字の表示
 {
@@ -37,8 +41,7 @@ void TypeStr(int x, int y, char *str) //文字の表示
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, (int) *str++);
 }
 
-#define PI        3.141592657
-#define CIRCLEDIV 24 //円図形　24角形
+
 POSITION circlepos[CIRCLEDIV]; //円図形データ
 //回転変換 点ｐをdir回転した座標を戻り値とする
 POSITION rotate(POSITION p, double dir) {

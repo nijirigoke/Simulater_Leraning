@@ -52,7 +52,7 @@ public:
 
     int touchsensor(int i);
 
-    double nearrobotsensor() const;
+    double nearrobotsensor();
 
     static int check_cross_wall(POSITION p1, POSITION p2);
 
@@ -68,7 +68,7 @@ public:
 
     void flash_action();
 
-    double sens_nearrobotsensor() const;
+    double sens_nearrobotsensor();
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
@@ -355,7 +355,7 @@ int ROBO::check_cross_others(POSITION p) {
     return 0;
 }
 
-double ROBO::nearrobotsensor() const {
+double ROBO::nearrobotsensor() {
     double l;
     double distance_x;
     double distance_y;
@@ -378,7 +378,7 @@ double ROBO::nearrobotsensor() const {
     }
 }
 
-double ROBO::sens_nearrobotsensor() const {
+double ROBO::sens_nearrobotsensor() {
     double l;
     double distance_x;
     double distance_y;

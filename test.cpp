@@ -1,3 +1,5 @@
+//#pragma GCC optimize("Ofast")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 //
 // Created by T118029 on 2021/03/15.
 //
@@ -20,13 +22,13 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 50 //通信レンジ の半径
-#define SENS_RANGE 50 //通信レンジ の半径
+#define RANGE 20 //通信レンジ の半径
+#define SENS_RANGE 20 //通信レンジ の半径
 #define TEST 10
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  1000  //ロボット台数　10台
+#define ROBOS  800 //ロボット台数　10台
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -67,7 +69,7 @@ public:
 
     int touchsensor(int i);
 
-    double nearrobotsensor() const;
+    double nearrobotsensor();
 
     static int check_cross_wall(POSITION p1, POSITION p2);
 
@@ -79,13 +81,11 @@ public:
 
     int flash_memori = 0;
 
-    void senser_action();
-
     void flash_action();
 
-    void calculation_reaction_diffusion();
+    double calculation_reaction_diffusion();
 
-    double sens_nearrobotsensor() const;
+    double sens_nearrobotsensor();
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
@@ -135,25 +135,7 @@ void ROBO::action() {
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
-
-    if (sens_flag == 1) {
-//        std::cout << "flash::" << flash_memori << std::endl;
-        if (flash_memori >= test - 4) {
-            sens_nearrobotsensor();
-        }
-//        flash_memori++;
-
-    }
-
-    if (sens_flag == 0 && receive_flag == 1 && flash_memori < test) {
-//        std::cout << flash_memori << std::endl;
-        nearrobotsensor();
-    }
-    if (flash_memori > test) {
-        flash_memori = 0;
-        receive_flag = 0;
-    }
-
+    nearrobotsensor();
 
     if (stack < 25 && sens_flag == 0) {
         if (tLeft == 1)        //左チセンサ反応あり
@@ -181,8 +163,6 @@ void ROBO::action() {
 
 //std::cout << flash_memori << std::endl;
 //std::cout << receive_flag << std::endl;
-    flash_memori++;
-
 
 }
 
@@ -223,19 +203,13 @@ void ROBO::init() {
     activator = rando(mt);
     inhibitor = rando(mt);
 
-    if (sens_flag == 1) {
-        dir = dir_gen(mt);
+
+    dir = dir_gen(mt);
 //    printf("%f", dir);
-        x = 0;
-        y = 0;
-        r = 10;
-    } else {
-        dir = dir_gen(mt);
-//    printf("%f", dir);
-        x = distr(mt);
-        y = distr(mt);
-        r = 10;
-    }
+    x = distr(mt);
+    y = distr(mt);
+    r = 10;
+
     tsensor[CENTER].x = TRANGE * r; //タッチセンサーのレンジ（棒の長さ）
     tsensor[CENTER].y = 0;
     tsensor[LEFT].x = TRANGE * r * cos(60.0 / 180.0 * PI); //正面が０度なので、左は６０度
@@ -250,21 +224,24 @@ void ROBO::draw() {
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
 
 
+    //
 
-    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
+    //
+    double dx = activator * a - inhibitor * b + Cu;
+    double dy = activator * c - inhibitor * d + Cv;
+
+    activator = inhibitor + dx;
+    activator = inhibitor + dy;
+
+    glColor3d(activator, inhibitor, activator - 0.5 * (activator + inhibitor));
     draw_robo_circle(0, 0, r);
-
 
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
     glColor3d(0.5, 0.5, 0.5);
 
-    if (sens_flag == 1) {
-        draw_circle(0, 0, SENS_RANGE); //通信範囲の描画
 
-    } else {
-        draw_circle(0, 0, RANGE); //通信範囲の描画
+    draw_circle(0, 0, RANGE); //通信範囲の描画
 
-    }
     glColor3d(1.0, 1.0, 1.0);
     glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
@@ -378,7 +355,7 @@ int ROBO::check_cross_others(POSITION p) {
     return 0;
 }
 
-double ROBO::nearrobotsensor() const {
+double ROBO::nearrobotsensor() {
     double l;
     double distance_x;
     double distance_y;
@@ -396,40 +373,34 @@ double ROBO::nearrobotsensor() const {
         l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
         if (l < RANGE) {
 //            printf("%f\n::%d",l,RANGE);
-            i.receive_flag = 1;
+//            i.receive_flag = 1;
+            double tx;
+            double ty;
+
+            tx = du * (activator - inhibitor);
+            ty = dv * (activator - inhibitor);
+            activator = activator - tx;
+            i.activator = i.activator + tx;
+            inhibitor = inhibitor - ty;
+            i.inhibitor = i.inhibitor + ty;
         }
     }
 }
 
-double ROBO::sens_nearrobotsensor() const {
-    double l;
-    double distance_x;
-    double distance_y;
-    std::chrono::system_clock::time_point start, end; // 型は auto で可
-    end = std::chrono::system_clock::now();  // 計測終了時間
-    start = std::chrono::system_clock::now(); // 計測開始時間
-    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
 
-    for (auto &i : robo) {
-
-        //他のロボットのちゃん座標
-        double another_robo_x = i.x;
-        double another_robo_y = i.y;
-
-        distance_x = another_robo_x - x;
-        distance_y = another_robo_y - y;
-
-        l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
-        if (l < SENS_RANGE) {
-//            printf("%f\n::%d",l,RANGE);
-            i.receive_flag = 1;
-        }
-    }
-}
-
-void ROBO::calculation_reaction_diffusion() {
-
-}
+//double ROBO::calculation_reaction_diffusion() {
+//
+//    double tx;
+//    double ty;
+//
+//    tx=du*(activator-inhibitor);
+//    ty=dv*(activator-inhibitor);
+//    activator = activator - tx;
+//    i.activator = i.activator + tx;
+//    inhibitor = inhibitor - ty;
+//    i.inhibitor = i.inhibitor + ty;
+//
+//}
 
 
 int main(int argc, char *argv[]) {
@@ -450,8 +421,6 @@ int main(int argc, char *argv[]) {
 //    }
 
     Initialize();
-    robo[0].receive_flag = 1;
-    robo[0].sens_flag = 1;
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(point, point);

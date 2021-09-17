@@ -9,8 +9,8 @@
 
 #include "simbase_test.h"
 
-#define PINN  8
-#define WALLS 8
+#define PINN  4
+#define WALLS 4
 
 
 typedef struct {

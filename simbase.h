@@ -2,6 +2,9 @@
 #include <math.h>
 #include <stdio.h>
 
+#define PI        3.141592657
+#define CIRCLEDIV 24 //円図形　24角形
+
 typedef struct { //座標を表す構造体
     double x;
     double y;
@@ -36,8 +39,6 @@ void TypeStr(int x, int y, char *str) //文字の表示
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, (int) *str++);
 }
 
-#define PI        3.141592657
-#define CIRCLEDIV 24 //円図形　24角形
 POSITION circlepos[CIRCLEDIV]; //円図形データ
 //回転変換 点ｐをdir回転した座標を戻り値とする
 POSITION rotate(POSITION p, double dir) {
