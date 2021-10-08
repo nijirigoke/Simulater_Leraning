@@ -215,6 +215,7 @@ void ROBO::init() {
         y = distr(mt);
         r = 10;
     }
+
     tsensor[CENTER].x = TRANGE * r; //タッチセンサーのレンジ（棒の長さ）
     tsensor[CENTER].y = 0;
     tsensor[LEFT].x = TRANGE * r * cos(60.0 / 180.0 * PI); //正面が０度なので、左は６０度

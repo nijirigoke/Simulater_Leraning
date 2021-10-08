@@ -12,21 +12,24 @@
 #include "simbase_test.h"
 //#include "workspace_test.h"
 #include <random>
-
+#include <vector>
 #define LEFT   0
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 40 //通信レンジ の半径
-#define SENS_RANGE 40 //通信レンジ の半径
+#define RANGE 20 //通信レンジ の半径
+#define SENS_RANGE 50 //通信レンジ の半径
 #define TEST 10
 
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  800 //ロボット台数　10台
+#define ROBOS  1000 //ロボット台数　10台
 
+int glidline=2*point/RANGE;
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
+std::vector<std::vector<int>>glid(glidline,std::vector<int>(glidline,0));// 2*point/RANGE=仕切りの数
+
 
 typedef struct ROBO {
     double r{};
@@ -206,13 +209,13 @@ void ROBO::draw() {
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
 
-    double dx = activator * a - inhibitor * b + Cu;
-    double dy = activator * c - inhibitor * d + Cv;
+//    double dx = activator * a - inhibitor * b + Cu;
+//    double dy = activator * c - inhibitor * d + Cv;
 
-    activator = inhibitor + dx;
-    activator = inhibitor + dy;
+//    activator = inhibitor + dx;
+//    activator = inhibitor + dy;
 
-    glColor3d(activator, inhibitor, activator - 0.5 * (activator + inhibitor));
+    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
     draw_robo_circle(0, 0, r);
 
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
@@ -364,6 +367,12 @@ double ROBO::nearrobotsensor() {
 
 
 int main(int argc, char *argv[]) {
+
+    for (int i = 0; i < glidline; ++i) {
+        for (int j = 0; j < glidline; ++j) {
+            glid[i][j]=
+        }
+    }
 
     Initialize();
     glutInit(&argc, argv);
