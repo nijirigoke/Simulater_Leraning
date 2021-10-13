@@ -1,5 +1,4 @@
-//#pragma GCC optimize("Ofast")
-//#pragma once
+#pragma GCC optimize("Ofast")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 //
 // Created by T118029 on 2021/03/15.
@@ -18,14 +17,12 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 10 //通信レンジ の半径
-#define SENS_RANGE 50 //通信レンジ の半径
-#define TEST 10
-
+#define RANGE 13 //通信レンジ の半径
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  3000 //ロボット台数　10台
+#define ROBOS  4000 //ロボット台数　10台
 
+int step_counter = 0;
 int glidline = 2 * point / RANGE;
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -40,6 +37,8 @@ typedef struct ROBO {
     int glid_x = 0;
     int glid_y = 0;
 
+    int tCenter, tRight, tLeft;
+
     //信号出力フラグ群
     int receive_flag{};
     int sens_flag{};
@@ -47,15 +46,16 @@ typedef struct ROBO {
     //反応拡散用パラメータ群
     double activator = 0;
     double inhibitor = 0;
+    double dx;
+    double dy;
     double du = 0.08;
-    double dv = 0.48;
+    double dv = 0.40;
     double Cu = 0.0001;
     double Cv = 0.0000;
     double a = 0.01;
     double b = 0.011;
     double c = 0.008;
     double d = 0.009;
-
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
@@ -71,21 +71,16 @@ public:
 
     int touchsensor(int i);
 
-    double nearrobotsensor();
 
     static int check_cross_wall(POSITION p1, POSITION p2);
 
     int check_cross_others(POSITION p);
 
-//    int SearchRobot(POSITION p, double range);
 
     int stack = 0;
 
-    int flash_memori = 0;
-
     double sens_nearrobotsensor();
 
-    int glidsearch();
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
@@ -125,18 +120,21 @@ void ROBO::turn(double q) {
 }
 
 void ROBO::action() {
-//    nearrobotsensor();
 
-    glid_x = 2*floor(x)/RANGE;//グリッドぎり
-    glid_y = 2*floor(y)/RANGE;
+    glid_x = floor(x) / (2 * RANGE);//グリッドぎり
+    glid_y = floor(y) / (2 * RANGE);
 
-    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
-    int tCenter, tRight, tLeft;
+//    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
+
+    dx = activator * a - inhibitor * b + Cu;
+    dy = activator * c - inhibitor * d + Cv;
+
+    activator = activator + dx;
+    inhibitor = inhibitor + dy;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
-    nearrobotsensor();
 
     if (stack < 25) {
         if (tLeft == 1)        //左チセンサ反応あり
@@ -153,7 +151,7 @@ void ROBO::action() {
             stack++;
         } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
         {
-            forward(0.5);//前進1.0ステップ
+            forward(0.6);//前進1.0ステップ
             stack = 0;
         }
     } else {
@@ -169,10 +167,13 @@ void ROBO::action() {
 
 
 void idle() {
+
+    std::cout << step_counter << std::endl;
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
     display();
+    step_counter++;
 }
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
@@ -189,17 +190,13 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 }
 
 void ROBO::init() {
-//    robo[0].sens_flag = 0;
-//    if (sens_flag = 1) {
-//        std::cout << glid_x << std::endl;
-//    }
+
     std::uniform_int_distribution<int> distr(-point, point);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
     std::uniform_real_distribution<> rando(0.0, 1.0);
 
     activator = rando(mt);
     inhibitor = rando(mt);
-
 
     dir = dir_gen(mt);
 //    printf("%f", dir);
@@ -230,23 +227,22 @@ void ROBO::draw() {
     draw_robo_circle(0, 0, r);
 
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-    glColor3d(0.5, 0.5, 0.5);
+    glColor3d(0.2, 0.2, 0.2);
     draw_circle(0, 0, RANGE); //通信範囲の描画
-    glColor3d(1.0, 1.0, 1.0);
-    glBegin(GL_LINES);
-    glVertex2d(0, 0); //左センサーの描画
-    glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
-    glVertex2d(0, 0); //正面センサーの描画
-    glVertex2d(tsensor[CENTER].x, tsensor[CENTER].y);
-    glVertex2d(0, 0); //右センサーの描画
-    glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
+//    glColor3d(0.5, 0.5, 0.5);
+//    glBegin(GL_LINES);
+////    glVertex2d(0, 0); //左センサーの描画
+////    glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
+////    glVertex2d(0, 0); //正面センサーの描画
+////    glVertex2d(tsensor[CENTER].x, tsensor[CENTER].y);
+////    glVertex2d(0, 0); //右センサーの描画
+////    glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
     glEnd();
     glPopMatrix(); //保存ておいた座標系へ戻す
 }
 
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
 int ROBO::touchsensor(int i)
-//構造体ROBOに所属している関数なので関数名の前に“ROBO::”とついている。
 {
     int fw = 0;
     int fo = 0; //他のロボットとの接触フラグ
@@ -319,7 +315,6 @@ int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
 
 int ROBO::check_cross_others(POSITION p) {
 
-
     double l;
     double sensor_x;
     double sensor_y;
@@ -343,6 +338,18 @@ int ROBO::check_cross_others(POSITION p) {
 
             l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
             if (l < i.r) {
+
+                double tx;
+                double ty;
+
+                tx = du * (activator - i.activator);
+                ty = dv * (inhibitor - i.inhibitor);
+
+                activator = activator - tx;
+                i.activator = i.activator + tx;
+                inhibitor = inhibitor - ty;
+                i.inhibitor = i.inhibitor + ty;
+
                 return 1;
             }
         }
@@ -351,53 +358,8 @@ int ROBO::check_cross_others(POSITION p) {
     return 0;
 }
 
-double ROBO::nearrobotsensor() {
-    double l;
-    double distance_x;
-    double distance_y;
-
-    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
-    for (auto &i: robo) {
-        if (
-                (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
-                (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)
-                ) {
-            //他のロボットのちゃん座標
-            double another_robo_x = i.x;
-            double another_robo_y = i.y;
-
-            distance_x = another_robo_x - x;
-            distance_y = another_robo_y - y;
-
-            l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
-            if (l < RANGE) {
-//            printf("%f\n::%d",l,RANGE);
-//            i.receive_flag = 1;
-                double tx;
-                double ty;
-
-                tx = du * (activator - inhibitor);
-                ty = dv * (activator - inhibitor);
-                activator = activator - tx;
-                i.activator = i.activator + tx;
-                inhibitor = inhibitor - ty;
-                i.inhibitor = i.inhibitor + ty;
-            }
-        }
-    }
-}
-
-int ROBO::glidsearch(){
-
-}
 
 int main(int argc, char *argv[]) {
-
-//    for (int i = 0; i < glidline; ++i) {
-//        for (int j = 0; j < glidline; ++j) {
-//            glid[i][j] =
-//        }
-//    }
 
 
     Initialize();
@@ -410,7 +372,6 @@ int main(int argc, char *argv[]) {
     glutIdleFunc(idle);
     glutMouseFunc(mouse); //マウスのボタンを検出
     glutMainLoop();
-
 
     return 0;
 }

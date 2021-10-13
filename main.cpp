@@ -379,31 +379,6 @@ double ROBO::nearrobotsensor() {
     }
 }
 
-double ROBO::sens_nearrobotsensor() {
-    double l;
-    double distance_x;
-    double distance_y;
-    std::chrono::system_clock::time_point start, end; // 型は auto で可
-    end = std::chrono::system_clock::now();  // 計測終了時間
-    start = std::chrono::system_clock::now(); // 計測開始時間
-    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
-
-    for (auto &i : robo) {
-
-        //他のロボットのちゃん座標
-        double another_robo_x = i.x;
-        double another_robo_y = i.y;
-
-        distance_x = another_robo_x - x;
-        distance_y = another_robo_y - y;
-
-        l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
-        if (l < SENS_RANGE) {
-            //            printf("%f\n::%d",l,RANGE);
-            i.receive_flag = 1;
-        }
-    }
-}
 
 
 int main(int argc, char *argv[]) {
