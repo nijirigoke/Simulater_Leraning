@@ -17,10 +17,10 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 13 //通信レンジ の半径
+#define RANGE 10 //通信レンジ の半径
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  4000 //ロボット台数　10台
+#define ROBOS  2000 //ロボット台数　10台
 
 int step_counter = 0;
 int glidline = 2 * point / RANGE;
@@ -44,13 +44,13 @@ typedef struct ROBO {
     int sens_flag{};
 
     //反応拡散用パラメータ群
-    double activator = 0;
-    double inhibitor = 0;
+    double activator;
+    double inhibitor;
     double dx;
     double dy;
     double du = 0.08;
-    double dv = 0.40;
-    double Cu = 0.0001;
+    double dv = 0.50;
+    double Cu = 0.00010;
     double Cv = 0.0000;
     double a = 0.01;
     double b = 0.011;
@@ -168,12 +168,12 @@ void ROBO::action() {
 
 void idle() {
 
-    std::cout << step_counter << std::endl;
+//    std::cout << step_counter << std::endl;
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
     display();
-    step_counter++;
+//    step_counter++;
 }
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
@@ -227,8 +227,8 @@ void ROBO::draw() {
     draw_robo_circle(0, 0, r);
 
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-    glColor3d(0.2, 0.2, 0.2);
-    draw_circle(0, 0, RANGE); //通信範囲の描画
+    glColor3d(0.7, 0.7, 0.7);
+//    draw_circle(0, 0, RANGE); //通信範囲の描画
 //    glColor3d(0.5, 0.5, 0.5);
 //    glBegin(GL_LINES);
 ////    glVertex2d(0, 0); //左センサーの描画
