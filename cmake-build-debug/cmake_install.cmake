@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/T118029b/scoop/apps/msys2/2021-06-04/mingw64/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Users/T118029b/scoop/apps/msys2/current/mingw64/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
