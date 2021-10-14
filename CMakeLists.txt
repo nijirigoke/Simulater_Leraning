@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 project(Simulater_Leraning)
 
 set(CMAKE_CXX_STANDARD 11)
-
+add_compile_options(-Ofast)
 add_executable(Simulater_Leraning main.cpp workspace.h simbase.h)
 add_executable(test test.cpp)
 add_executable(time testtime.cpp)

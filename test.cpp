@@ -17,7 +17,7 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 10 //通信レンジ の半径
+#define RANGE 50 //通信レンジ の半径
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  2000 //ロボット台数　10台
@@ -48,14 +48,23 @@ typedef struct ROBO {
     double inhibitor;
     double dx;
     double dy;
+//    double du = 0.08;
+//    double dv = 0.50;
+//    double Cu = 0.00010;
+//    double Cv = 0.0000;
+//    double a = 0.01;
+//    double b = 0.011;
+//    double c = 0.008;
+//    double d = 0.009;
+
     double du = 0.08;
     double dv = 0.50;
     double Cu = 0.00010;
     double Cv = 0.0000;
-    double a = 0.01;
-    double b = 0.011;
-    double c = 0.008;
-    double d = 0.009;
+    double a = 0.1;
+    double b = 0.12;
+    double c = 0.09;
+    double d = 0.09;
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:

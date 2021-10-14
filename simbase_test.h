@@ -8,7 +8,7 @@
 #define CIRCLEDIV 24 //円図形　24角形
 
 int fStart = 0; //シミュレーションの開始フラグ
-double point = 600;
+double point = 800;
 
 typedef struct { //座標を表す構造体
     double x;
