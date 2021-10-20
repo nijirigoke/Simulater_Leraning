@@ -12,6 +12,7 @@
 //#include "workspace_test.h"
 #include <random>
 #include <vector>
+#include <numeric>
 
 #define LEFT   0
 #define CENTER 1
@@ -57,14 +58,14 @@ typedef struct ROBO {
 //    double c = 0.008;
 //    double d = 0.009;
 
-    double du = 0.08;
+    double du = 0.05;
     double dv = 0.50;
     double Cu = 0.00010;
     double Cv = 0.0000;
-    double a = 0.1;
-    double b = 0.12;
-    double c = 0.09;
-    double d = 0.09;
+    double a = 0.01;
+    double b = 0.012;
+    double c = 0.009;
+    double d = 0.011;
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
@@ -176,7 +177,7 @@ void ROBO::action() {
 
 
 void idle() {
-
+    step_counter++;
 //    std::cout << step_counter << std::endl;
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
@@ -327,12 +328,17 @@ int ROBO::check_cross_others(POSITION p) {
     double l;
     double sensor_x;
     double sensor_y;
+    int touch_counter = 0;
+
 // 各ロボの座標 for:
 // 自他の区別 ？？？
 // 区別したらそいつとの距離を産出すること
     sensor_x = p.x;
     sensor_y = p.y;
     for (auto &i: robo) {
+        double sum_activator = 0;
+        double sum_inhibitor = 0;
+
         if (
                 (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
                 (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)
@@ -347,6 +353,7 @@ int ROBO::check_cross_others(POSITION p) {
 
             l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
             if (l < i.r) {
+                touch_counter++;
 
                 double tx;
                 double ty;
@@ -355,14 +362,31 @@ int ROBO::check_cross_others(POSITION p) {
                 ty = dv * (inhibitor - i.inhibitor);
 
                 activator = activator - tx;
-                i.activator = i.activator + tx;
+//                i.activator = i.activator + tx;
                 inhibitor = inhibitor - ty;
-                i.inhibitor = i.inhibitor + ty;
+//                i.inhibitor = i.inhibitor + ty;
 
+//                activator = activator - tx;
+//                i.activator = i.activator + tx;
+//                inhibitor = inhibitor - ty;
+//                i.inhibitor = i.inhibitor + ty;
+//
+
+                sum_activator += activator - tx;
+                sum_inhibitor += inhibitor - ty;
+
+                touch_counter = 0;
                 return 1;
             }
         }
 
+//        if(step_counter>=10) {
+//            activator = sum_activator / touch_counter;
+//            inhibitor = sum_inhibitor / touch_counter;
+//
+//            sum_activator = 0;
+//            sum_inhibitor = 0;
+//        }
     }
     return 0;
 }
