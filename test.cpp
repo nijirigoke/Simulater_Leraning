@@ -47,6 +47,10 @@ typedef struct ROBO {
     //反応拡散用パラメータ群
     double activator;
     double inhibitor;
+    double sum_activator = 0;
+    double sum_inhibitor = 0;
+    int touch_counter = 0;
+
     double dx;
     double dy;
 //    double du = 0.08;
@@ -177,13 +181,15 @@ void ROBO::action() {
 
 
 void idle() {
-    step_counter++;
 //    std::cout << step_counter << std::endl;
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
     display();
-//    step_counter++;
+    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
+              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",touch_counter,"
+              << robo[0].touch_counter << std::endl;
+    step_counter++;
 }
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
@@ -227,19 +233,13 @@ void ROBO::draw() {
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
 
-//    double dx = activator * a - inhibitor * b + Cu;
-//    double dy = activator * c - inhibitor * d + Cv;
-
-//    activator = inhibitor + dx;
-//    activator = inhibitor + dy;
-
     glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
     draw_robo_circle(0, 0, r);
 
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-    glColor3d(0.7, 0.7, 0.7);
+//    glColor3d(0.3, 0.3, 0.3);
 //    draw_circle(0, 0, RANGE); //通信範囲の描画
-//    glColor3d(0.5, 0.5, 0.5);
+//    glColor3d(0.3, 0.3, 0.3);
 //    glBegin(GL_LINES);
 ////    glVertex2d(0, 0); //左センサーの描画
 ////    glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
@@ -328,7 +328,6 @@ int ROBO::check_cross_others(POSITION p) {
     double l;
     double sensor_x;
     double sensor_y;
-    int touch_counter = 0;
 
 // 各ロボの座標 for:
 // 自他の区別 ？？？
@@ -336,8 +335,6 @@ int ROBO::check_cross_others(POSITION p) {
     sensor_x = p.x;
     sensor_y = p.y;
     for (auto &i: robo) {
-        double sum_activator = 0;
-        double sum_inhibitor = 0;
 
         if (
                 (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
@@ -353,40 +350,36 @@ int ROBO::check_cross_others(POSITION p) {
 
             l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
             if (l < i.r) {
-                touch_counter++;
-
                 double tx;
                 double ty;
 
                 tx = du * (activator - i.activator);
                 ty = dv * (inhibitor - i.inhibitor);
 
-                activator = activator - tx;
-//                i.activator = i.activator + tx;
-                inhibitor = inhibitor - ty;
-//                i.inhibitor = i.inhibitor + ty;
-
 //                activator = activator - tx;
-//                i.activator = i.activator + tx;
+                i.activator = i.activator + tx;
 //                inhibitor = inhibitor - ty;
-//                i.inhibitor = i.inhibitor + ty;
-//
+                i.inhibitor = i.inhibitor + ty;
 
                 sum_activator += activator - tx;
                 sum_inhibitor += inhibitor - ty;
 
-                touch_counter = 0;
+                touch_counter++;
+                if (step_counter >= 10) {
+//                    if(touch_counter!=0) {
+                    activator = sum_activator / touch_counter;
+                    inhibitor = sum_inhibitor / touch_counter;
+                    sum_activator = 0;
+                    sum_inhibitor = 0;
+                    touch_counter = 0;
+//                    }
+                    step_counter = 0;
+                }
                 return 1;
             }
         }
 
-//        if(step_counter>=10) {
-//            activator = sum_activator / touch_counter;
-//            inhibitor = sum_inhibitor / touch_counter;
-//
-//            sum_activator = 0;
-//            sum_inhibitor = 0;
-//        }
+
     }
     return 0;
 }
