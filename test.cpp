@@ -64,12 +64,12 @@ typedef struct ROBO {
 
     double du = 0.05;
     double dv = 0.50;
-    double Cu = 0.00010;
+    double Cu = 0.0000;
     double Cv = 0.0000;
     double a = 0.01;
     double b = 0.012;
     double c = 0.009;
-    double d = 0.011;
+    double d = 0.014;
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
@@ -169,7 +169,7 @@ void ROBO::action() {
             stack = 0;
         }
     } else {
-        turn(0.4 * PI);
+        turn(1 * PI);
         stack = 0;
     }
 
@@ -187,8 +187,8 @@ void idle() {
 //    Sleep(1 * 100);
     display();
     std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
-              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",touch_counter,"
-              << robo[0].touch_counter << std::endl;
+              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",step,"
+              << step_counter << std::endl;
     step_counter++;
 }
 
@@ -356,23 +356,24 @@ int ROBO::check_cross_others(POSITION p) {
                 tx = du * (activator - i.activator);
                 ty = dv * (inhibitor - i.inhibitor);
 
-//                activator = activator - tx;
-                i.activator = i.activator + tx;
-//                inhibitor = inhibitor - ty;
-                i.inhibitor = i.inhibitor + ty;
+//                i.activator +=  tx;
+//                i.inhibitor +=  ty;
 
-                sum_activator += activator - tx;
+                i.sum_activator += tx;
+                i.sum_inhibitor += ty;
+
                 sum_inhibitor += inhibitor - ty;
+                sum_activator += activator - tx;
 
                 touch_counter++;
                 if (step_counter >= 10) {
-//                    if(touch_counter!=0) {
+
                     activator = sum_activator / touch_counter;
                     inhibitor = sum_inhibitor / touch_counter;
                     sum_activator = 0;
                     sum_inhibitor = 0;
                     touch_counter = 0;
-//                    }
+
                     step_counter = 0;
                 }
                 return 1;
