@@ -4,15 +4,11 @@
 // Created by T118029 on 2021/03/15.
 //
 
-//todo 目標 通信の実装。通信の可視化。センサレンジの可視化。通信波及の可視化。
-
 #include <GL/glut.h>
 #include <iostream>
 #include "simbase_test.h"
-//#include "workspace_test.h"
 #include <random>
 #include <vector>
-#include <numeric>
 
 #define LEFT   0
 #define CENTER 1
@@ -23,12 +19,11 @@
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  2000 //ロボット台数　10台
 
-int step_counter = 0;
-int glidline = 2 * point / RANGE;
-std::random_device rnd;     // 非決定的な乱数生成器
-std::mt19937 mt(rnd());
-std::vector<std::vector<int>> glid(glidline, std::vector<int>(glidline, 0));// 2*point/RANGE=仕切りの数
 
+typedef struct GLID {
+    double ave_activator;
+    double ave_inhibitor;
+};
 
 typedef struct ROBO {
     double r{};
@@ -98,6 +93,14 @@ public:
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
+
+int step_counter = 0;
+int glidline = 2 * point / RANGE;
+
+std::random_device rnd;     // 非決定的な乱数生成器
+std::mt19937 mt(rnd());
+std::vector<std::vector<GLID>> glid(glidline, std::vector<int>(glidline, 0));// 2*point/RANGE=仕切りの数
+
 
 void wall_draw();
 
@@ -186,9 +189,9 @@ void idle() {
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
     display();
-    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
-              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",step,"
-              << step_counter << std::endl;
+//    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
+//              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",step,"
+//              << step_counter << std::endl;
     step_counter++;
 }
 
@@ -252,8 +255,7 @@ void ROBO::draw() {
 }
 
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
-int ROBO::touchsensor(int i)
-{
+int ROBO::touchsensor(int i) {
     int fw = 0;
     int fo = 0; //他のロボットとの接触フラグ
     POSITION p1, p2;
@@ -368,8 +370,8 @@ int ROBO::check_cross_others(POSITION p) {
                 touch_counter++;
                 if (step_counter >= 10) {
 
-                    activator = sum_activator / touch_counter;
-                    inhibitor = sum_inhibitor / touch_counter;
+                    activator = 2 * sum_activator / touch_counter;
+                    inhibitor = 2 * sum_inhibitor / touch_counter;
                     sum_activator = 0;
                     sum_inhibitor = 0;
                     touch_counter = 0;
@@ -407,3 +409,22 @@ void Initialize() {
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
 }
+
+void calculate_glid_concentration() {
+    double sum_glid_activator;
+    double sum_glid_inhibitor;
+    double hoge;
+    double hoge;
+
+    for (int i = 0; i <; ++i) {
+        for (int j = 0; j <; ++j) {
+            if (glid_num == glid_x && glid_num == glid_y) {
+                sum_glid_activator += activator;
+                sum_glid_inhibitor += inhibitor;
+            }
+            GLID[i][j].ave_activator = sum_glid_activator;
+            GLID[i][j].ave_inhibitor = sum_glid_inhibitor;
+        }
+
+        return;
+    }

@@ -167,6 +167,19 @@ time/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/build
 .PHONY : time/fast
 
+#=============================================================================
+# Target rules for targets named glwindows
+
+# Build rule for target.
+glwindows: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 glwindows
+.PHONY : glwindows
+
+# fast build rule for target.
+glwindows/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\glwindows.dir\build.make CMakeFiles/glwindows.dir/build
+.PHONY : glwindows/fast
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -214,6 +227,30 @@ test.s: test.cpp.s
 test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.s
 .PHONY : test.cpp.s
+
+test_glwindows.obj: test_glwindows.cpp.obj
+.PHONY : test_glwindows.obj
+
+# target to build an object file
+test_glwindows.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\glwindows.dir\build.make CMakeFiles/glwindows.dir/test_glwindows.cpp.obj
+.PHONY : test_glwindows.cpp.obj
+
+test_glwindows.i: test_glwindows.cpp.i
+.PHONY : test_glwindows.i
+
+# target to preprocess a source file
+test_glwindows.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\glwindows.dir\build.make CMakeFiles/glwindows.dir/test_glwindows.cpp.i
+.PHONY : test_glwindows.cpp.i
+
+test_glwindows.s: test_glwindows.cpp.s
+.PHONY : test_glwindows.s
+
+# target to generate assembly for a file
+test_glwindows.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\glwindows.dir\build.make CMakeFiles/glwindows.dir/test_glwindows.cpp.s
+.PHONY : test_glwindows.cpp.s
 
 testtime.obj: testtime.cpp.obj
 .PHONY : testtime.obj
@@ -272,6 +309,7 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
+	@echo ... glwindows
 	@echo ... test
 	@echo ... test2
 	@echo ... time
@@ -281,6 +319,9 @@ help:
 	@echo ... test.obj
 	@echo ... test.i
 	@echo ... test.s
+	@echo ... test_glwindows.obj
+	@echo ... test_glwindows.i
+	@echo ... test_glwindows.s
 	@echo ... testtime.obj
 	@echo ... testtime.i
 	@echo ... testtime.s
