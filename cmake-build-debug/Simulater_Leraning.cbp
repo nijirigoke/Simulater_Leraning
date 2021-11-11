@@ -223,14 +223,14 @@
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/test.cpp">
 			<Option target="test"/>
 		</Unit>
-		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/test2.cpp">
-			<Option target="test2"/>
-		</Unit>
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/testtime.cpp">
 			<Option target="time"/>
 		</Unit>
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/workspace.h">
 			<Option target="Simulater_Leraning"/>
+		</Unit>
+		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/write_line.cpp">
+			<Option target="test2"/>
 		</Unit>
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

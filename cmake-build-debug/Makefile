@@ -215,30 +215,6 @@ test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.s
 .PHONY : test.cpp.s
 
-test2.obj: test2.cpp.obj
-.PHONY : test2.obj
-
-# target to build an object file
-test2.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/test2.cpp.obj
-.PHONY : test2.cpp.obj
-
-test2.i: test2.cpp.i
-.PHONY : test2.i
-
-# target to preprocess a source file
-test2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/test2.cpp.i
-.PHONY : test2.cpp.i
-
-test2.s: test2.cpp.s
-.PHONY : test2.s
-
-# target to generate assembly for a file
-test2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/test2.cpp.s
-.PHONY : test2.cpp.s
-
 testtime.obj: testtime.cpp.obj
 .PHONY : testtime.obj
 
@@ -263,6 +239,30 @@ testtime.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/testtime.cpp.s
 .PHONY : testtime.cpp.s
 
+write_line.obj: write_line.cpp.obj
+.PHONY : write_line.obj
+
+# target to build an object file
+write_line.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/write_line.cpp.obj
+.PHONY : write_line.cpp.obj
+
+write_line.i: write_line.cpp.i
+.PHONY : write_line.i
+
+# target to preprocess a source file
+write_line.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/write_line.cpp.i
+.PHONY : write_line.cpp.i
+
+write_line.s: write_line.cpp.s
+.PHONY : write_line.s
+
+# target to generate assembly for a file
+write_line.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/write_line.cpp.s
+.PHONY : write_line.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -281,12 +281,12 @@ help:
 	@echo ... test.obj
 	@echo ... test.i
 	@echo ... test.s
-	@echo ... test2.obj
-	@echo ... test2.i
-	@echo ... test2.s
 	@echo ... testtime.obj
 	@echo ... testtime.i
 	@echo ... testtime.s
+	@echo ... write_line.obj
+	@echo ... write_line.i
+	@echo ... write_line.s
 .PHONY : help
 
 
