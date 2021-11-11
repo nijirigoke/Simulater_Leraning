@@ -356,11 +356,11 @@ int ROBO::check_cross_others(POSITION p) {
                 tx = du * (activator - i.activator);
                 ty = dv * (inhibitor - i.inhibitor);
 
-//                i.activator +=  tx;
-//                i.inhibitor +=  ty;
+                i.activator += tx;
+                i.inhibitor += ty;
 
-                i.sum_activator += tx;
-                i.sum_inhibitor += ty;
+//                i.sum_activator += tx;
+//                i.sum_inhibitor += ty;
 
                 sum_inhibitor += inhibitor - ty;
                 sum_activator += activator - tx;
