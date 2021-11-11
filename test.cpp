@@ -62,14 +62,14 @@ typedef struct ROBO {
 //    double c = 0.008;
 //    double d = 0.009;
 
-    double du = 0.05;
+    double du = 0.08;
     double dv = 0.50;
     double Cu = 0.0000;
-    double Cv = 0.0000;
+    double Cv = 0.0005;
     double a = 0.01;
-    double b = 0.012;
+    double b = 0.010;
     double c = 0.009;
-    double d = 0.014;
+    double d = 0.010;
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
@@ -356,11 +356,11 @@ int ROBO::check_cross_others(POSITION p) {
                 tx = du * (activator - i.activator);
                 ty = dv * (inhibitor - i.inhibitor);
 
-//                i.activator +=  tx;
-//                i.inhibitor +=  ty;
+                i.activator += tx;
+                i.inhibitor += ty;
 
-                i.sum_activator += tx;
-                i.sum_inhibitor += ty;
+//                i.sum_activator += tx;
+//                i.sum_inhibitor += ty;
 
                 sum_inhibitor += inhibitor - ty;
                 sum_activator += activator - tx;
