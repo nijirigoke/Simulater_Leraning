@@ -217,17 +217,11 @@
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/main.cpp">
 			<Option target="Simulater_Leraning"/>
 		</Unit>
-		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/simbase.h">
-			<Option target="Simulater_Leraning"/>
-		</Unit>
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/test.cpp">
 			<Option target="test"/>
 		</Unit>
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/testtime.cpp">
 			<Option target="time"/>
-		</Unit>
-		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/workspace.h">
-			<Option target="Simulater_Leraning"/>
 		</Unit>
 		<Unit filename="C:/Users/Jun/CLionProjects/Simulater_Leraning/write_line.cpp">
 			<Option target="test2"/>

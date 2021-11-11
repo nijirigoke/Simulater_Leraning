@@ -3,7 +3,7 @@ project(Simulater_Leraning)
 
 set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Ofast)
-add_executable(Simulater_Leraning main.cpp workspace.h simbase.h)
+add_executable(Simulater_Leraning main.cpp)
 add_executable(test test.cpp)
 add_executable(time testtime.cpp)
 add_executable(test2 write_line.cpp)
