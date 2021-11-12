@@ -9,6 +9,7 @@
 #include "simbase_test.h"
 #include <random>
 #include <vector>
+#include <numeric>
 
 #define LEFT   0
 #define CENTER 1
@@ -18,11 +19,14 @@
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  2000 //ロボット台数　10台
+using namespace std;
 
+struct GLID_STRUCT {
 
-typedef struct GLID {
     double ave_activator;
     double ave_inhibitor;
+
+    GLID_STRUCT(double act, double inh) : ave_activator(act), ave_inhibitor(inh) {}
 };
 
 typedef struct ROBO {
@@ -95,12 +99,17 @@ public:
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
 
 int step_counter = 0;
-int glidline = 2 * point / RANGE;
+int epoch = 0;
+int glidline = (int) point / RANGE;
+int half_glidline = (int) point / (2 * RANGE);
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
-std::vector<std::vector<GLID>> glid(glidline, std::vector<int>(glidline, 0));// 2*point/RANGE=仕切りの数
+using GLID = vector<vector<GLID_STRUCT>>;
+GLID GL1(glidline);
+//GLID GL1(glidline,vector<GLID_STRUCT> (glidline));
 
+void calculate_glid_concentration();
 
 void wall_draw();
 
@@ -138,8 +147,8 @@ void ROBO::turn(double q) {
 
 void ROBO::action() {
 
-    glid_x = floor(x) / (2 * RANGE);//グリッドぎり
-    glid_y = floor(y) / (2 * RANGE);
+    glid_x = (floor(x) / (2 * RANGE)) + half_glidline;//グリッドぎり
+    glid_y = (floor(y) / (2 * RANGE)) + half_glidline;
 
 //    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
 
@@ -184,15 +193,22 @@ void ROBO::action() {
 
 
 void idle() {
+//    GLID GL1(ROBOS);
+
 //    std::cout << step_counter << std::endl;
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
     display();
+    calculate_glid_concentration();
+
 //    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
 //              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",step,"
 //              << step_counter << std::endl;
+//cout<<robo[0].glid_x<<"..."<<half_glidline<<endl;
     step_counter++;
+    epoch++;
+    cout << epoch << ";;;;";
 }
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
@@ -411,20 +427,46 @@ void Initialize() {
 }
 
 void calculate_glid_concentration() {
-    double sum_glid_activator;
-    double sum_glid_inhibitor;
-    double hoge;
-    double hoge;
 
-    for (int i = 0; i <; ++i) {
-        for (int j = 0; j <; ++j) {
-            if (glid_num == glid_x && glid_num == glid_y) {
-                sum_glid_activator += activator;
-                sum_glid_inhibitor += inhibitor;
+    vector<double> sum_glid_activator;
+    vector<double> sum_glid_inhibitor;
+    GLID GL2(glidline);
+    double ave_activator = 0;
+    double ave_inhibitor = 0;
+
+    for (int x = 0; x < glidline; ++x) {
+        for (int y = 0; y < glidline; ++y) {// y point
+            for (int i = 0; i < ROBOS; i++) {// i point
+//                cout << x << ";" << robo[i].glid_x << endl;
+                if (x == robo[i].glid_x && y == robo[i].glid_y) {
+                    sum_glid_activator.push_back(robo[i].activator);
+                    sum_glid_inhibitor.push_back(robo[i].inhibitor);
+                }
+
+//                if (epoch > 16) {
+//                    ave_activator =
+//                            accumulate(sum_glid_activator.begin(), sum_glid_activator.end(), 0.0) /
+//                            sum_glid_activator.size();
+//                    ave_inhibitor =
+//                            accumulate(sum_glid_inhibitor.begin(), sum_glid_inhibitor.end(), 0.0) /
+//                            sum_glid_inhibitor.size();
+////                    GL1[x][y].ave_activator = ave_activator;
+//                    GL1.at(x).at(y).ave_activator = ave_activator;
+//                    GL1.at(x).at(y).ave_inhibitor = ave_inhibitor;
+//                }
+
             }
-            GLID[i][j].ave_activator = sum_glid_activator;
-            GLID[i][j].ave_inhibitor = sum_glid_inhibitor;
         }
+        ave_activator =
+                accumulate(sum_glid_activator.begin(), sum_glid_activator.end(), 0.0) / sum_glid_activator.size();
+        ave_inhibitor =
+                accumulate(sum_glid_inhibitor.begin(), sum_glid_inhibitor.end(), 0.0) / sum_glid_inhibitor.size();
+        GL2[x].push_back(GLID_STRUCT(ave_activator, ave_inhibitor));
 
-        return;
     }
+//    cout << GL1[0][0].ave_activator << "::" << GL1[0][0].ave_inhibitor <<"::"<<GL1[0].size() <<endl;
+    cout << GL2[0][0].ave_activator << "::" << GL2[0][0].ave_inhibitor << "::" << GL2[0].size() << endl;
+//    cout<<sum_glid_activator.size()<<"::"<<GL1[0][0].ave_inhibitor<<endl;
+
+}
+
