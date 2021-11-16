@@ -24,10 +24,10 @@
 #define ROBOS  2000 //ロボット台数　10台
 
 int step_counter = 0;
-int glidline = 2 * point / RANGE;
+int gridline = 2 * point / RANGE;
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
-std::vector<std::vector<int>> glid(glidline, std::vector<int>(glidline, 0));// 2*point/RANGE=仕切りの数
+std::vector<std::vector<int>> glid(gridline, std::vector<int>(gridline, 0));// 2*point/RANGE=仕切りの数
 
 
 typedef struct ROBO {
@@ -135,8 +135,8 @@ void ROBO::turn(double q) {
 
 void ROBO::action() {
 
-    glid_x = floor(x) / (2 * RANGE);//グリッドぎり
-    glid_y = floor(y) / (2 * RANGE);
+    glid_x = floor(x) / (RANGE);//グリッドぎり
+    glid_y = floor(y) / (RANGE);
 
 //    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
 
