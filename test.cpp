@@ -1,36 +1,33 @@
-//#pragma GCC optimize("Ofast")
-//#pragma once
+#pragma GCC optimize("Ofast")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 //
 // Created by T118029 on 2021/03/15.
 //
 
-//todo 目標 通信の実装。通信の可視化。センサレンジの可視化。通信波及の可視化。
-
 #include <GL/glut.h>
 #include <iostream>
 #include "simbase_test.h"
-//#include "workspace_test.h"
 #include <random>
 #include <vector>
+#include <numeric>
 
 #define LEFT   0
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 10 //通信レンジ の半径
-#define SENS_RANGE 50 //通信レンジ の半径
-#define TEST 10
-
+#define RANGE 50 //通信レンジ の半径
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  3000 //ロボット台数　10台
+#define ROBOS  2000 //ロボット台数　10台
+using namespace std;
 
-int glidline = 2 * point / RANGE;
-std::random_device rnd;     // 非決定的な乱数生成器
-std::mt19937 mt(rnd());
-std::vector<std::vector<int>> glid(glidline, std::vector<int>(glidline, 0));// 2*point/RANGE=仕切りの数
+struct GLID_STRUCT {
 
+    double ave_activator;
+    double ave_inhibitor;
+
+    GLID_STRUCT(double act, double inh) : ave_activator(act), ave_inhibitor(inh) {}
+};
 
 typedef struct ROBO {
     double r{};
@@ -40,22 +37,38 @@ typedef struct ROBO {
     int glid_x = 0;
     int glid_y = 0;
 
+    int tCenter, tRight, tLeft;
+
     //信号出力フラグ群
     int receive_flag{};
     int sens_flag{};
 
     //反応拡散用パラメータ群
-    double activator = 0;
-    double inhibitor = 0;
-    double du = 0.08;
-    double dv = 0.48;
-    double Cu = 0.0001;
-    double Cv = 0.0000;
-    double a = 0.01;
-    double b = 0.011;
-    double c = 0.008;
-    double d = 0.009;
+    double activator;
+    double inhibitor;
+    double sum_activator = 0;
+    double sum_inhibitor = 0;
+    int touch_counter = 0;
 
+    double dx;
+    double dy;
+//    double du = 0.08;
+//    double dv = 0.50;
+//    double Cu = 0.00010;
+//    double Cv = 0.0000;
+//    double a = 0.01;
+//    double b = 0.011;
+//    double c = 0.008;
+//    double d = 0.009;
+
+    double du = 0.08;
+    double dv = 0.50;
+    double Cu = 0.0000;
+    double Cv = 0.0005;
+    double a = 0.01;
+    double b = 0.010;
+    double c = 0.009;
+    double d = 0.010;
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
@@ -71,24 +84,35 @@ public:
 
     int touchsensor(int i);
 
-    double nearrobotsensor();
 
     static int check_cross_wall(POSITION p1, POSITION p2);
 
     int check_cross_others(POSITION p);
 
-//    int SearchRobot(POSITION p, double range);
 
     int stack = 0;
 
-    int flash_memori = 0;
-
     double sens_nearrobotsensor();
 
-    int glidsearch();
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
+
+int step_counter = 0;
+int epoch = 0;
+int gridline = (int) point / RANGE;
+int half_gridline = (int) point / (2 * RANGE);
+int robotwindow;
+int gridwindow;
+int windows[2];
+
+std::random_device rnd;     // 非決定的な乱数生成器
+std::mt19937 mt(rnd());
+using GLID = vector<vector<GLID_STRUCT>>;
+GLID GL1(gridline);
+//GLID GL1(gridline,vector<GLID_STRUCT> (gridline));
+
+void calculate_glid_concentration(GLID vector);
 
 void wall_draw();
 
@@ -96,15 +120,36 @@ void Initialize();
 
 void wall_draw() {
 
+    double hoge = 2 * point;
+    int num = hoge / (RANGE);
+
     glBegin(GL_LINES);
     for (auto &i: wall) {
         glVertex2d(pin[i.p1].x, pin[i.p1].y);
         glVertex2d(pin[i.p2].x, pin[i.p2].y);
+//        cout << pin[i.p1].x << pin[i.p1].y << endl;
     }
+    glBegin(GL_LINES);
+
+    // tate
+    for (int j = 0; j < num; ++j) {
+        glVertex2d(-point + (j * RANGE), point);
+        glVertex2d(-point + (j * RANGE), -point);
+    }
+
+    // yoko
+    for (int j = 0; j < num; ++j) {
+        glVertex2d(point, point - (j * RANGE));
+        glVertex2d(-point, point - (j * RANGE));
+    }
+
     glEnd();
+
+
 }
 
 void display() {
+
     glClear(GL_COLOR_BUFFER_BIT);
     graphics();
     wall_draw();
@@ -125,18 +170,21 @@ void ROBO::turn(double q) {
 }
 
 void ROBO::action() {
-//    nearrobotsensor();
 
-    glid_x = 2*floor(x)/RANGE;//グリッドぎり
-    glid_y = 2*floor(y)/RANGE;
+    glid_x = (floor(x) / (2 * RANGE)) + half_gridline;//グリッドぎり
+    glid_y = (floor(y) / (2 * RANGE)) + half_gridline;
 
-    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
-    int tCenter, tRight, tLeft;
+//    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
+
+    dx = activator * a - inhibitor * b + Cu;
+    dy = activator * c - inhibitor * d + Cv;
+
+    activator = activator + dx;
+    inhibitor = inhibitor + dy;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
     tLeft = touchsensor(LEFT);        //左センサーの値
-    nearrobotsensor();
 
     if (stack < 25) {
         if (tLeft == 1)        //左チセンサ反応あり
@@ -153,11 +201,11 @@ void ROBO::action() {
             stack++;
         } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
         {
-            forward(0.5);//前進1.0ステップ
+            forward(0.6);//前進1.0ステップ
             stack = 0;
         }
     } else {
-        turn(0.4 * PI);
+        turn(1 * PI);
         stack = 0;
     }
 
@@ -169,14 +217,33 @@ void ROBO::action() {
 
 
 void idle() {
+//    GLID GL1(ROBOS);
+
+//    std::cout << step_counter << std::endl;
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
     display();
+    for (int i; i < 2; i++) {
+        glutSetWindow(windows[i]);
+        glutPostRedisplay();
+    }
+    calculate_glid_concentration(GLID());
+
+
+//    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
+//              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",step,"
+//              << step_counter << std::endl;
+//cout<<robo[0].glid_x<<"..."<<half_gridline<<endl;
+    step_counter++;
+    epoch++;
+//    cout << epoch << ";;;;";
 }
+
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
 {
+
     if (state == GLUT_DOWN) { //ボタンが押されたら...
         if (fStart == 1)
             fStart = 0;
@@ -189,17 +256,13 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 }
 
 void ROBO::init() {
-//    robo[0].sens_flag = 0;
-//    if (sens_flag = 1) {
-//        std::cout << glid_x << std::endl;
-//    }
+
     std::uniform_int_distribution<int> distr(-point, point);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
     std::uniform_real_distribution<> rando(0.0, 1.0);
 
     activator = rando(mt);
     inhibitor = rando(mt);
-
 
     dir = dir_gen(mt);
 //    printf("%f", dir);
@@ -216,38 +279,32 @@ void ROBO::init() {
 }
 
 void ROBO::draw() {
+
     glPushMatrix(); //現在の座標系の保存
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
-
-//    double dx = activator * a - inhibitor * b + Cu;
-//    double dy = activator * c - inhibitor * d + Cv;
-
-//    activator = inhibitor + dx;
-//    activator = inhibitor + dy;
 
     glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
     draw_robo_circle(0, 0, r);
 
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-    glColor3d(0.5, 0.5, 0.5);
-    draw_circle(0, 0, RANGE); //通信範囲の描画
-    glColor3d(1.0, 1.0, 1.0);
-    glBegin(GL_LINES);
-    glVertex2d(0, 0); //左センサーの描画
-    glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
-    glVertex2d(0, 0); //正面センサーの描画
-    glVertex2d(tsensor[CENTER].x, tsensor[CENTER].y);
-    glVertex2d(0, 0); //右センサーの描画
-    glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
+//    glColor3d(0.3, 0.3, 0.3);
+//    draw_circle(0, 0, RANGE); //通信範囲の描画
+//    glColor3d(0.3, 0.3, 0.3);
+//    glBegin(GL_LINES);
+////    glVertex2d(0, 0); //左センサーの描画
+////    glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
+////    glVertex2d(0, 0); //正面センサーの描画
+////    glVertex2d(tsensor[CENTER].x, tsensor[CENTER].y);
+////    glVertex2d(0, 0); //右センサーの描画
+////    glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
+
     glEnd();
     glPopMatrix(); //保存ておいた座標系へ戻す
 }
 
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
-int ROBO::touchsensor(int i)
-//構造体ROBOに所属している関数なので関数名の前に“ROBO::”とついている。
-{
+int ROBO::touchsensor(int i) {
     int fw = 0;
     int fo = 0; //他のロボットとの接触フラグ
     POSITION p1, p2;
@@ -319,16 +376,17 @@ int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
 
 int ROBO::check_cross_others(POSITION p) {
 
-
     double l;
     double sensor_x;
     double sensor_y;
+
 // 各ロボの座標 for:
 // 自他の区別 ？？？
 // 区別したらそいつとの距離を産出すること
     sensor_x = p.x;
     sensor_y = p.y;
     for (auto &i: robo) {
+
         if (
                 (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
                 (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)
@@ -343,74 +401,76 @@ int ROBO::check_cross_others(POSITION p) {
 
             l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
             if (l < i.r) {
+                double tx;
+                double ty;
+
+                tx = du * (activator - i.activator);
+                ty = dv * (inhibitor - i.inhibitor);
+
+                i.activator += tx;
+                i.inhibitor += ty;
+
+//                i.sum_activator += tx;
+//                i.sum_inhibitor += ty;
+
+                sum_inhibitor += inhibitor - ty;
+                sum_activator += activator - tx;
+
+                touch_counter++;
+                if (step_counter >= 10) {
+
+                    activator = 2 * sum_activator / touch_counter;
+                    inhibitor = 2 * sum_inhibitor / touch_counter;
+                    sum_activator = 0;
+                    sum_inhibitor = 0;
+                    touch_counter = 0;
+
+                    step_counter = 0;
+                }
                 return 1;
             }
         }
+
 
     }
     return 0;
 }
 
-double ROBO::nearrobotsensor() {
-    double l;
-    double distance_x;
-    double distance_y;
-
-    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
-    for (auto &i: robo) {
-        if (
-                (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
-                (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)
-                ) {
-            //他のロボットのちゃん座標
-            double another_robo_x = i.x;
-            double another_robo_y = i.y;
-
-            distance_x = another_robo_x - x;
-            distance_y = another_robo_y - y;
-
-            l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
-            if (l < RANGE) {
-//            printf("%f\n::%d",l,RANGE);
-//            i.receive_flag = 1;
-                double tx;
-                double ty;
-
-                tx = du * (activator - inhibitor);
-                ty = dv * (activator - inhibitor);
-                activator = activator - tx;
-                i.activator = i.activator + tx;
-                inhibitor = inhibitor - ty;
-                i.inhibitor = i.inhibitor + ty;
-            }
-        }
-    }
-}
-
-int ROBO::glidsearch(){
-
-}
 
 int main(int argc, char *argv[]) {
-
-//    for (int i = 0; i < glidline; ++i) {
-//        for (int j = 0; j < glidline; ++j) {
-//            glid[i][j] =
-//        }
-//    }
 
 
     Initialize();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(point, point);
-    glutCreateWindow(argv[0]);
+    windows[0] = glutCreateWindow("Robot sim");
+    glutDisplayFunc(display);
+    glutReshapeFunc(resize);
+//    glutIdleFunc(idle);
+    glutMouseFunc(mouse); //マウスのボタンを検出 これを切るとコマ送りになる。
+//    glutMainLoop();
+
+//    Initialize();
+//    glutInit(&argc, argv);
+
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+    glutInitWindowSize(point, point);
+    windows[1] = glutCreateWindow("Grid");
+//    glutCreateSubWindow(0,0,200,200,200);
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
-    glutMouseFunc(mouse); //マウスのボタンを検出
-    glutMainLoop();
 
+
+//    //サブウィンドウ作成
+//    SubWinID[0] = glutCreateSubWindow(MainWinID,0,0,160,120);//左上原点、(0,0)から横160、縦120ピクセル分
+//    GLUT_CALL_FUNC_SUB();
+//    MY_INIT_SUB();
+//    glutMouseFunc(mouse); //マウスのボタンを検出
+
+
+    glutMainLoop();
 
     return 0;
 }
@@ -419,3 +479,48 @@ void Initialize() {
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
 }
+
+void calculate_glid_concentration(GLID vector) {
+
+    vector<double> sum_glid_activator;
+    vector<double> sum_glid_inhibitor;
+    GLID GL2(gridline);
+    double ave_activator = 0;
+    double ave_inhibitor = 0;
+
+    for (int x = 0; x < gridline; ++x) {
+        for (int y = 0; y < gridline; ++y) {// y point
+            for (int i = 0; i < ROBOS; i++) {// i point
+//                cout << x << ";" << robo[i].glid_x << endl;
+                if (x == robo[i].glid_x && y == robo[i].glid_y) {
+                    sum_glid_activator.push_back(robo[i].activator);
+                    sum_glid_inhibitor.push_back(robo[i].inhibitor);
+                }
+
+//                if (epoch > 16) {
+//                    ave_activator =
+//                            accumulate(sum_glid_activator.begin(), sum_glid_activator.end(), 0.0) /
+//                            sum_glid_activator.size();
+//                    ave_inhibitor =
+//                            accumulate(sum_glid_inhibitor.begin(), sum_glid_inhibitor.end(), 0.0) /
+//                            sum_glid_inhibitor.size();
+////                    GL1[x][y].ave_activator = ave_activator;
+//                    GL1.at(x).at(y).ave_activator = ave_activator;
+//                    GL1.at(x).at(y).ave_inhibitor = ave_inhibitor;
+//                }
+
+            }
+        }
+        ave_activator =
+                accumulate(sum_glid_activator.begin(), sum_glid_activator.end(), 0.0) / sum_glid_activator.size();
+        ave_inhibitor =
+                accumulate(sum_glid_inhibitor.begin(), sum_glid_inhibitor.end(), 0.0) / sum_glid_inhibitor.size();
+        GL2[x].push_back(GLID_STRUCT(ave_activator, ave_inhibitor));
+
+    }
+//    cout << GL1[0][0].ave_activator << "::" << GL1[0][0].ave_inhibitor <<"::"<<GL1[0].size() <<endl;
+//    cout << GL2[0][0].ave_activator << "::" << GL2[0][0].ave_inhibitor << "::" << GL2[0].size() << endl;
+//    cout<<sum_glid_activator.size()<<"::"<<GL1[0][0].ave_inhibitor<<endl;
+
+}
+

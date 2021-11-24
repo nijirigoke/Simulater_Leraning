@@ -1,6 +1,6 @@
 #include <GL/glut.h>
 #include <math.h>
-#include <stdio.h>
+//#include <stdio.h>
 
 #define PINN  4
 #define WALLS 4
@@ -8,7 +8,7 @@
 #define CIRCLEDIV 24 //円図形　24角形
 
 int fStart = 0; //シミュレーションの開始フラグ
-int point = 500;
+double point = 800;
 
 typedef struct { //座標を表す構造体
     double x;
