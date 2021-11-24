@@ -4,12 +4,9 @@
 // Created by T118029 on 2021/03/15.
 //
 
-//todo 目標 通信の実装。通信の可視化。センサレンジの可視化。通信波及の可視化。
-
 #include <GL/glut.h>
 #include <iostream>
-#include "simbase_test.h"
-//#include "workspace_test.h"
+#include "simbase.h"
 #include <random>
 #include <vector>
 #include <numeric>
@@ -22,13 +19,13 @@
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  2000 //ロボット台数　10台
+using namespace std;
 
-int step_counter = 0;
-int gridline = 2 * point / RANGE;
-std::random_device rnd;     // 非決定的な乱数生成器
-std::mt19937 mt(rnd());
-std::vector<std::vector<int>> glid(gridline, std::vector<int>(gridline, 0));// 2*point/RANGE=仕切りの数
+struct GLID_STRUCT {
 
+    double ave_activator;
+    double ave_inhibitor;
+};
 
 typedef struct ROBO {
     double r{};
@@ -98,6 +95,23 @@ public:
 } ROBO;
 
 ROBO robo[ROBOS];    //要素数ROBOSで配列変数roboを定義
+int step_counter = 0;
+int epoch = 0;
+int gridline = (int) point * 2 / RANGE;
+int half_gridline = gridline / (2 * RANGE);
+int robotwindow;
+int gridwindow;
+int windows[2];
+
+std::random_device rnd;     // 非決定的な乱数生成器
+std::mt19937 mt(rnd());
+GLID_STRUCT GL[100][100];
+
+void calculate_grid_concentration();
+
+void draw_grid_density_map();
+
+void grid_display();
 
 void wall_draw();
 
@@ -109,11 +123,49 @@ void wall_draw() {
     for (auto &i: wall) {
         glVertex2d(pin[i.p1].x, pin[i.p1].y);
         glVertex2d(pin[i.p2].x, pin[i.p2].y);
+//        cout << pin[i.p1].x << pin[i.p1].y << endl;
     }
     glEnd();
+
+}
+
+void grid_wall_draw() {
+
+    double hoge = 2 * point;
+    int num = hoge / (RANGE);
+
+    glBegin(GL_LINES);
+    glColor3d(1, 1, 1);
+
+    for (auto &i: wall) {
+        glVertex2d(pin[i.p1].x, pin[i.p1].y);
+        glVertex2d(pin[i.p2].x, pin[i.p2].y);
+//        cout << pin[i.p1].x << pin[i.p1].y << endl;
+    }
+    glEnd();
+
+
+    glBegin(GL_LINES);
+
+    // tate
+    for (int j = 0; j < num; ++j) {
+        glVertex2d(-point + (j * RANGE), point);
+        glVertex2d(-point + (j * RANGE), -point);
+    }
+
+    // yoko
+    for (int j = 0; j < num; ++j) {
+        glVertex2d(point, point - (j * RANGE));
+        glVertex2d(-point, point - (j * RANGE));
+    }
+
+    glEnd();
+
+
 }
 
 void display() {
+
     glClear(GL_COLOR_BUFFER_BIT);
     graphics();
     wall_draw();
@@ -122,6 +174,70 @@ void display() {
     }
 
     glutSwapBuffers();
+}
+
+void grid_display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    graphics();
+    grid_wall_draw();
+    glutSwapBuffers();
+
+}
+
+void calculate_grid_concentration(GLID_STRUCT **GL) {
+
+    vector<double> sum_glid_activator;
+    vector<double> sum_glid_inhibitor;
+    double ave_activator = 0;
+    double ave_inhibitor = 0;
+    //todo 計算に問題あり
+    for (int x = 0; x < gridline; ++x) {
+        for (int y = 0; y < gridline; ++y) {// y point
+            //todo 配列を初期化すべし
+            for (int i = 0; i < ROBOS; i++) {// i point
+//                cout << x << ";" << robo[i].glid_x << endl;
+                if (x == robo[i].glid_x && y == robo[i].glid_y) {
+                    sum_glid_activator.push_back(robo[i].activator);
+                    sum_glid_inhibitor.push_back(robo[i].inhibitor);
+                }
+            }
+            //todo この段階で平均値を産出すべし
+        }
+        ave_activator =
+                accumulate(sum_glid_activator.begin(), sum_glid_activator.end(), 0.0) / sum_glid_activator.size();
+        ave_inhibitor =
+                accumulate(sum_glid_inhibitor.begin(), sum_glid_inhibitor.end(), 0.0) / sum_glid_inhibitor.size();
+        GL2[x].push_back(GLID_STRUCT(ave_activator, ave_inhibitor));
+
+
+
+    }
+//    cout << GL1[0][0].ave_activator << "::" << GL1[0][0].ave_inhibitor <<"::"<<GL1[0].size() <<endl;
+//    cout << GL2[0][0].ave_activator << "::" << GL2[0][0].ave_inhibitor << "::" << GL2[0].size() << endl;
+//    cout<<sum_glid_activator.size()<<"::"<<GL1[0][0].ave_inhibitor<<endl;
+}
+
+void draw_grid_density_map() {
+    double hoge = 2 * point;
+    int num = hoge / (RANGE);
+//    cout << GL2[0][0].ave_activator << "::" << GL2[0][0].ave_inhibitor << "::" << GL2[0].size() << endl;
+    glBegin(GL_QUADS);
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    for (int i = 0; i < gridline; ++i) {
+        for (int j = 0; j < gridline; ++j) {
+//            glColor3b(GL2[i][j].ave_activator, GL2[i][j].ave_inhibitor,
+            glColor3b(1, 1, 0);
+            glVertex2d(-point + (RANGE * i), (RANGE * j));
+            glVertex2d(-point + (RANGE * i), (RANGE * (j + 1)));
+            glVertex2d(-point + (RANGE * (i + 1)), (RANGE * (j + 1)));
+            glVertex2d(-point + (RANGE * (i + 1)), (RANGE * j));
+        }
+    }
+    glEnd();
+
+//    glutSwapBuffers();
+
 }
 
 void ROBO::forward(double v) {
@@ -135,8 +251,8 @@ void ROBO::turn(double q) {
 
 void ROBO::action() {
 
-    glid_x = floor(x) / (RANGE);//グリッドぎり
-    glid_y = floor(y) / (RANGE);
+    glid_x = (floor(x) / (2 * RANGE)) + half_gridline;//グリッドぎり
+    glid_y = (floor(y) / (2 * RANGE)) + half_gridline;
 
 //    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
 
@@ -179,32 +295,6 @@ void ROBO::action() {
 
 }
 
-
-void idle() {
-//    std::cout << step_counter << std::endl;
-    if (fStart == 0) return;
-    for (auto &i: robo) i.action();
-//    Sleep(1 * 100);
-    display();
-    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
-              << ",activator," << robo[0].activator << ",inhibitor," << robo[0].inhibitor << ",step,"
-              << step_counter << std::endl;
-    step_counter++;
-}
-
-void mouse(int button, int state, int x, int y) //マウスボタンの処理
-{
-    if (state == GLUT_DOWN) { //ボタンが押されたら...
-        if (fStart == 1)
-            fStart = 0;
-        else
-            fStart = 1;
-        for (auto &i: robo) {
-            i.init();
-        }
-    }
-}
-
 void ROBO::init() {
 
     std::uniform_int_distribution<int> distr(-point, point);    // 非決定的な乱数生成器
@@ -229,6 +319,7 @@ void ROBO::init() {
 }
 
 void ROBO::draw() {
+
     glPushMatrix(); //現在の座標系の保存
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
@@ -247,13 +338,12 @@ void ROBO::draw() {
 ////    glVertex2d(tsensor[CENTER].x, tsensor[CENTER].y);
 ////    glVertex2d(0, 0); //右センサーの描画
 ////    glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
+
     glEnd();
     glPopMatrix(); //保存ておいた座標系へ戻す
 }
-
 //接触センサー関数 戻り値に　接触状態を１　非接触状態を０　返す
-int ROBO::touchsensor(int i)
-{
+int ROBO::touchsensor(int i) {
     int fw = 0;
     int fo = 0; //他のロボットとの接触フラグ
     POSITION p1, p2;
@@ -368,8 +458,8 @@ int ROBO::check_cross_others(POSITION p) {
                 touch_counter++;
                 if (step_counter >= 10) {
 
-                    activator = sum_activator / touch_counter;
-                    inhibitor = sum_inhibitor / touch_counter;
+                    activator = 2 * sum_activator / touch_counter;
+                    inhibitor = 2 * sum_inhibitor / touch_counter;
                     sum_activator = 0;
                     sum_inhibitor = 0;
                     touch_counter = 0;
@@ -385,19 +475,65 @@ int ROBO::check_cross_others(POSITION p) {
     return 0;
 }
 
+void idle() {
+
+    if (fStart == 0) return;
+    for (auto &i: robo) i.action();
+//    Sleep(1 * 100);
+    calculate_grid_concentration();
+
+    display();
+    for (int i; i < 2; i++) {
+        glutSetWindow(windows[i]);
+        glutPostRedisplay();
+    }
+
+    step_counter++;
+    epoch++;
+//    cout << epoch << ";;;;";
+}
+
+void mouse(int button, int state, int x, int y) //マウスボタンの処理
+{
+    if (state == GLUT_DOWN) { //ボタンが押されたら...
+        if (fStart == 1)
+            fStart = 0;
+        else
+            fStart = 1;
+        for (auto &i: robo) {
+            i.init();
+        }
+    }
+}
 
 int main(int argc, char *argv[]) {
-
 
     Initialize();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(point, point);
-    glutCreateWindow(argv[0]);
+    windows[0] = glutCreateWindow("Robot sim");
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
+//    glutIdleFunc(idle);
+    glutMouseFunc(mouse); //マウスのボタンを検出 これを切るとコマ送りになる。
+//    glutMainLoop();
+
+//    Initialize();
+//    glutInit(&argc, argv);
+
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+    glutInitWindowSize(point, point);
+    windows[1] = glutCreateWindow("Grid");
+//    glutCreateSubWindow(0,0,200,200,200);
+    glutDisplayFunc(grid_display);
+    glutReshapeFunc(resize);
     glutIdleFunc(idle);
-    glutMouseFunc(mouse); //マウスのボタンを検出
+//    //サブウィンドウ作成
+//    SubWinID[0] = glutCreateSubWindow(MainWinID,0,0,160,120);//左上原点、(0,0)から横160、縦120ピクセル分
+//    GLUT_CALL_FUNC_SUB();
+//    MY_INIT_SUB();
+//    glutMouseFunc(mouse); //マウスのボタンを検出
     glutMainLoop();
 
     return 0;

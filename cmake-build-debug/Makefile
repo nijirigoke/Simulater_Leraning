@@ -47,19 +47,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\Jun\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\212.5457.51\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\T118029b\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\212.5284.51\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\Jun\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\212.5457.51\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\T118029b\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\212.5284.51\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Jun\CLionProjects\Simulater_Leraning
+CMAKE_SOURCE_DIR = C:\Users\T118029b\CLionProjects\Simulater_Leraning
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -67,7 +67,7 @@ CMAKE_BINARY_DIR = C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-deb
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	C:\Users\Jun\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\212.5457.51\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	C:\Users\T118029b\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\212.5284.51\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -77,7 +77,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	C:\Users\Jun\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\212.5457.51\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	C:\Users\T118029b\scoop\persist\jetbrains-toolbox\apps\CLion\ch-0\212.5284.51\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Jun\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\T118029b\CLionProjects\Simulater_Leraning\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,45 +129,6 @@ Simulater_Leraning/fast:
 .PHONY : Simulater_Leraning/fast
 
 #=============================================================================
-# Target rules for targets named test2
-
-# Build rule for target.
-test2: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test2
-.PHONY : test2
-
-# fast build rule for target.
-test2/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/build
-.PHONY : test2/fast
-
-#=============================================================================
-# Target rules for targets named test
-
-# Build rule for target.
-test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 test
-.PHONY : test
-
-# fast build rule for target.
-test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/build
-.PHONY : test/fast
-
-#=============================================================================
-# Target rules for targets named time
-
-# Build rule for target.
-time: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 time
-.PHONY : time
-
-# fast build rule for target.
-time/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/build
-.PHONY : time/fast
-
-#=============================================================================
 # Target rules for targets named glwindows
 
 # Build rule for target.
@@ -204,30 +165,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Simulater_Leraning.dir\build.make CMakeFiles/Simulater_Leraning.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-test.obj: test.cpp.obj
-.PHONY : test.obj
-
-# target to build an object file
-test.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.obj
-.PHONY : test.cpp.obj
-
-test.i: test.cpp.i
-.PHONY : test.i
-
-# target to preprocess a source file
-test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.i
-.PHONY : test.cpp.i
-
-test.s: test.cpp.s
-.PHONY : test.s
-
-# target to generate assembly for a file
-test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test.dir\build.make CMakeFiles/test.dir/test.cpp.s
-.PHONY : test.cpp.s
-
 test_glwindows.obj: test_glwindows.cpp.obj
 .PHONY : test_glwindows.obj
 
@@ -252,54 +189,6 @@ test_glwindows.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\glwindows.dir\build.make CMakeFiles/glwindows.dir/test_glwindows.cpp.s
 .PHONY : test_glwindows.cpp.s
 
-testtime.obj: testtime.cpp.obj
-.PHONY : testtime.obj
-
-# target to build an object file
-testtime.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/testtime.cpp.obj
-.PHONY : testtime.cpp.obj
-
-testtime.i: testtime.cpp.i
-.PHONY : testtime.i
-
-# target to preprocess a source file
-testtime.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/testtime.cpp.i
-.PHONY : testtime.cpp.i
-
-testtime.s: testtime.cpp.s
-.PHONY : testtime.s
-
-# target to generate assembly for a file
-testtime.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\time.dir\build.make CMakeFiles/time.dir/testtime.cpp.s
-.PHONY : testtime.cpp.s
-
-write_line.obj: write_line.cpp.obj
-.PHONY : write_line.obj
-
-# target to build an object file
-write_line.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/write_line.cpp.obj
-.PHONY : write_line.cpp.obj
-
-write_line.i: write_line.cpp.i
-.PHONY : write_line.i
-
-# target to preprocess a source file
-write_line.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/write_line.cpp.i
-.PHONY : write_line.cpp.i
-
-write_line.s: write_line.cpp.s
-.PHONY : write_line.s
-
-# target to generate assembly for a file
-write_line.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\test2.dir\build.make CMakeFiles/test2.dir/write_line.cpp.s
-.PHONY : write_line.cpp.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -310,24 +199,12 @@ help:
 	@echo ... rebuild_cache
 	@echo ... Simulater_Leraning
 	@echo ... glwindows
-	@echo ... test
-	@echo ... test2
-	@echo ... time
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... test.obj
-	@echo ... test.i
-	@echo ... test.s
 	@echo ... test_glwindows.obj
 	@echo ... test_glwindows.i
 	@echo ... test_glwindows.s
-	@echo ... testtime.obj
-	@echo ... testtime.i
-	@echo ... testtime.s
-	@echo ... write_line.obj
-	@echo ... write_line.i
-	@echo ... write_line.s
 .PHONY : help
 
 
