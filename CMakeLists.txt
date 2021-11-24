@@ -14,4 +14,6 @@ target_link_libraries(test -lOpenGL32 -lfreeGLUT)
 target_link_libraries(test2 -lOpenGL32 -lfreeGLUT)
 target_link_libraries(time -lOpenGL32 -lfreeGLUT)
 target_link_libraries(glwindows -lOpenGL32 -lfreeGLUT)
+target_link_libraries(glwindows -lOpenGL32 -lfreeGLUT)
+
 

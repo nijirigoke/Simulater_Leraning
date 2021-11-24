@@ -112,7 +112,7 @@ using GLID = vector<vector<GLID_STRUCT>>;
 GLID GL1(gridline);
 //GLID GL1(gridline,vector<GLID_STRUCT> (gridline));
 
-void calculate_glid_concentration();
+void calculate_glid_concentration(GLID vector);
 
 void wall_draw();
 
@@ -228,7 +228,7 @@ void idle() {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
     }
-    calculate_glid_concentration();
+    calculate_glid_concentration(GLID());
 
 
 //    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
@@ -480,7 +480,7 @@ void Initialize() {
     for (auto &i: robo) i.init();
 }
 
-void calculate_glid_concentration() {
+void calculate_glid_concentration(GLID vector) {
 
     vector<double> sum_glid_activator;
     vector<double> sum_glid_inhibitor;

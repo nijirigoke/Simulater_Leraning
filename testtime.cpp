@@ -109,10 +109,14 @@ int windows[2];
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 using GLID = vector<vector<GLID_STRUCT>>;
-GLID GL1(gridline);
+//GLID GL1(gridline);
 //GLID GL1(gridline,vector<GLID_STRUCT> (gridline));
 
-void calculate_glid_concentration();
+void calculate_glid_concentration(GLID vector);
+
+void draw_grid_density_map(GLID vector);
+
+void grid_display();
 
 void wall_draw();
 
@@ -165,25 +169,6 @@ void grid_wall_draw() {
 
 }
 
-void draw_grid_density_map(vector<vector<GLID_STRUCT>> &GL2) {
-    double hoge = 2 * point;
-    int num = hoge / (RANGE);
-
-    for (int i = 0; i < gridline; ++i) {
-        for (int j = 0; j < gridline; ++j) {
-            glBegin(GL_QUADS);
-            glColor3b(GL2[i][j].ave_activator, GL2[i][j].ave_inhibitor,
-                      1 - 0.5 * (GL2[i][j].ave_activator + GL2[i][j].ave_inhibitor));
-            glVertex2d(-point, -point);
-            glVertex2d(-point, point);
-            glVertex2d(point, point);
-            glVertex2d(point, -point);
-            glEnd();
-        }
-    }
-
-
-}
 
 
 void display() {
@@ -202,7 +187,6 @@ void grid_display() {
     glClear(GL_COLOR_BUFFER_BIT);
     graphics();
     grid_wall_draw();
-
     glutSwapBuffers();
 
 }
@@ -265,20 +249,20 @@ void ROBO::action() {
 
 void idle() {
 //    GLID GL1(ROBOS);
+    GLID GL2(gridline);
 
 //    std::cout << step_counter << std::endl;
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
+    calculate_glid_concentration(GL2);
     display();
-    grid_display();
     for (int i; i < 2; i++) {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
     }
 //    glPopMatrix();
 
-    calculate_glid_concentration();
 
 
 //    std::cout << "sum_activator," << robo[0].sum_activator << ",sum_inhibitor," << robo[0].sum_inhibitor
@@ -530,11 +514,10 @@ void Initialize() {
     for (auto &i: robo) i.init();
 }
 
-void calculate_glid_concentration() {
+void calculate_glid_concentration(vector<vector<GLID_STRUCT>> GL2) {
 
     vector<double> sum_glid_activator;
     vector<double> sum_glid_inhibitor;
-    GLID GL2(gridline);
     double ave_activator = 0;
     double ave_inhibitor = 0;
 
@@ -571,6 +554,29 @@ void calculate_glid_concentration() {
 //    cout << GL1[0][0].ave_activator << "::" << GL1[0][0].ave_inhibitor <<"::"<<GL1[0].size() <<endl;
 //    cout << GL2[0][0].ave_activator << "::" << GL2[0][0].ave_inhibitor << "::" << GL2[0].size() << endl;
 //    cout<<sum_glid_activator.size()<<"::"<<GL1[0][0].ave_inhibitor<<endl;
-    draw_grid_density_map(GL2);
+
 }
 
+void draw_grid_density_map(vector<vector<GLID_STRUCT>> GL2) {
+    double hoge = 2 * point;
+    int num = hoge / (RANGE);
+
+//    cout << GL2[0][0].ave_activator << "::" << GL2[0][0].ave_inhibitor << "::" << GL2[0].size() << endl;
+    glBegin(GL_QUADS);
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    for (int i = 0; i < gridline; ++i) {
+        for (int j = 0; j < gridline; ++j) {
+//            glColor3b(GL2[i][j].ave_activator, GL2[i][j].ave_inhibitor,
+            glColor3b(1, 1, 0);
+            glVertex2d(-point + (RANGE * i), (RANGE * j));
+            glVertex2d(-point + (RANGE * i), (RANGE * (j + 1)));
+            glVertex2d(-point + (RANGE * (i + 1)), (RANGE * (j + 1)));
+            glVertex2d(-point + (RANGE * (i + 1)), (RANGE * j));
+        }
+    }
+    glEnd();
+
+//    glutSwapBuffers();
+
+}
