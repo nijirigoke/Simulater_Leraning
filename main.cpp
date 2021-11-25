@@ -215,18 +215,16 @@ void calculate_grid_concentration() {
                 }
             }
             //todo この段階で平均値を産出すべし
-            if (counter > 0) {
+//            if (counter > 0) {
                 GL[x][y].ave_activator = sum_glid_activator / counter;
                 GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
-            }
+//            }
 //            cout << GL[x][y].ave_activator << "::" << GL[x][y].ave_inhibitor <<endl;
         }
     }
 }
 
 void draw_grid_density_map() {
-    double hoge = 2 * point;
-    int num = (int) hoge / (RANGE);
     glBegin(GL_QUAD_STRIP);
     for (int i = 0; i < gridline; ++i) {
         for (int j = 0; j < gridline; ++j) {
@@ -485,13 +483,12 @@ void idle() {
 //    Sleep(1 * 100);
 
     calculate_grid_concentration();
-    display();
-    grid_display();
+//    display();
+//    grid_display();
     for (int i; i < 2; i++) {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
     }
-
     step_counter++;
     epoch++;
 //    cout << epoch << ";;;;";
