@@ -16,7 +16,7 @@
 #define RANGE 50 //通信レンジ の半径
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  2000 //ロボット台数　10台
+#define ROBOS  1000 //ロボット台数　10台
 using namespace std;
 
 struct GLID_STRUCT {
@@ -61,10 +61,10 @@ typedef struct ROBO {
 
     double du = 0.08;
     double dv = 0.50;
-    double Cu = 0.0000;
-    double Cv = 0.0005;
+    double Cu = 0.000001;
+    double Cv = 0.0000;
     double a = 0.01;
-    double b = 0.010;
+    double b = 0.012;
     double c = 0.009;
     double d = 0.010;
 
@@ -82,16 +82,11 @@ public:
 
     int touchsensor(int i);
 
-
     static int check_cross_wall(POSITION p1, POSITION p2);
 
     int check_cross_others(POSITION p);
 
-
     int stack = 0;
-
-    double sens_nearrobotsensor();
-
 } ROBO;
 
 ROBO robo[ROBOS];//要素数ROBOSで配列変数roboを定義
@@ -106,7 +101,6 @@ std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
 
-
 void calculate_grid_concentration();
 
 void draw_grid_density_map();
@@ -118,7 +112,6 @@ void wall_draw();
 void Initialize();
 
 void wall_draw() {
-
     glBegin(GL_LINES);
     for (auto &i: wall) {
         glVertex2d(pin[i.p1].x, pin[i.p1].y);
@@ -126,7 +119,6 @@ void wall_draw() {
 //        cout << pin[i.p1].x << pin[i.p1].y << endl;
     }
     glEnd();
-
 }
 
 void grid_wall_draw() {
@@ -144,9 +136,7 @@ void grid_wall_draw() {
     }
     glEnd();
 
-
     glBegin(GL_LINES);
-
     // tate
     for (int j = 0; j < gridline; ++j) {
         glVertex2d(-point + (j * RANGE), point);
@@ -158,10 +148,7 @@ void grid_wall_draw() {
         glVertex2d(point, point - (j * RANGE));
         glVertex2d(-point, point - (j * RANGE));
     }
-
     glEnd();
-
-
 }
 
 void display() {
@@ -199,11 +186,10 @@ void calculate_grid_concentration() {
     }
     // 初期化 終わり
 
-    //todo 計算に問題あり
     for (int x = 0; x < gridline; ++x) {
         for (int y = 0; y < gridline; ++y) {// y point
             int counter = 0;
-            //todo 配列を初期化すべし
+            //配列を初期化すべし
             sum_glid_activator = 0;
             sum_glid_inhibitor = 0;
             for (int i = 0; i < ROBOS; i++) {// i point
@@ -214,12 +200,8 @@ void calculate_grid_concentration() {
                     sum_glid_inhibitor += robo[i].inhibitor;
                 }
             }
-            //todo この段階で平均値を産出すべし
-//            if (counter > 0) {
-                GL[x][y].ave_activator = sum_glid_activator / counter;
-                GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
-//            }
-//            cout << GL[x][y].ave_activator << "::" << GL[x][y].ave_inhibitor <<endl;
+            GL[x][y].ave_activator = sum_glid_activator / counter;
+            GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
 }
@@ -288,7 +270,6 @@ void ROBO::action() {
         turn(1 * PI);
         stack = 0;
     }
-
 
 //std::cout << flash_memori << std::endl;
 //std::cout << receive_flag << std::endl;
@@ -450,8 +431,8 @@ int ROBO::check_cross_others(POSITION p) {
                 i.activator += tx;
                 i.inhibitor += ty;
 
-//                i.sum_activator += tx;
-//                i.sum_inhibitor += ty;
+                i.sum_activator += tx;
+                i.sum_inhibitor += ty;
 
                 sum_inhibitor += inhibitor - ty;
                 sum_activator += activator - tx;
@@ -470,8 +451,6 @@ int ROBO::check_cross_others(POSITION p) {
                 return 1;
             }
         }
-
-
     }
     return 0;
 }
@@ -518,11 +497,6 @@ int main(int argc, char *argv[]) {
     glutReshapeFunc(resize);
 //    glutIdleFunc(idle);
     glutMouseFunc(mouse); //マウスのボタンを検出 これを切るとコマ送りになる。
-//    glutMainLoop();
-
-//    Initialize();
-//    glutInit(&argc, argv);
-
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(point, point);
     windows[1] = glutCreateWindow("Grid");
@@ -530,11 +504,6 @@ int main(int argc, char *argv[]) {
     glutDisplayFunc(grid_display);
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
-//    //サブウィンドウ作成
-//    SubWinID[0] = glutCreateSubWindow(MainWinID,0,0,160,120);//左上原点、(0,0)から横160、縦120ピクセル分
-//    GLUT_CALL_FUNC_SUB();
-//    MY_INIT_SUB();
-//    glutMouseFunc(mouse); //マウスのボタンを検出
     glutMainLoop();
 
     return 0;
