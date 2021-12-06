@@ -16,7 +16,7 @@
 #define RANGE 50 //通信レンジ の半径
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  1000 //ロボット台数　10台
+#define ROBOS  1500 //ロボット台数　10台
 using namespace std;
 
 struct GLID_STRUCT {
@@ -50,23 +50,24 @@ typedef struct ROBO {
 
     double dx;
     double dy;
-//    double du = 0.08;
+//
+//    double du = 0.05;
 //    double dv = 0.50;
 //    double Cu = 0.00010;
 //    double Cv = 0.0000;
-//    double a = 0.01;
-//    double b = 0.011;
-//    double c = 0.008;
-//    double d = 0.009;
+//    double a = 0.005;
+//    double b = 0.006;
+//    double c = 0.0045;
+//    double d = 0.0055;
 
     double du = 0.08;
-    double dv = 0.50;
-    double Cu = 0.000001;
-    double Cv = 0.0000;
+    double dv = 0.40;
+    double Cu = 0.0001;
+    double Cv = 0.00000;
     double a = 0.01;
-    double b = 0.012;
-    double c = 0.009;
-    double d = 0.010;
+    double b = 0.011;
+    double c = 0.008;
+    double d = 0.009;
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
@@ -204,22 +205,47 @@ void calculate_grid_concentration() {
             GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
+
+//    cout << GL[8][8].ave_activator<<","<<GL[8][8].ave_inhibitor<<endl;
+    cout << robo[0].activator << "," << robo[0].inhibitor << endl;
 }
 
 void draw_grid_density_map() {
-    glBegin(GL_QUAD_STRIP);
+
     for (int i = 0; i < gridline; ++i) {
         for (int j = 0; j < gridline; ++j) {
-            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
-                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
+            glBegin(GL_TRIANGLE_STRIP);
+
+
+//            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
+//                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
+
+            glColor3d(GL[i][j].ave_activator, 0, 0);
             glVertex2d(-point + (RANGE * i), -point + (RANGE * j));
-            glVertex2d(-point + (RANGE * i), -point + (RANGE * (j + 1) * 2));
-            glVertex2d(-point + (RANGE * (i + 1)), -point + (RANGE * (j + 1) * 2));
             glVertex2d(-point + (RANGE * (i + 1)), -point + (RANGE * j));
+            glVertex2d(-point + (RANGE * i), -point + (RANGE * (j + 1) * 1));
+            glVertex2d(-point + (RANGE * (i + 1)), -point + (RANGE * (j + 1) * 1));
+            glEnd();
 
         }
     }
+
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3d(0, 0, 1);
+    glVertex2d(-point + (RANGE * 0), -point + (RANGE * 0));
+    glVertex2d(-point + (RANGE * (0 + 1)), -point + (RANGE * 0));
+    glVertex2d(-point + (RANGE * 0), -point + (RANGE * (0 + 1) * 1));
+    glVertex2d(-point + (RANGE * (0 + 1)), -point + (RANGE * (0 + 1) * 1));
     glEnd();
+
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3d(0, 2, 1);
+    glVertex2d(-point + (RANGE * 5), -point + (RANGE * 5));
+    glVertex2d(-point + (RANGE * (5 + 1)), -point + (RANGE * 5));
+    glVertex2d(-point + (RANGE * 5), -point + (RANGE * (5 + 1) * 1));
+    glVertex2d(-point + (RANGE * (5 + 1)), -point + (RANGE * (5 + 1) * 1));
+    glEnd();
+
 }
 
 void ROBO::forward(double v) {
@@ -241,8 +267,8 @@ void ROBO::action() {
     dx = activator * a - inhibitor * b + Cu;
     dy = activator * c - inhibitor * d + Cv;
 
-    activator = activator + dx;
-    inhibitor = inhibitor + dy;
+    activator += dx;
+    inhibitor += dy;
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
@@ -278,7 +304,7 @@ void ROBO::action() {
 
 void ROBO::init() {
 
-    std::uniform_int_distribution<int> distr(-point, point);    // 非決定的な乱数生成器
+    std::uniform_int_distribution<int> distr(-point + 1, point - 1);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
     std::uniform_real_distribution<> rando(0.0, 1.0);
 
@@ -305,7 +331,8 @@ void ROBO::draw() {
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
 
-    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
+//    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
+    glColor3d(activator, inhibitor, 0);
     draw_robo_circle(0, 0, r);
 
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
@@ -428,8 +455,8 @@ int ROBO::check_cross_others(POSITION p) {
                 tx = du * (activator - i.activator);
                 ty = dv * (inhibitor - i.inhibitor);
 
-                i.activator += tx;
-                i.inhibitor += ty;
+//                i.activator += tx;
+//                i.inhibitor += ty;
 
                 i.sum_activator += tx;
                 i.sum_inhibitor += ty;
@@ -440,8 +467,8 @@ int ROBO::check_cross_others(POSITION p) {
                 touch_counter++;
                 if (step_counter >= 10) {
 
-                    activator = 2 * sum_activator / touch_counter;
-                    inhibitor = 2 * sum_inhibitor / touch_counter;
+                    activator = sum_activator / touch_counter;
+                    inhibitor = sum_inhibitor / touch_counter;
                     sum_activator = 0;
                     sum_inhibitor = 0;
                     touch_counter = 0;
