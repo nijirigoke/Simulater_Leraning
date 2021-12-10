@@ -14,11 +14,11 @@
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
 #define RANGE 50 //通信レンジ の半径
-#define INHIBITOR_RANGE 70
+#define INHIBITOR_RANGE 80
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
-#define MAPDENSITY 30
+#define MAPDENSITY 80
 
 using namespace std;
 
@@ -37,6 +37,9 @@ typedef struct ROBO {
     int glid_x = 0;
     int glid_y = 0;
 
+    int map_glid_x = 0;
+    int map_glid_y = 0;
+
     int tCenter = 0;
     int tRight = 0;
     int tLeft = 0;
@@ -52,8 +55,8 @@ typedef struct ROBO {
     double sum_inhibitor = 0;
     int touch_counter = 0;
 
-    double dx;
-    double dy;
+    double dx = 0;
+    double dy = 0;
 
 //    double dv = 0.40;
 //    double du = 0.08;
@@ -113,8 +116,13 @@ public:
 ROBO robo[ROBOS];//要素数ROBOSで配列変数roboを定義
 
 int epoch = 0;
+// 通信可能性のあるロボットを効率的に探すためのグリッド切り
 int gridline = (int) point * 2 / INHIBITOR_RANGE;
 int half_gridline = gridline / 2;
+// ビジュアライズしたマップのためのグリッド切り
+int map_gridline = (int) point * 2 / MAPDENSITY;
+int half_map_gridline = map_gridline / 2;
+
 int windows[2];
 
 std::random_device rnd;     // 非決定的な乱数生成器
@@ -144,9 +152,6 @@ void wall_draw() {
 
 void grid_wall_draw() {
 
-    double hoge = 2 * point;
-    int num = (int) hoge / (RANGE);
-
     glBegin(GL_LINES);
     glColor3d(1, 1, 1);
 
@@ -159,13 +164,13 @@ void grid_wall_draw() {
 
     glBegin(GL_LINES);
     // tate
-    for (int j = 0; j < gridline; ++j) {
+    for (int j = 0; j < map_gridline; ++j) {
         glVertex2d(-point + (j * MAPDENSITY), point);
         glVertex2d(-point + (j * MAPDENSITY), -point);
     }
 
     // yoko
-    for (int j = 0; j < gridline; ++j) {
+    for (int j = 0; j < map_gridline; ++j) {
         glVertex2d(point, point - (j * MAPDENSITY));
         glVertex2d(-point, point - (j * MAPDENSITY));
     }
@@ -199,23 +204,23 @@ void calculate_grid_concentration() {
     double sum_glid_activator = 0;
     double sum_glid_inhibitor = 0;
 
-    for (int x = 0; x < gridline; ++x) {
-        for (int y = 0; y < gridline; ++y) {// y point
+    for (int x = 0; x < map_gridline; ++x) {
+        for (int y = 0; y < map_gridline; ++y) {// y point
             GL[x][y].ave_activator = 0;
             GL[x][y].ave_inhibitor = 0;
         }
     }
     // 初期化 終わり
 
-    for (int x = 0; x < gridline; ++x) {
-        for (int y = 0; y < gridline; ++y) {// y point
+    for (int x = 0; x < map_gridline; ++x) {
+        for (int y = 0; y < map_gridline; ++y) {// y point
             int counter = 0;
             //配列を初期化すべし
             sum_glid_activator = 0;
             sum_glid_inhibitor = 0;
             for (int i = 0; i < ROBOS; i++) {// i point
-//                cout << x << ";" << robo[i].glid_x << endl;
-                if (x == robo[i].glid_x && y == robo[i].glid_y) {
+//                cout << x << ";" << robo[i].map_glid_x <<  ";" << y << ";"<< robo[i].map_glid_y<< endl;
+                if (x == robo[i].map_glid_x && y == robo[i].map_glid_y) {
                     counter++;
                     sum_glid_activator += robo[i].activator;
                     sum_glid_inhibitor += robo[i].inhibitor;
@@ -225,22 +230,22 @@ void calculate_grid_concentration() {
             GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
-
+    cout << "epoch," << epoch << "," << robo[0].activator << "," << robo[0].inhibitor << "," << endl;
 //    cout << GL[8][8].ave_activator<<","<<GL[8][8].ave_inhibitor<<endl;
 //    cout <<epoch<<"," <<robo[0].activator << "," << robo[0].inhibitor << endl;
 }
 
 void draw_grid_density_map() {
 
-    for (int i = 0; i < gridline; ++i) {
-        for (int j = 0; j < gridline; ++j) {
+    for (int i = 0; i < map_gridline; ++i) {
+        for (int j = 0; j < map_gridline; ++j) {
             glBegin(GL_TRIANGLE_STRIP);
 
 
-            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
-                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
+//            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
+//                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
 
-//            glColor3d(GL[i][j].ave_activator, 0, 0);
+            glColor3d(GL[i][j].ave_activator, 0, 0);
             glVertex2d(-point + (MAPDENSITY * i), -point + (MAPDENSITY * j));
             glVertex2d(-point + (MAPDENSITY * (i + 1)), -point + (MAPDENSITY * j));
             glVertex2d(-point + (MAPDENSITY * i), -point + (MAPDENSITY * (j + 1) * 1));
@@ -249,23 +254,6 @@ void draw_grid_density_map() {
 
         }
     }
-
-    glBegin(GL_TRIANGLE_STRIP);
-    glColor3d(0, 0, 1);
-    glVertex2d(-point + (RANGE * 0), -point + (RANGE * 0));
-    glVertex2d(-point + (RANGE * (0 + 1)), -point + (RANGE * 0));
-    glVertex2d(-point + (RANGE * 0), -point + (RANGE * (0 + 1) * 1));
-    glVertex2d(-point + (RANGE * (0 + 1)), -point + (RANGE * (0 + 1) * 1));
-    glEnd();
-
-    glBegin(GL_TRIANGLE_STRIP);
-    glColor3d(0, 2, 1);
-    glVertex2d(-point + (RANGE * 5), -point + (RANGE * 5));
-    glVertex2d(-point + (RANGE * (5 + 1)), -point + (RANGE * 5));
-    glVertex2d(-point + (RANGE * 5), -point + (RANGE * (5 + 1) * 1));
-    glVertex2d(-point + (RANGE * (5 + 1)), -point + (RANGE * (5 + 1) * 1));
-    glEnd();
-
 }
 
 void ROBO::forward(double v) {
@@ -280,8 +268,13 @@ void ROBO::turn(double q) {
 void ROBO::action() {
     step_counter++;
 
-    glid_x = (int) half_gridline + floor(x) / (2 * RANGE);//グリッドぎり
-    glid_y = (int) half_gridline + floor(y) / (2 * RANGE);
+    glid_x = (int) half_gridline + floor(x) / (2 * INHIBITOR_RANGE);//グリッドぎり
+    glid_y = (int) half_gridline + floor(y) / (2 * INHIBITOR_RANGE);
+
+    map_glid_x = half_map_gridline + floor(x) / (MAPDENSITY);
+    map_glid_y = half_map_gridline + floor(y) / (MAPDENSITY);
+//    cout<<map_glid_x<<endl;
+//    cout<<map_glid_y<<endl;
 
 //    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
 
@@ -363,17 +356,18 @@ void ROBO::draw() {
 //    glColor3d(activator, inhibitor, 0);
     glColor3d(activator, 0, 0);
     draw_robo_circle(0, 0, r);
+    glColor3d(0.5, 0.5, 0.5);
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-//    glColor3d(0.3, 0.3, 0.3);
+
 //    draw_circle(0, 0, RANGE); //通信範囲の描画
 //    glColor3d(0.3, 0.3, 0.3);
 //    glBegin(GL_LINES);
-////    glVertex2d(0, 0); //左センサーの描画
-////    glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
-////    glVertex2d(0, 0); //正面センサーの描画
-////    glVertex2d(tsensor[CENTER].x, tsensor[CENTER].y);
-////    glVertex2d(0, 0); //右センサーの描画
-////    glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
+    glVertex2d(0, 0); //左センサーの描画
+    glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
+    glVertex2d(0, 0); //正面センサーの描画
+    glVertex2d(tsensor[CENTER].x, tsensor[CENTER].y);
+    glVertex2d(0, 0); //右センサーの描画
+    glVertex2d(tsensor[RIGHT].x, tsensor[RIGHT].y);
 
     glEnd();
     glPopMatrix(); //保存ておいた座標系へ戻す
@@ -579,9 +573,6 @@ double ROBO::calculate_parameter(struct ROBO i) {
 
 
 void idle() {
-    cout << epoch << "," << RANGE << "," << robo[0].step_counter << "," << robo[0].activator << ","
-         << robo[0].sum_activator << "," << endl;
-
 
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
@@ -635,6 +626,8 @@ int main(int argc, char *argv[]) {
 }
 
 void Initialize() {
+    cout << "map_gridline:" << map_gridline << endl;
+
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
 }

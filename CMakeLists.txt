@@ -9,5 +9,3 @@ add_executable(glwindows test_glwindows.cpp)
 target_link_libraries(Simulater_Leraning -lOpenGL32 -lfreeGLUT)
 target_link_libraries(glwindows -lOpenGL32 -lfreeGLUT)
 target_link_libraries(glwindows -lOpenGL32 -lfreeGLUT)
-
-
