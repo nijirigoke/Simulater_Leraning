@@ -14,18 +14,20 @@
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
 #define RANGE 50 //通信レンジ の半径
+#define INHIBITOR_RANGE 100
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
 using namespace std;
 
 struct GLID_STRUCT {
-
     double ave_activator;
     double ave_inhibitor;
 };
 
 typedef struct ROBO {
+    int step_counter = 0;
+
     double r{};
     double x{}, y{};
     double dir{};
@@ -50,24 +52,35 @@ typedef struct ROBO {
 
     double dx;
     double dy;
-//
-//    double du = 0.05;
-//    double dv = 0.50;
-//    double Cu = 0.00010;
-//    double Cv = 0.0000;
-//    double a = 0.005;
-//    double b = 0.006;
-//    double c = 0.0045;
-//    double d = 0.0055;
 
-    double du = 0.08;
-    double dv = 0.40;
-    double Cu = 0.0001;
-    double Cv = 0.00000;
-    double a = 0.01;
-    double b = 0.011;
-    double c = 0.008;
-    double d = 0.009;
+//    double dv = 0.040;
+//    double du = 0.008;
+//    double Cv = 0.0000;
+//    double Cu = 0.000010;
+//    double a = 0.001;
+//    double b = 0.0011;
+//    double c = 0.0008;
+//    double d = 0.0009;
+
+//    double du = 0.000;
+//    double dv = 0.000;
+//    double Cu = 0.000000;
+//    double Cv = 0.0000;
+//    double a = 0.000;
+//    double b = 0.000;
+//    double c = 0.0000;
+//    double d = 0.0000;
+
+
+    double dv = 0.040;
+    double du = 0.008;
+    double Cv = 0.0000;
+    double Cu = 0.000010;
+    double a = 0.001;
+    double b = 0.0011;
+    double c = 0.0008;
+    double d = 0.0010;
+
 
     POSITION tsensor[3]{}; //構造体変数の追加
 public:
@@ -88,11 +101,15 @@ public:
     int check_cross_others(POSITION p);
 
     int stack = 0;
+
+    void nearrobotsensor();
+
+    double calculate_parameter(struct ROBO i);
+
 } ROBO;
 
 ROBO robo[ROBOS];//要素数ROBOSで配列変数roboを定義
 
-int step_counter = 0;
 int epoch = 0;
 int gridline = (int) point * 2 / RANGE;
 int half_gridline = gridline / 2;
@@ -101,6 +118,7 @@ int windows[2];
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
+
 
 void calculate_grid_concentration();
 
@@ -207,7 +225,7 @@ void calculate_grid_concentration() {
     }
 
 //    cout << GL[8][8].ave_activator<<","<<GL[8][8].ave_inhibitor<<endl;
-    cout << robo[0].activator << "," << robo[0].inhibitor << endl;
+//    cout <<epoch<<"," <<robo[0].activator << "," << robo[0].inhibitor << endl;
 }
 
 void draw_grid_density_map() {
@@ -217,10 +235,10 @@ void draw_grid_density_map() {
             glBegin(GL_TRIANGLE_STRIP);
 
 
-//            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
-//                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
+            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
+                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
 
-            glColor3d(GL[i][j].ave_activator, 0, 0);
+//            glColor3d(GL[i][j].ave_activator, 0, 0);
             glVertex2d(-point + (RANGE * i), -point + (RANGE * j));
             glVertex2d(-point + (RANGE * (i + 1)), -point + (RANGE * j));
             glVertex2d(-point + (RANGE * i), -point + (RANGE * (j + 1) * 1));
@@ -258,6 +276,7 @@ void ROBO::turn(double q) {
 }
 
 void ROBO::action() {
+    step_counter++;
 
     glid_x = (int) half_gridline + floor(x) / (2 * RANGE);//グリッドぎり
     glid_y = (int) half_gridline + floor(y) / (2 * RANGE);
@@ -267,8 +286,10 @@ void ROBO::action() {
     dx = activator * a - inhibitor * b + Cu;
     dy = activator * c - inhibitor * d + Cv;
 
-    activator += dx;
-    inhibitor += dy;
+//    cout<<dx<<endl;
+    activator = activator + dx;
+    inhibitor = inhibitor + dy;
+    nearrobotsensor();
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
     tRight = touchsensor(RIGHT);        //右センサーの値
@@ -308,6 +329,8 @@ void ROBO::init() {
     std::uniform_real_distribution<> dir_gen(0, 360);
     std::uniform_real_distribution<> rando(0.0, 1.0);
 
+//robo[0].activator=0.9;
+//robo[0].inhibitor=0.4;
     activator = rando(mt);
     inhibitor = rando(mt);
 
@@ -332,9 +355,9 @@ void ROBO::draw() {
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
 
 //    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
-    glColor3d(activator, inhibitor, 0);
+//    glColor3d(activator, inhibitor, 0);
+    glColor3d(activator, 0, 0);
     draw_robo_circle(0, 0, r);
-
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
 //    glColor3d(0.3, 0.3, 0.3);
 //    draw_circle(0, 0, RANGE); //通信範囲の描画
@@ -433,8 +456,8 @@ int ROBO::check_cross_others(POSITION p) {
 // 区別したらそいつとの距離を産出すること
     sensor_x = p.x;
     sensor_y = p.y;
-    for (auto &i: robo) {
 
+    for (auto &i: robo) {
         if (
                 (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
                 (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)
@@ -449,32 +472,6 @@ int ROBO::check_cross_others(POSITION p) {
 
             l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
             if (l < i.r) {
-                double tx;
-                double ty;
-
-                tx = du * (activator - i.activator);
-                ty = dv * (inhibitor - i.inhibitor);
-
-//                i.activator += tx;
-//                i.inhibitor += ty;
-
-                i.sum_activator += tx;
-                i.sum_inhibitor += ty;
-
-                sum_inhibitor += inhibitor - ty;
-                sum_activator += activator - tx;
-
-                touch_counter++;
-                if (step_counter >= 10) {
-
-                    activator = sum_activator / touch_counter;
-                    inhibitor = sum_inhibitor / touch_counter;
-                    sum_activator = 0;
-                    sum_inhibitor = 0;
-                    touch_counter = 0;
-
-                    step_counter = 0;
-                }
                 return 1;
             }
         }
@@ -482,7 +479,82 @@ int ROBO::check_cross_others(POSITION p) {
     return 0;
 }
 
+void ROBO::nearrobotsensor() {
+
+    double l;
+    double distance_x;
+    double distance_y;
+
+    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
+    for (auto &i: robo) {
+        if (
+                (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
+                (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)
+                ) {
+
+            //他のロボットのちゃん座標
+            double another_robo_x = i.x;
+            double another_robo_y = i.y;
+
+            distance_x = another_robo_x - x;
+            distance_y = another_robo_y - y;
+
+            l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+
+            if (l < RANGE) {
+//                cout<<l<<endl;
+//                cout<<epoch<<","<<l<<","<<RANGE<< endl;
+                touch_counter += 2;
+
+                double tx;
+                double ty;
+
+                tx = du * (activator - i.activator);
+                ty = dv * (inhibitor - i.inhibitor);
+
+                /*
+                A.agitation1 = A.agitation1 - tx;
+                B.agitation1 = B.agitation1 + tx;
+
+                A.agitation2 = A.agitation2 - ty;
+                B.agitation2 = B.agitation2 + ty;
+                */
+
+                sum_activator += activator - tx;
+                i.sum_activator += i.activator + tx;
+
+                sum_inhibitor += inhibitor - ty;
+                i.sum_inhibitor += i.inhibitor + ty;
+
+//                activator += activator - tx;
+//                i.activator += i.activator + tx;
+//
+//                inhibitor += inhibitor - ty;
+//                i.inhibitor += i.inhibitor + ty;
+
+                if (step_counter >= 10) {
+                    activator = sum_activator / touch_counter;
+                    inhibitor = sum_inhibitor / touch_counter;
+                    sum_activator = 0;
+                    sum_inhibitor = 0;
+                    touch_counter = 0;
+                    step_counter = 0;
+
+                }
+            }
+        }
+    }
+}
+
+double ROBO::calculate_parameter(struct ROBO i) {
+
+}
+
+
 void idle() {
+    cout << epoch << "," << RANGE << "," << robo[0].step_counter << "," << robo[0].activator << ","
+         << robo[0].sum_activator << "," << endl;
+
 
     if (fStart == 0) return;
     for (auto &i: robo) i.action();
@@ -495,7 +567,6 @@ void idle() {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
     }
-    step_counter++;
     epoch++;
 //    cout << epoch << ";;;;";
 }
