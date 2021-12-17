@@ -1,3 +1,7 @@
+//
+// Created by Jun on 2021/12/13.
+//
+
 #pragma GCC optimize("Ofast")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 //
@@ -13,8 +17,8 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 50 //通信レンジ の半径
-#define INHIBITOR_RANGE 50
+#define RANGE 12 //通信レンジ の半径
+#define INHIBITOR_RANGE 12
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
