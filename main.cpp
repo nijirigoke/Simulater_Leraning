@@ -14,7 +14,7 @@
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
 #define RANGE 50 //通信レンジ の半径
-#define INHIBITOR_RANGE 50
+#define INHIBITOR_RANGE 70
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
@@ -45,8 +45,8 @@ typedef struct ROBO {
     int tLeft = 0;
 
     //信号出力フラグ群
-    int receive_flag{};
-    int sens_flag{};
+    int act_flag{};
+    int inh_flag{};
 
     //反応拡散用パラメータ群
     double activator = 0;
@@ -54,6 +54,8 @@ typedef struct ROBO {
     double sum_activator = 0;
     double sum_inhibitor = 0;
     int touch_counter = 0;
+    int act_touch_counter = 0;
+    int inh_touch_counter = 0;
 
     double dx = 0;
     double dy = 0;
@@ -82,9 +84,9 @@ typedef struct ROBO {
     double Cv = 0.0000;
     double Cu = 0.0001;
     double a = 0.010;
-    double b = 0.011;
-    double c = 0.008;
-    double d = 0.009;
+    double b = 0.02;
+    double c = 0.010;
+    double d = 0.02;
 
 
     POSITION tsensor[3]{}; //構造体変数の追加
@@ -124,6 +126,8 @@ int map_gridline = (int) point * 2 / MAPDENSITY;
 int half_map_gridline = map_gridline / 2;
 
 int windows[2];
+
+double save_grid_activater[1000][15];
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -230,7 +234,8 @@ void calculate_grid_concentration() {
             GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
-    cout << "epoch," << epoch << "," << robo[0].activator << "," << robo[0].inhibitor << "," << endl;
+    cout << "epoch," << epoch << "," << robo[0].activator << "," << robo[0].inhibitor << "," << robo[0].sum_activator
+         << endl;
 //    cout << GL[8][8].ave_activator<<","<<GL[8][8].ave_inhibitor<<endl;
 //    cout <<epoch<<"," <<robo[0].activator << "," << robo[0].inhibitor << endl;
 }
@@ -242,8 +247,8 @@ void draw_grid_density_map() {
             glBegin(GL_TRIANGLE_STRIP);
 
 
-//            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
-//                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
+            glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
+                      1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
 
             glColor3d(GL[i][j].ave_activator, 0, 0);
             glVertex2d(-point + (MAPDENSITY * i), -point + (MAPDENSITY * j));
@@ -358,8 +363,13 @@ void ROBO::draw() {
     draw_robo_circle(0, 0, r);
     glColor3d(0.5, 0.5, 0.5);
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-
+//
+//    glColor3d(0, 0, 0.5);
 //    draw_circle(0, 0, RANGE); //通信範囲の描画
+
+//    glColor3d(0, 0.5, 0);
+//    draw_circle(0, 0, INHIBITOR_RANGE); //通信範囲の描画
+
 //    glColor3d(0.3, 0.3, 0.3);
 //    glBegin(GL_LINES);
     glVertex2d(0, 0); //左センサーの描画
@@ -498,78 +508,80 @@ void ROBO::nearrobotsensor() {
 
             l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
 
-            if (activator > inhibitor) {
-                if (l < RANGE) {
+
+            if (l < RANGE) {
 //                cout<<l<<endl;
 //                cout<<epoch<<","<<l<<","<<RANGE<< endl;
-                    touch_counter++;
-                    i.touch_counter++;
+                act_touch_counter++;
+                i.act_touch_counter++;
 
-                    double tx;
-                    double ty;
+                double tx;
+                double ty;
 
-                    tx = du * (activator - i.activator);
-                    ty = dv * (inhibitor - i.inhibitor);
+                tx = du * (activator - i.activator);
+                ty = dv * (inhibitor - i.inhibitor);
 
-                    /*
-                    A.agitation1 = A.agitation1 - tx;
-                    B.agitation1 = B.agitation1 + tx;
+                /*
+                A.agitation1 = A.agitation1 - tx;
+                B.agitation1 = B.agitation1 + tx;
 
-                    A.agitation2 = A.agitation2 - ty;
-                    B.agitation2 = B.agitation2 + ty;
-                    */
+                A.agitation2 = A.agitation2 - ty;
+                B.agitation2 = B.agitation2 + ty;
+                */
 
-                    sum_activator += activator - tx;
-                    i.sum_activator += i.activator + tx;
+                sum_activator += activator - tx;
+                i.sum_activator += i.activator + tx;
 
-                    sum_inhibitor += inhibitor - ty;
-                    i.sum_inhibitor += i.inhibitor + ty;
+//                    sum_inhibitor += inhibitor - ty;
+//                    i.sum_inhibitor += i.inhibitor + ty;
+                act_flag = 1;
 
-                }
-            } else {
-                if (l < INHIBITOR_RANGE) {
-//                cout<<l<<endl;
-//                cout<<epoch<<","<<l<<","<<RANGE<< endl;
-                    touch_counter++;
-                    i.touch_counter++;
-
-                    double tx;
-                    double ty;
-
-                    tx = du * (activator - i.activator);
-                    ty = dv * (inhibitor - i.inhibitor);
-
-                    /*
-                    A.agitation1 = A.agitation1 - tx;
-                    B.agitation1 = B.agitation1 + tx;
-
-                    A.agitation2 = A.agitation2 - ty;
-                    B.agitation2 = B.agitation2 + ty;
-                    */
-
-                    sum_activator += activator - tx;
-                    i.sum_activator += i.activator + tx;
-
-                    sum_inhibitor += inhibitor - ty;
-                    i.sum_inhibitor += i.inhibitor + ty;
-
-                }
             }
+            if (l < INHIBITOR_RANGE) {
+//                cout<<l<<endl;
+//                cout<<epoch<<","<<l<<","<<RANGE<< endl;
+                inh_touch_counter++;
+                i.inh_touch_counter++;
+
+                double tx;
+                double ty;
+
+                tx = du * (activator - i.activator);
+                ty = dv * (inhibitor - i.inhibitor);
+
+//
+//                    sum_activator += activator - tx;
+//                    i.sum_activator += i.activator + tx;
+
+                sum_inhibitor += inhibitor - ty;
+                i.sum_inhibitor += i.inhibitor + ty;
+                inh_flag = 1;
+
+            }
+
             if (step_counter >= 10) {
-                activator = sum_activator / touch_counter;
-                inhibitor = sum_inhibitor / touch_counter;
+                if (act_flag == 1) {
+                    activator = sum_activator / act_touch_counter;
+                    act_flag = 0;
+                }
+                if (inh_flag == 1) {
+                    inhibitor = sum_inhibitor / inh_touch_counter;
+                    inh_flag = 0;
+                }
                 sum_activator = 0;
                 sum_inhibitor = 0;
                 touch_counter = 0;
+                act_touch_counter = 0;
+                inh_touch_counter = 0;
                 step_counter = 0;
             }
         }
     }
 }
 
-double ROBO::calculate_parameter(struct ROBO i) {
-
-}
+//double ROBO::calculate_parameter(struct ROBO i) {
+//
+//}
 
 
 void idle() {
@@ -627,7 +639,7 @@ int main(int argc, char *argv[]) {
 
 void Initialize() {
     cout << "map_gridline:" << map_gridline << endl;
-
+    epoch = 0;
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
 }
