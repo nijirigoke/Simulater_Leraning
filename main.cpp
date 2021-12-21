@@ -19,6 +19,13 @@
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
 #define MAPDENSITY 80
+/**
+ * grid_memo.md
+ *
+ *
+ *
+ */
+
 
 using namespace std;
 
@@ -127,7 +134,7 @@ int half_map_gridline = map_gridline / 2;
 
 int windows[2];
 
-double save_grid_activater[1000][15];
+double save_grid_activater[100000][15];
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -143,6 +150,8 @@ void grid_display();
 void wall_draw();
 
 void Initialize();
+
+void input_turingpattern();
 
 void wall_draw() {
     glBegin(GL_LINES);
@@ -532,8 +541,6 @@ void ROBO::nearrobotsensor() {
                 sum_activator += activator - tx;
                 i.sum_activator += i.activator + tx;
 
-//                    sum_inhibitor += inhibitor - ty;
-//                    i.sum_inhibitor += i.inhibitor + ty;
                 act_flag = 1;
 
             }
@@ -546,12 +553,7 @@ void ROBO::nearrobotsensor() {
                 double tx;
                 double ty;
 
-                tx = du * (activator - i.activator);
                 ty = dv * (inhibitor - i.inhibitor);
-
-//
-//                    sum_activator += activator - tx;
-//                    i.sum_activator += i.activator + tx;
 
                 sum_inhibitor += inhibitor - ty;
                 i.sum_inhibitor += i.inhibitor + ty;
@@ -642,4 +644,20 @@ void Initialize() {
     epoch = 0;
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
+    input_turingpattern();
+}
+
+void input_turingpattern() {
+
+    for (auto &i: robo) {
+        //ロボットすべてに対して濃度の印譜とを開始
+
+        for (int j = 0; j < gridline; ++j) {
+            for (int k = 0; k < gridline; ++k) {
+                //あらかじめ設定されたパターんを酔いこみ
+                //
+            }
+        }
+
+    }
 }
