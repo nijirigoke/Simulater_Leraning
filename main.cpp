@@ -19,6 +19,30 @@
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
 #define MAPDENSITY 80
+
+double input_concentration[15][15] = {
+
+        {1,   0.5, 0, 0, 0,   0,   0,   0,   1,   0, 0,   0,   0,   0.5, 1},
+        {1,   0.5, 0, 0, 0,   0,   0,   0,   1,   1, 0,   0,   0,   1,   1},
+        {1,   0,   0, 0, 0,   0,   1,   1,   1,   1, 0,   0,   0,   1,   1},
+        {0.5, 0,   0, 0, 1,   1,   1,   1,   1,   1, 0,   0,   0.5, 1,   1},
+        {0,   0,   0, 1, 1,   1,   1,   1,   1,   1, 0,   0,   0,   1,   0.5},
+
+        {0,   0,   1, 1, 1,   1,   1,   1,   1,   0, 0,   0,   0,   0,   0},
+        {0,   1,   1, 1, 1,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0},
+        {0,   1,   1, 1, 1,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0},
+        {0,   0.5, 1, 1, 0,   0,   0,   1,   0.5, 1, 0,   0,   0,   0.5, 1},
+        {0,   0.5, 1, 1, 0.5, 0,   0,   1,   1,   1, 1,   1,   1,   1,   1,},
+
+        {0,   0,   1, 1, 1,   0,   0,   1,   1,   1, 1,   1,   1,   1,   0},
+        {0,   0.5, 1, 1, 1,   0,   0.5, 1,   1,   0, 0.5, 1,   1,   0,   0},
+        {0,   1,   1, 1, 1,   0.5, 1,   1,   0,   0, 0,   0.5, 1,   0,   0.5},
+        {0.5, 0.5, 0, 0, 1,   1,   1,   0,   0,   0, 0,   1,   1,   1,   1},
+        {0.5, 0,   0, 0, 1,   1,   1,   0.5, 0,   0, 0,   0,   1,   1,   1}
+
+
+};
+
 /**
  grid_memo.md
 
@@ -151,12 +175,14 @@ int half_map_gridline = map_gridline / 2;
 
 int windows[2];
 
-double save_grid_activater[100000][15];
+double save_grid_activater[100000];
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
 
+
+double input_ave = 0;
 
 void calculate_grid_concentration();
 
@@ -169,6 +195,16 @@ void wall_draw();
 void Initialize();
 
 void input_turingpattern();
+
+void calculate_grid_concentration_memory();
+
+void save_grid_concentration();
+
+double covariance();
+
+double calculate_input_ave();
+
+double calculate_GL_ave();
 
 void wall_draw() {
     glBegin(GL_LINES);
@@ -606,19 +642,67 @@ void ROBO::nearrobotsensor() {
 void idle() {
 
     if (fStart == 0) return;
+
     for (auto &i: robo) i.action();
 //    Sleep(1 * 100);
 
     calculate_grid_concentration();
+//    save_grid_concentration();
 //    display();
 //    grid_display();
     for (int i; i < 2; i++) {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
     }
+
+    if (epoch == 0) {
+        input_turingpattern();
+    }
     epoch++;
 //    cout << epoch << ";;;;";
 }
+
+void save_grid_concentration() {
+
+    double r = 0;
+    double Sxy;
+    double Sx;
+    double Sy;
+
+    Sxy = covariance();
+//    Sxy=std();
+//    Sxy=std();
+
+
+    r = Sxy / (Sx * Sy);
+
+
+}
+
+double covariance() {
+
+    double sum = 0;
+    double GL_ave = calculate_GL_ave();
+    for (int x = 0; x < map_gridline; ++x) {
+        for (int y = 0; y < map_gridline; ++y) {
+            sum += (GL[x][y].ave_activator - GL_ave) * (input_concentration[y][x] - input_ave);
+        }
+    }
+
+    return sum / pow(gridline, 2);
+}
+
+double calculate_GL_ave() {
+    double sum = 0;
+
+    for (int i = 0; i < gridline; ++i) {
+        for (int j = 0; j < gridline; ++j) {
+            sum += GL[i][j].ave_activator;
+        }
+    }
+    return sum / pow(gridline, 2);
+}
+
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
 {
@@ -660,19 +744,37 @@ void Initialize() {
     cout << "map_gridline:" << map_gridline << endl;
     epoch = 0;
     make_circle();//円図形データの作成
+    input_ave = calculate_input_ave();
     for (auto &i: robo) i.init();
-    input_turingpattern();
+
+}
+
+double calculate_input_ave() {
+    double sum = 0;
+
+    for (int i = 0; i < map_gridline; ++i) {
+        for (int j = 0; j < map_gridline; ++j) {
+            sum += input_concentration[i][j];
+        }
+    }
+    return sum / pow(gridline, 2);
 }
 
 void input_turingpattern() {
 
+    //ロボットすべてに対して濃度の印譜とを開始
     for (auto &i: robo) {
-        //ロボットすべてに対して濃度の印譜とを開始
 
-        for (int j = 0; j < gridline; ++j) {
-            for (int k = 0; k < gridline; ++k) {
+        //X軸検索
+        for (int x = 0; x < map_gridline; ++x) {
+            //y軸検索
+            for (int y = 0; y < map_gridline; ++y) {
                 //あらかじめ設定されたパターんを酔いこみ
-                //
+                if (i.map_glid_x == x && i.map_glid_y == y) {
+//                    cout<<i.map_glid_x<<","<<i.map_glid_y<<endl;
+                    i.activator = input_concentration[y][x];
+                    i.inhibitor = 0;
+                }
             }
         }
 
