@@ -39,9 +39,9 @@ double input_concentration[15][15] = {
         {0,   1,   1, 1, 1,   0.5, 1,   1,   0,   0, 0,   0.5, 1,   0,   0.5},
         {0.5, 0.5, 0, 0, 1,   1,   1,   0,   0,   0, 0,   1,   1,   1,   1},
         {0.5, 0,   0, 0, 1,   1,   1,   0.5, 0,   0, 0,   0,   1,   1,   1}
-
-
 };
+
+
 
 /**
  grid_memo.md
@@ -108,14 +108,14 @@ typedef struct ROBO {
     double dx = 0;
     double dy = 0;
 
-//    double dv = 0.40;
-//    double du = 0.08;
-//    double Cv = 0.0000;
-//    double Cu = 0.00010;
-//    double a = 0.010;
-//    double b = 0.011;
-//    double c = 0.008;
-//    double d = 0.009;
+    double dv = 0.40;
+    double du = 0.08;
+    double Cv = 0.0000;
+    double Cu = 0.00010;
+    double a = 0.010;
+    double b = 0.011;
+    double c = 0.008;
+    double d = 0.009;
 
 //    double du = 0.000;
 //    double dv = 0.000;
@@ -126,15 +126,15 @@ typedef struct ROBO {
 //    double c = 0.0000;
 //    double d = 0.0000;
 
-
-    double dv = 0.40;
-    double du = 0.08;
-    double Cv = 0.0000;
-    double Cu = 0.0001;
-    double a = 0.010;
-    double b = 0.02;
-    double c = 0.010;
-    double d = 0.019;
+//
+//    double dv = 0.40;
+//    double du = 0.08;
+//    double Cv = 0.0000;
+//    double Cu = 0.0001;
+//    double a = 0.010;
+//    double b = 0.02;
+//    double c = 0.010;
+//    double d = 0.015;
 
 
     POSITION tsensor[3]{}; //構造体変数の追加
@@ -355,6 +355,12 @@ void ROBO::action() {
 //    cout<<dx<<endl;
     activator = activator + dx;
     inhibitor = inhibitor + dy;
+    if (activator > 1) {
+        activator = 1;
+    }
+    if (activator < 0) {
+        activator = 0;
+    }
     nearrobotsensor();
 
     tCenter = touchsensor(CENTER);    //中央センサーの値
@@ -425,7 +431,7 @@ void ROBO::draw() {
 
 //    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
 //    glColor3d(activator, inhibitor, 0);
-    glColor3d(activator * 10, 0, 0);
+    glColor3d(activator, 0, 0);
     draw_robo_circle(0, 0, r);
     glColor3d(0.5, 0.5, 0.5);
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
@@ -621,8 +627,9 @@ void ROBO::nearrobotsensor() {
 
             if (step_counter >= 10) {
                 if (act_flag == 1) {
-                    tmp = sum_activator / act_touch_counter;
-                    activator = tmp - pow(activator, 3);
+//                    tmp = sum_activator / act_touch_counter;
+                    activator = sum_activator / act_touch_counter;
+
                     act_flag = 0;
                 }
                 if (inh_flag == 1) {
@@ -793,7 +800,6 @@ void input_turingpattern() {
 
     //ロボットすべてに対して濃度のinputを開始
     for (auto &i: robo) {
-
         //X軸検索
         for (int x = 0; x < map_gridline; ++x) {
             //y軸検索
@@ -806,6 +812,5 @@ void input_turingpattern() {
                 }
             }
         }
-
     }
 }
