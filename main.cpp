@@ -134,7 +134,7 @@ typedef struct ROBO {
     double a = 0.010;
     double b = 0.02;
     double c = 0.010;
-    double d = 0.02;
+    double d = 0.019;
 
 
     POSITION tsensor[3]{}; //構造体変数の追加
@@ -175,7 +175,7 @@ int half_map_gridline = map_gridline / 2;
 
 int windows[2];
 
-double save_grid_activater[100000];
+double save_grid_activater[100000][225];
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -205,6 +205,10 @@ double covariance();
 double calculate_input_ave();
 
 double calculate_GL_ave();
+
+double stdd_now();
+
+double stdd_target();
 
 void wall_draw() {
     glBegin(GL_LINES);
@@ -296,9 +300,9 @@ void calculate_grid_concentration() {
             GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
-    cout << "epoch," << epoch << "," << robo[0].activator << "," << robo[0].inhibitor << "," << robo[0].sum_activator
-         << endl;
-//    cout << GL[8][8].ave_activator<<","<<GL[8][8].ave_inhibitor<<endl;
+    cout << "epoch," << epoch << "," << robo[0].activator << ","
+         << robo[0].inhibitor << "," << robo[0].sum_activator << endl;
+//    cout << GL[15][15].ave_activator<<","<<GL[15][15].ave_inhibitor<<endl;
 //    cout <<epoch<<"," <<robo[0].activator << "," << robo[0].inhibitor << endl;
 }
 
@@ -421,7 +425,7 @@ void ROBO::draw() {
 
 //    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
 //    glColor3d(activator, inhibitor, 0);
-    glColor3d(activator, 0, 0);
+    glColor3d(activator * 10, 0, 0);
     draw_robo_circle(0, 0, r);
     glColor3d(0.5, 0.5, 0.5);
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
@@ -555,6 +559,7 @@ void ROBO::nearrobotsensor() {
     double l;
     double distance_x;
     double distance_y;
+    double tmp;
 
     //自身の座標から一定レンジを探索？ 計算量ちゃん…。
     for (auto &i: robo) {
@@ -616,7 +621,8 @@ void ROBO::nearrobotsensor() {
 
             if (step_counter >= 10) {
                 if (act_flag == 1) {
-                    activator = sum_activator / act_touch_counter;
+                    tmp = sum_activator / act_touch_counter;
+                    activator = tmp - pow(activator, 3);
                     act_flag = 0;
                 }
                 if (inh_flag == 1) {
@@ -644,20 +650,22 @@ void idle() {
     if (fStart == 0) return;
 
     for (auto &i: robo) i.action();
-//    Sleep(1 * 100);
+
+    if (epoch == 0) {
+//        input_turingpattern();
+        input_ave = calculate_input_ave();
+        cout << "input_ave," << input_ave << endl;
+    }
 
     calculate_grid_concentration();
-//    save_grid_concentration();
-//    display();
-//    grid_display();
+    save_grid_concentration();
+
     for (int i; i < 2; i++) {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
     }
 
-    if (epoch == 0) {
-        input_turingpattern();
-    }
+
     epoch++;
 //    cout << epoch << ";;;;";
 }
@@ -669,38 +677,60 @@ void save_grid_concentration() {
     double Sx;
     double Sy;
 
+
     Sxy = covariance();
-//    Sxy=std();
-//    Sxy=std();
+    Sx = stdd_now();
+    Sy = stdd_target();
 
 
     r = Sxy / (Sx * Sy);
+//    cout << Sxy << "," << Sx << "," << Sy << "," << r << endl;
+}
 
+double stdd_target() {
+    double sum = 0;
+    for (int x = 0; x < map_gridline; ++x) {
+        for (int y = 0; y < map_gridline; ++y) {
+            sum += (input_concentration[y][x] - input_ave);
+        }
+    }
+    return sqrt(sum / pow(map_gridline, 2));
+}
 
+double stdd_now() {
+    double sum = 0;
+    double GL_ave = calculate_GL_ave();
+
+    for (int x = 0; x < map_gridline; ++x) {
+        for (int y = 0; y < map_gridline; ++y) {
+            sum += (GL[x][y].ave_activator - GL_ave);
+        }
+    }
+
+    return sqrt(sum / pow(map_gridline, 2));
 }
 
 double covariance() {
+    double GL_ave = calculate_GL_ave();
 
     double sum = 0;
-    double GL_ave = calculate_GL_ave();
     for (int x = 0; x < map_gridline; ++x) {
         for (int y = 0; y < map_gridline; ++y) {
             sum += (GL[x][y].ave_activator - GL_ave) * (input_concentration[y][x] - input_ave);
         }
     }
-
-    return sum / pow(gridline, 2);
+    return sum / pow(map_gridline, 2);
 }
 
 double calculate_GL_ave() {
     double sum = 0;
 
-    for (int i = 0; i < gridline; ++i) {
-        for (int j = 0; j < gridline; ++j) {
+    for (int i = 0; i < map_gridline; ++i) {
+        for (int j = 0; j < map_gridline; ++j) {
             sum += GL[i][j].ave_activator;
         }
     }
-    return sum / pow(gridline, 2);
+    return sum / pow(map_gridline, 2);
 }
 
 
@@ -744,7 +774,6 @@ void Initialize() {
     cout << "map_gridline:" << map_gridline << endl;
     epoch = 0;
     make_circle();//円図形データの作成
-    input_ave = calculate_input_ave();
     for (auto &i: robo) i.init();
 
 }
@@ -762,7 +791,7 @@ double calculate_input_ave() {
 
 void input_turingpattern() {
 
-    //ロボットすべてに対して濃度の印譜とを開始
+    //ロボットすべてに対して濃度のinputを開始
     for (auto &i: robo) {
 
         //X軸検索
