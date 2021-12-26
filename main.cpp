@@ -8,6 +8,7 @@
 #include <iostream>
 #include "simbase.h"
 #include <random>
+#include <omp.h>
 
 #define LEFT   0
 #define CENTER 1
@@ -17,8 +18,10 @@
 #define INHIBITOR_RANGE 70
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  1500 //ロボット台数　10台
+#define ROBOS  3000 //ロボット台数　10台
 #define MAPDENSITY 80
+#define FORWARD 0.3
+#define RADIUS 5
 
 double input_concentration[15][15] = {
 
@@ -159,8 +162,6 @@ public:
 
     void nearrobotsensor();
 
-    double calculate_parameter(struct ROBO i);
-
 } ROBO;
 
 ROBO robo[ROBOS];//要素数ROBOSで配列変数roboを定義
@@ -240,6 +241,7 @@ void grid_wall_draw() {
     }
 
     // yoko
+
     for (int j = 0; j < map_gridline; ++j) {
         glVertex2d(point, point - (j * MAPDENSITY));
         glVertex2d(-point, point - (j * MAPDENSITY));
@@ -271,9 +273,9 @@ void grid_display() {
 void calculate_grid_concentration() {
 
     // 初期化
-    double sum_glid_activator = 0;
-    double sum_glid_inhibitor = 0;
-
+    double sum_glid_activator;
+    double sum_glid_inhibitor;
+#pragma omp parallel for
     for (int x = 0; x < map_gridline; ++x) {
         for (int y = 0; y < map_gridline; ++y) {// y point
             GL[x][y].ave_activator = 0;
@@ -281,7 +283,7 @@ void calculate_grid_concentration() {
         }
     }
     // 初期化 終わり
-
+#pragma omp parallel for
     for (int x = 0; x < map_gridline; ++x) {
         for (int y = 0; y < map_gridline; ++y) {// y point
             int counter = 0;
@@ -300,6 +302,8 @@ void calculate_grid_concentration() {
             GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
+
+#pragma omp critical
     cout << "epoch," << epoch << "," << robo[0].activator << ","
          << robo[0].inhibitor << "," << robo[0].sum_activator << endl;
 //    cout << GL[15][15].ave_activator<<","<<GL[15][15].ave_inhibitor<<endl;
@@ -307,7 +311,7 @@ void calculate_grid_concentration() {
 }
 
 void draw_grid_density_map() {
-
+#pragma omp parallel for
     for (int i = 0; i < map_gridline; ++i) {
         for (int j = 0; j < map_gridline; ++j) {
             glBegin(GL_TRIANGLE_STRIP);
@@ -382,7 +386,7 @@ void ROBO::action() {
             stack++;
         } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
         {
-            forward(0.6);//前進1.0ステップ
+            forward(FORWARD);//前進1.0ステップ
             stack = 0;
         }
     } else {
@@ -411,7 +415,7 @@ void ROBO::init() {
 //    printf("%f", dir);
     x = distr(mt);
     y = distr(mt);
-    r = 10;
+    r = RADIUS;
 
     tsensor[CENTER].x = TRANGE * r; //タッチセンサーのレンジ（棒の長さ）
     tsensor[CENTER].y = 0;
@@ -487,7 +491,7 @@ int ROBO::touchsensor(int i) {
 }
 
 int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
-
+#pragma omp parallel for
     for (auto &i: wall) {
         double Wp1x, Wp1y, Wp2x, Wp2y; //線分の両端点
         double Bvx, Bvy;               //線分への垂線の方向ベクトル
@@ -537,7 +541,7 @@ int ROBO::check_cross_others(POSITION p) {
 // 区別したらそいつとの距離を産出すること
     sensor_x = p.x;
     sensor_y = p.y;
-
+#pragma omp parallel for
     for (auto &i: robo) {
         if (
                 (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
@@ -551,7 +555,7 @@ int ROBO::check_cross_others(POSITION p) {
             distance_x = another_robo_x - sensor_x;
             distance_y = another_robo_y - sensor_y;
 
-            l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+            l = sqrt(distance_x * distance_x + distance_y * distance_y);
             if (l < i.r) {
                 return 1;
             }
@@ -568,6 +572,8 @@ void ROBO::nearrobotsensor() {
     double tmp;
 
     //自身の座標から一定レンジを探索？ 計算量ちゃん…。
+
+#pragma omp parallel for
     for (auto &i: robo) {
         if ((glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
             (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)) {
@@ -579,7 +585,7 @@ void ROBO::nearrobotsensor() {
             distance_x = another_robo_x - x;
             distance_y = another_robo_y - y;
 
-            l = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+            l = sqrt(distance_x * distance_x + distance_y * distance_y);
 
 
             if (l < RANGE) {
@@ -592,15 +598,6 @@ void ROBO::nearrobotsensor() {
                 double ty;
 
                 tx = du * (activator - i.activator);
-                ty = dv * (inhibitor - i.inhibitor);
-
-                /*
-                A.agitation1 = A.agitation1 - tx;
-                B.agitation1 = B.agitation1 + tx;
-
-                A.agitation2 = A.agitation2 - ty;
-                B.agitation2 = B.agitation2 + ty;
-                */
 
                 sum_activator += activator - tx;
                 i.sum_activator += i.activator + tx;
@@ -655,7 +652,7 @@ void ROBO::nearrobotsensor() {
 void idle() {
 
     if (fStart == 0) return;
-
+#pragma omp parallel for
     for (auto &i: robo) i.action();
 
     if (epoch == 0) {
@@ -666,7 +663,7 @@ void idle() {
 
     calculate_grid_concentration();
     save_grid_concentration();
-
+#pragma omp parallel for
     for (int i; i < 2; i++) {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
@@ -773,7 +770,6 @@ int main(int argc, char *argv[]) {
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
     glutMainLoop();
-
     return 0;
 }
 
@@ -793,7 +789,7 @@ double calculate_input_ave() {
             sum += input_concentration[i][j];
         }
     }
-    return sum / pow(gridline, 2);
+    return sum / (gridline * gridline);
 }
 
 void input_turingpattern() {
