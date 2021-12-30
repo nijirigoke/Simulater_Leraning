@@ -1,14 +1,16 @@
-#pragma GCC optimize("Ofast")
+#pragma GCC optimize("O3")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 //
 // Created by T118029 on 2021/03/15.
 //
 
 #include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <iostream>
 #include "simbase.h"
 #include <random>
 #include <omp.h>
+#include <fstream>
 
 #define LEFT   0
 #define CENTER 1
@@ -18,30 +20,30 @@
 #define INHIBITOR_RANGE 70
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  3000 //ロボット台数　10台
+#define ROBOS  1500 //ロボット台数　10台
 #define MAPDENSITY 80
-#define FORWARD 0.3
-#define RADIUS 5
+#define FORWARD 0.6
+#define RADIUS 10
 
 double input_concentration[15][15] = {
 
-        {1,   0.5, 0, 0, 0,   0,   0,   0,   1,   0, 0,   0,   0,   0.5, 1},
-        {1,   0.5, 0, 0, 0,   0,   0,   0,   1,   1, 0,   0,   0,   1,   1},
-        {1,   0,   0, 0, 0,   0,   1,   1,   1,   1, 0,   0,   0,   1,   1},
-        {0.5, 0,   0, 0, 1,   1,   1,   1,   1,   1, 0,   0,   0.5, 1,   1},
-        {0,   0,   0, 1, 1,   1,   1,   1,   1,   1, 0,   0,   0,   1,   0.5},
+        {1,       0.5,     0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 1,       0.00001, 0.00001, 0.00001, 0.00001, 0.5,     1},
+        {1,       0.5,     0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       0.00001, 0.00001, 0.00001, 1,       1},
+        {1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 1,       1},
+        {0.5,     0.00001, 0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       0.00001, 0.00001, 0.5,     1,       1},
+        {0.00001, 0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 1,       0.5},
 
-        {0,   0,   1, 1, 1,   1,   1,   1,   1,   0, 0,   0,   0,   0,   0},
-        {0,   1,   1, 1, 1,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0},
-        {0,   1,   1, 1, 1,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0},
-        {0,   0.5, 1, 1, 0,   0,   0,   1,   0.5, 1, 0,   0,   0,   0.5, 1},
-        {0,   0.5, 1, 1, 0.5, 0,   0,   1,   1,   1, 1,   1,   1,   1,   1,},
+        {0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001},
+        {0.00001, 1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001},
+        {0.00001, 1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001},
+        {0.00001, 0.5,     1,       1,       0.00001, 0.00001, 0.00001, 1,       0.5,     1,       0.00001, 0.00001, 0.00001, 0.5,     1},
+        {0.00001, 0.5,     1,       1,       0.5,     0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       1,},
 
-        {0,   0,   1, 1, 1,   0,   0,   1,   1,   1, 1,   1,   1,   1,   0},
-        {0,   0.5, 1, 1, 1,   0,   0.5, 1,   1,   0, 0.5, 1,   1,   0,   0},
-        {0,   1,   1, 1, 1,   0.5, 1,   1,   0,   0, 0,   0.5, 1,   0,   0.5},
-        {0.5, 0.5, 0, 0, 1,   1,   1,   0,   0,   0, 0,   1,   1,   1,   1},
-        {0.5, 0,   0, 0, 1,   1,   1,   0.5, 0,   0, 0,   0,   1,   1,   1}
+        {0.00001, 0.00001, 1,       1,       1,       0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       0.00001},
+        {0.00001, 0.5,     1,       1,       1,       0.00001, 0.5,     1,       1,       0.00001, 0.5,     1,       1,       0.00001, 0.00001},
+        {0.00001, 1,       1,       1,       1,       0.5,     1,       1,       0.00001, 0.00001, 0.00001, 0.5,     1,       0.00001, 0.5},
+        {0.5,     0.5,     0.00001, 0.00001, 1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1,       1},
+        {0.5,     0.00001, 0.00001, 0.00001, 1,       1,       1,       0.5,     0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1}
 };
 
 
@@ -67,9 +69,7 @@ double input_concentration[15][15] = {
 | 14 | 1 | .5 |  |  |  |  |  | 1 | 1 |  |  |  |  | 1 | 1 |
 | 15 | 1 | .5 |  |  |  |  |  |  | 1 |  |  |  |  | .5 | 1 |
 
-
  */
-
 
 using namespace std;
 
@@ -176,12 +176,15 @@ int half_map_gridline = map_gridline / 2;
 
 int windows[2];
 
-double save_grid_activater[100000][225];
+double save_grid_activater[100000][225] = {};
+double save_robot_log[50][10000] = {};
+double save_autocorr[5000][225] = {};
+double save_autocorr_fin[5000] = {};
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
-
+POSITION ROBOTLOG[50][10000];
 
 double input_ave = 0;
 
@@ -210,6 +213,10 @@ double calculate_GL_ave();
 double stdd_now();
 
 double stdd_target();
+
+void calculate_autocorr();
+
+void save_robot_loging();
 
 void wall_draw() {
     glBegin(GL_LINES);
@@ -275,7 +282,7 @@ void calculate_grid_concentration() {
     // 初期化
     double sum_glid_activator;
     double sum_glid_inhibitor;
-#pragma omp parallel for
+
     for (int x = 0; x < map_gridline; ++x) {
         for (int y = 0; y < map_gridline; ++y) {// y point
             GL[x][y].ave_activator = 0;
@@ -283,7 +290,7 @@ void calculate_grid_concentration() {
         }
     }
     // 初期化 終わり
-#pragma omp parallel for
+
     for (int x = 0; x < map_gridline; ++x) {
         for (int y = 0; y < map_gridline; ++y) {// y point
             int counter = 0;
@@ -303,15 +310,14 @@ void calculate_grid_concentration() {
         }
     }
 
-#pragma omp critical
-    cout << "epoch," << epoch << "," << robo[0].activator << ","
-         << robo[0].inhibitor << "," << robo[0].sum_activator << endl;
+    cout << "epoch," << epoch << endl;
+//         << robo[0].inhibitor << "," << robo[0].sum_activator << endl;
 //    cout << GL[15][15].ave_activator<<","<<GL[15][15].ave_inhibitor<<endl;
 //    cout <<epoch<<"," <<robo[0].activator << "," << robo[0].inhibitor << endl;
 }
 
 void draw_grid_density_map() {
-#pragma omp parallel for
+
     for (int i = 0; i < map_gridline; ++i) {
         for (int j = 0; j < map_gridline; ++j) {
             glBegin(GL_TRIANGLE_STRIP);
@@ -491,7 +497,7 @@ int ROBO::touchsensor(int i) {
 }
 
 int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
-#pragma omp parallel for
+
     for (auto &i: wall) {
         double Wp1x, Wp1y, Wp2x, Wp2y; //線分の両端点
         double Bvx, Bvy;               //線分への垂線の方向ベクトル
@@ -541,7 +547,7 @@ int ROBO::check_cross_others(POSITION p) {
 // 区別したらそいつとの距離を産出すること
     sensor_x = p.x;
     sensor_y = p.y;
-#pragma omp parallel for
+
     for (auto &i: robo) {
         if (
                 (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
@@ -573,7 +579,7 @@ void ROBO::nearrobotsensor() {
 
     //自身の座標から一定レンジを探索？ 計算量ちゃん…。
 
-#pragma omp parallel for
+
     for (auto &i: robo) {
         if ((glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
             (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)) {
@@ -644,99 +650,63 @@ void ROBO::nearrobotsensor() {
     }
 }
 
-//double ROBO::calculate_parameter(struct ROBO i) {
-//
-//}
-
-
 void idle() {
 
     if (fStart == 0) return;
-#pragma omp parallel for
+
     for (auto &i: robo) i.action();
 
     if (epoch == 0) {
-//        input_turingpattern();
+        input_turingpattern();
         input_ave = calculate_input_ave();
         cout << "input_ave," << input_ave << endl;
     }
 
     calculate_grid_concentration();
     save_grid_concentration();
-#pragma omp parallel for
+    save_robot_loging();
+
     for (int i; i < 2; i++) {
         glutSetWindow(windows[i]);
         glutPostRedisplay();
     }
 
-
     epoch++;
+
+    if (epoch > 10000) {
+        glutLeaveMainLoop();
+    }
 //    cout << epoch << ";;;;";
+
+}
+
+void save_robot_loging() {
+    double x = 0;
+    double y = 0;
+
+    for (int i = 0; i < 50; ++i) {
+        ROBOTLOG[i][epoch].x = robo[i].x;
+        ROBOTLOG[i][epoch].y = robo[i].y;
+
+    }
+
 }
 
 void save_grid_concentration() {
 
-    double r = 0;
-    double Sxy;
-    double Sx;
-    double Sy;
+    for (int x = 0; x < map_gridline; ++x) {
+        for (int y = 0; y < map_gridline; ++y) {
+            if (GL[x][y].ave_activator != GL[x][y].ave_activator) {
+                save_grid_activater[epoch][x * (map_gridline) + y] = input_concentration[y][x];
+                cout << "なんなん？" << endl;
+            } else {
+                save_grid_activater[epoch][x * (map_gridline) + y] = GL[x][y].ave_activator;
+            }
+        }
+    }
 
-
-    Sxy = covariance();
-    Sx = stdd_now();
-    Sy = stdd_target();
-
-
-    r = Sxy / (Sx * Sy);
 //    cout << Sxy << "," << Sx << "," << Sy << "," << r << endl;
 }
-
-double stdd_target() {
-    double sum = 0;
-    for (int x = 0; x < map_gridline; ++x) {
-        for (int y = 0; y < map_gridline; ++y) {
-            sum += (input_concentration[y][x] - input_ave);
-        }
-    }
-    return sqrt(sum / pow(map_gridline, 2));
-}
-
-double stdd_now() {
-    double sum = 0;
-    double GL_ave = calculate_GL_ave();
-
-    for (int x = 0; x < map_gridline; ++x) {
-        for (int y = 0; y < map_gridline; ++y) {
-            sum += (GL[x][y].ave_activator - GL_ave);
-        }
-    }
-
-    return sqrt(sum / pow(map_gridline, 2));
-}
-
-double covariance() {
-    double GL_ave = calculate_GL_ave();
-
-    double sum = 0;
-    for (int x = 0; x < map_gridline; ++x) {
-        for (int y = 0; y < map_gridline; ++y) {
-            sum += (GL[x][y].ave_activator - GL_ave) * (input_concentration[y][x] - input_ave);
-        }
-    }
-    return sum / pow(map_gridline, 2);
-}
-
-double calculate_GL_ave() {
-    double sum = 0;
-
-    for (int i = 0; i < map_gridline; ++i) {
-        for (int j = 0; j < map_gridline; ++j) {
-            sum += GL[i][j].ave_activator;
-        }
-    }
-    return sum / pow(map_gridline, 2);
-}
-
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
 {
@@ -769,9 +739,16 @@ int main(int argc, char *argv[]) {
     glutDisplayFunc(grid_display);
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
+
     glutMainLoop();
+
+    calculate_autocorr();
+    cout << "finish" << endl;
+
     return 0;
 }
+
 
 void Initialize() {
     cout << "map_gridline:" << map_gridline << endl;
@@ -809,4 +786,48 @@ void input_turingpattern() {
             }
         }
     }
+}
+
+void calculate_autocorr() {
+    double tmp = map_gridline * map_gridline;
+    double sum = 0;
+    double ave[5000] = {};
+
+    for (int i = 0; i < 5000; ++i) {
+        for (int j = 0; j < tmp; ++j) {
+            ave[i] += save_grid_activater[i][j] / tmp;
+        }
+//        save_autocorr[i]=sum
+    }
+
+    for (int i = 0; i < 5000; ++i) {
+        for (int j = 0; j < 5000; ++j) {
+            for (int k = 0; k < tmp; ++k) {
+                save_autocorr[i][k] +=
+                        save_grid_activater[j][k] *
+                        save_grid_activater[j + i][k];
+            }
+        }
+//        save_autocorr[i]=sum
+    }
+
+    for (int i = 1; i < 5000; ++i) {
+        for (int j = 0; j < 225; ++j) {
+            save_autocorr[i][j] = (save_autocorr[i][j] / save_autocorr[0][j]);
+            save_autocorr_fin[i] += save_autocorr[i][j] / 225;
+        }
+    }
+
+
+    ofstream outputfile("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\test.csv");
+
+    for (int i = 0; i < 5000; ++i) {
+        outputfile << save_autocorr_fin[i];
+        for (int j = 0; j < 225; ++j) {
+            outputfile << "," << save_autocorr[i][j];
+        }
+        outputfile << endl;
+    }
+    outputfile.close();
+    cout << "calcfinish" << endl;
 }
