@@ -21,6 +21,7 @@
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
+#define N 5000
 #define MAPDENSITY 80
 #define FORWARD 0.6
 #define RADIUS 10
@@ -178,8 +179,8 @@ int windows[2];
 
 double save_grid_activater[100000][225] = {};
 double save_robot_log[50][10000] = {};
-double save_autocorr[5000][225] = {};
-double save_autocorr_fin[5000] = {};
+double save_autocorr[N][225] = {};
+double save_autocorr_fin[N] = {};
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
@@ -791,37 +792,39 @@ void input_turingpattern() {
 void calculate_autocorr() {
     double tmp = map_gridline * map_gridline;
     double sum = 0;
-    double ave[5000] = {};
+    double ave[N] = {};
 
-    for (int i = 0; i < 5000; ++i) {
-        for (int j = 0; j < tmp; ++j) {
-            ave[i] += save_grid_activater[i][j] / tmp;
+    //各列の平均を取得。
+    for (int i = 0; i < tmp; ++i) {
+        for (int j = 0; j < N * 2; ++j) {
+            ave[i] += save_grid_activater[j][i] / (N * 2);
         }
 //        save_autocorr[i]=sum
     }
 
-    for (int i = 0; i < 5000; ++i) {
-        for (int j = 0; j < 5000; ++j) {
+    //自己共分散
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
             for (int k = 0; k < tmp; ++k) {
                 save_autocorr[i][k] +=
-                        save_grid_activater[j][k] *
-                        save_grid_activater[j + i][k];
+                        ((save_grid_activater[j][k] - ave[k]) *
+                         (save_grid_activater[j + i][k] - ave[k]));
             }
         }
 //        save_autocorr[i]=sum
     }
 
-    for (int i = 1; i < 5000; ++i) {
-        for (int j = 0; j < 225; ++j) {
-            save_autocorr[i][j] = (save_autocorr[i][j] / save_autocorr[0][j]);
-            save_autocorr_fin[i] += save_autocorr[i][j] / 225;
+    for (int i = 1; i < N; ++i) {
+        for (int j = 0; j < tmp; ++j) {
+            save_autocorr[i][j] = save_autocorr[i][j] / (save_autocorr[0][j]);
+            save_autocorr_fin[i] += save_autocorr[i][j] / tmp;
         }
     }
 
 
     ofstream outputfile("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\test.csv");
 
-    for (int i = 0; i < 5000; ++i) {
+    for (int i = 0; i < N; ++i) {
         outputfile << save_autocorr_fin[i];
         for (int j = 0; j < 225; ++j) {
             outputfile << "," << save_autocorr[i][j];
