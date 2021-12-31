@@ -74,6 +74,12 @@ double input_concentration[15][15] = {
 
 using namespace std;
 
+typedef struct ROBOTLOG {
+    double x;
+    double y;
+    double distance;
+};
+
 struct GLID_STRUCT {
     double ave_activator;
     double ave_inhibitor;
@@ -178,14 +184,13 @@ int half_map_gridline = map_gridline / 2;
 int windows[2];
 
 double save_grid_activater[100000][225] = {};
-double save_robot_log[50][10000] = {};
 double save_autocorr[N][225] = {};
 double save_autocorr_fin[N] = {};
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
-POSITION ROBOTLOG[50][10000];
+ROBOTLOG robotlog[50][10000] = {};
 
 double input_ave = 0;
 
@@ -201,11 +206,7 @@ void Initialize();
 
 void input_turingpattern();
 
-void calculate_grid_concentration_memory();
-
 void save_grid_concentration();
-
-double covariance();
 
 double calculate_input_ave();
 
@@ -224,7 +225,6 @@ void wall_draw() {
     for (auto &i: wall) {
         glVertex2d(pin[i.p1].x, pin[i.p1].y);
         glVertex2d(pin[i.p2].x, pin[i.p2].y);
-//        cout << pin[i.p1].x << pin[i.p1].y << endl;
     }
     glEnd();
 }
@@ -237,7 +237,6 @@ void grid_wall_draw() {
     for (auto &i: wall) {
         glVertex2d(pin[i.p1].x, pin[i.p1].y);
         glVertex2d(pin[i.p2].x, pin[i.p2].y);
-//        cout << pin[i.p1].x << pin[i.p1].y << endl;
     }
     glEnd();
 
@@ -249,7 +248,6 @@ void grid_wall_draw() {
     }
 
     // yoko
-
     for (int j = 0; j < map_gridline; ++j) {
         glVertex2d(point, point - (j * MAPDENSITY));
         glVertex2d(-point, point - (j * MAPDENSITY));
@@ -275,11 +273,9 @@ void grid_display() {
     grid_wall_draw();
 
     glutSwapBuffers();
-
 }
 
 void calculate_grid_concentration() {
-
     // 初期化
     double sum_glid_activator;
     double sum_glid_inhibitor;
@@ -291,7 +287,6 @@ void calculate_grid_concentration() {
         }
     }
     // 初期化 終わり
-
     for (int x = 0; x < map_gridline; ++x) {
         for (int y = 0; y < map_gridline; ++y) {// y point
             int counter = 0;
@@ -310,15 +305,10 @@ void calculate_grid_concentration() {
             GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
-
     cout << "epoch," << epoch << endl;
-//         << robo[0].inhibitor << "," << robo[0].sum_activator << endl;
-//    cout << GL[15][15].ave_activator<<","<<GL[15][15].ave_inhibitor<<endl;
-//    cout <<epoch<<"," <<robo[0].activator << "," << robo[0].inhibitor << endl;
 }
 
 void draw_grid_density_map() {
-
     for (int i = 0; i < map_gridline; ++i) {
         for (int j = 0; j < map_gridline; ++j) {
             glBegin(GL_TRIANGLE_STRIP);
@@ -333,7 +323,6 @@ void draw_grid_density_map() {
             glVertex2d(-point + (MAPDENSITY * i), -point + (MAPDENSITY * (j + 1) * 1));
             glVertex2d(-point + (MAPDENSITY * (i + 1)), -point + (MAPDENSITY * (j + 1) * 1));
             glEnd();
-
         }
     }
 }
@@ -355,15 +344,10 @@ void ROBO::action() {
 
     map_glid_x = half_map_gridline + floor(x) / (MAPDENSITY);
     map_glid_y = half_map_gridline + floor(y) / (MAPDENSITY);
-//    cout<<map_glid_x<<endl;
-//    cout<<map_glid_y<<endl;
-
-//    std::uniform_int_distribution<int> distr(0, TEST);    // 非決定的な乱数生成器
 
     dx = activator * a - inhibitor * b + Cu;
     dy = activator * c - inhibitor * d + Cv;
 
-//    cout<<dx<<endl;
     activator = activator + dx;
     inhibitor = inhibitor + dy;
     if (activator > 1) {
@@ -400,10 +384,6 @@ void ROBO::action() {
         turn(1 * PI);
         stack = 0;
     }
-
-//std::cout << flash_memori << std::endl;
-//std::cout << receive_flag << std::endl;
-
 }
 
 void ROBO::init() {
@@ -502,7 +482,7 @@ int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
     for (auto &i: wall) {
         double Wp1x, Wp1y, Wp2x, Wp2y; //線分の両端点
         double Bvx, Bvy;               //線分への垂線の方向ベクトル
-        double Bx, By, R;              //球体の位置, 半径
+        double Bx, By;              //球体の位置, 半径
         double det, a, b, c, d, e, f;  //ベクトルの式の変数
 
         //接触判定
@@ -576,11 +556,8 @@ void ROBO::nearrobotsensor() {
     double l;
     double distance_x;
     double distance_y;
-    double tmp;
 
     //自身の座標から一定レンジを探索？ 計算量ちゃん…。
-
-
     for (auto &i: robo) {
         if ((glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
             (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)) {
@@ -596,13 +573,10 @@ void ROBO::nearrobotsensor() {
 
 
             if (l < RANGE) {
-//                cout<<l<<endl;
-//                cout<<epoch<<","<<l<<","<<RANGE<< endl;
                 act_touch_counter++;
                 i.act_touch_counter++;
 
                 double tx;
-                double ty;
 
                 tx = du * (activator - i.activator);
 
@@ -613,12 +587,9 @@ void ROBO::nearrobotsensor() {
 
             }
             if (l < INHIBITOR_RANGE) {
-//                cout<<l<<endl;
-//                cout<<epoch<<","<<l<<","<<RANGE<< endl;
                 inh_touch_counter++;
                 i.inh_touch_counter++;
 
-                double tx;
                 double ty;
 
                 ty = dv * (inhibitor - i.inhibitor);
@@ -631,9 +602,7 @@ void ROBO::nearrobotsensor() {
 
             if (step_counter >= 10) {
                 if (act_flag == 1) {
-//                    tmp = sum_activator / act_touch_counter;
                     activator = sum_activator / act_touch_counter;
-
                     act_flag = 0;
                 }
                 if (inh_flag == 1) {
@@ -678,19 +647,19 @@ void idle() {
         glutLeaveMainLoop();
     }
 //    cout << epoch << ";;;;";
-
 }
 
 void save_robot_loging() {
-    double x = 0;
-    double y = 0;
 
     for (int i = 0; i < 50; ++i) {
-        ROBOTLOG[i][epoch].x = robo[i].x;
-        ROBOTLOG[i][epoch].y = robo[i].y;
-
+        robotlog[i][epoch].x = robo[i].x;
+        robotlog[i][epoch].y = robo[i].y;
+        robotlog[i][epoch].distance =
+                sqrt(
+                        (robo[i].x - robo[0].x) * (robo[i].x - robo[0].x) +
+                        (robo[i].y - robo[0].y) * (robo[i].y - robo[0].y)
+                );
     }
-
 }
 
 void save_grid_concentration() {
@@ -731,12 +700,10 @@ int main(int argc, char *argv[]) {
     windows[0] = glutCreateWindow("Robot sim");
     glutDisplayFunc(display);
     glutReshapeFunc(resize);
-//    glutIdleFunc(idle);
     glutMouseFunc(mouse); //マウスのボタンを検出 これを切るとコマ送りになる。
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize(point, point);
     windows[1] = glutCreateWindow("Grid");
-//    glutCreateSubWindow(0,0,200,200,200);
     glutDisplayFunc(grid_display);
     glutReshapeFunc(resize);
     glutIdleFunc(idle);
@@ -791,7 +758,6 @@ void input_turingpattern() {
 
 void calculate_autocorr() {
     double tmp = map_gridline * map_gridline;
-    double sum = 0;
     double ave[N] = {};
 
     //各列の平均を取得。
@@ -820,17 +786,38 @@ void calculate_autocorr() {
             save_autocorr_fin[i] += save_autocorr[i][j] / tmp;
         }
     }
+/***************************
+ * 出力部
+ ***************************/
 
-
-    ofstream outputfile("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\test.csv");
+    ofstream output_autocorr_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\autocorr.csv");
 
     for (int i = 0; i < N; ++i) {
-        outputfile << save_autocorr_fin[i];
+        output_autocorr_log << save_autocorr_fin[i];
         for (int j = 0; j < 225; ++j) {
-            outputfile << "," << save_autocorr[i][j];
+            output_autocorr_log << "," << save_autocorr[i][j];
         }
-        outputfile << endl;
+        output_autocorr_log << endl;
     }
-    outputfile.close();
+    output_autocorr_log.close();
+
+    ofstream robot_distance_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\robot_distance_log.csv");
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < 50; ++j) { robot_distance_log << robotlog[i][j].distance << ","; }
+        robot_distance_log << endl;
+    }
+    robot_distance_log.close();
+
+    ofstream robot_point_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\robot_point_log.csv");
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < 50; ++j) {
+            robot_point_log << "robot_point num[" << i << "]," << robotlog[i][j].x << "," << robotlog[i][j].y;
+        }
+        robot_point_log << endl;
+    }
+    robot_point_log.close();
+
     cout << "calcfinish" << endl;
 }
