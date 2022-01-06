@@ -27,24 +27,23 @@
 #define RADIUS 10
 
 double input_concentration[15][15] = {
+        {0.5,     0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1,   0.5, 0.00001, 0.00001, 1,       1,       1,   1},
+        {1,       1,       0.00001, 0.00001, 0.00001, 1,       1,       1,   1,   0.5,     0.00001, 0.5,     1,       1,   1},
+        {1,       1,       0.5,     0.00001, 0.00001, 0.5,     1,       1,   1,   0.5,     0.00001, 0.5,     1,       1,   1},
+        {1,       1,       0.5,     1,       1,       0.00001, 0.5,     1,   1,   0.5,     0.00001, 0.5,     1,       1,   1},
+        {1,       1,       1,       0.5,     1,       1,       1,       1,   1,   0.5,     0.00001, 0.00001, 0.5,     1,   1},
 
-        {1,       0.5,     0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 1,       0.00001, 0.00001, 0.00001, 0.00001, 0.5,     1},
-        {1,       0.5,     0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       0.00001, 0.00001, 0.00001, 1,       1},
-        {1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 1,       1},
-        {0.5,     0.00001, 0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       0.00001, 0.00001, 0.5,     1,       1},
-        {0.00001, 0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 1,       0.5},
+        {0.5,     0.5,     1,       1,       1,       0.00001, 1,       1,   1,   1,       0.00001, 0.00001, 0.00001, 0.5, 1,},
+        {0.00001, 0.5,     1,       1,       0.5,     0.00001, 0.5,     1,   0.5, 1,       0.00001, 0.00001, 0.00001, 0.5, 1},
+        {0.00001, 1,       1,       1,       0.00001, 0.00001, 0.00001, 0.5, 1,   0.5,     0.00001, 0.00001, 0.00001, 0.5, 1},
+        {0.5,     1,       1,       1,       0.00001, 0.00001, 0.00001, 0.5, 1,   1,       0.5,     0.00001, 0.5,     1,   1},
+        {0.00001, 1,       1,       1,       0.00001, 0.00001, 0.00001, 0.5, 1,   1,       1,       1,       1,       1,   1},
 
-        {0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001},
-        {0.00001, 1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001},
-        {0.00001, 1,       1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001, 0.00001},
-        {0.00001, 0.5,     1,       1,       0.00001, 0.00001, 0.00001, 1,       0.5,     1,       0.00001, 0.00001, 0.00001, 0.5,     1},
-        {0.00001, 0.5,     1,       1,       0.5,     0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       1,},
-
-        {0.00001, 0.00001, 1,       1,       1,       0.00001, 0.00001, 1,       1,       1,       1,       1,       1,       1,       0.00001},
-        {0.00001, 0.5,     1,       1,       1,       0.00001, 0.5,     1,       1,       0.00001, 0.5,     1,       1,       0.00001, 0.00001},
-        {0.00001, 1,       1,       1,       1,       0.5,     1,       1,       0.00001, 0.00001, 0.00001, 0.5,     1,       0.00001, 0.5},
-        {0.5,     0.5,     0.00001, 0.00001, 1,       1,       1,       0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1,       1},
-        {0.5,     0.00001, 0.00001, 0.00001, 1,       1,       1,       0.5,     0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1}
+        {0.00001, 0.00001, 1,       1,       0.5,     0.5,     0.5,     1,   1,   1,       1,       1,       1,       1,   1},
+        {0.00001, 0.00001, 0.5,     1,       1,       1,       1,       1,   1,   1,       0.5,     0.5,     0.5,     1,   1},
+        {0.00001, 1,       1,       1,       1,       1,       1,       1,   1,   0.5,     0.00001, 0.00001, 0.5,     1,   1},
+        {0.5,     1,       1,       1,       1,       1,       1,       1,   0.5, 0.00001, 0.00001, 0.00001, 0.00001, 0.5, 1},
+        {1,       1,       1,       1,       1,       1,       1,       1,   0.5, 0.00001, 0.00001, 0.00001, 0.00001, 0.5, 1},
 };
 
 
@@ -118,8 +117,8 @@ typedef struct ROBO {
     double dx = 0;
     double dy = 0;
 
-    double dv = 0.40;
-    double du = 0.08;
+    double Dv = 0.40;
+    double Du = 0.08;
     double Cv = 0.0000;
     double Cu = 0.00010;
     double a = 0.010;
@@ -127,8 +126,8 @@ typedef struct ROBO {
     double c = 0.008;
     double d = 0.009;
 
-//    double du = 0.000;
-//    double dv = 0.000;
+//    double Du = 0.000;
+//    double Dv = 0.000;
 //    double Cu = 0.000000;
 //    double Cv = 0.0000;
 //    double a = 0.000;
@@ -137,8 +136,8 @@ typedef struct ROBO {
 //    double d = 0.0000;
 
 //
-//    double dv = 0.40;
-//    double du = 0.08;
+//    double Dv = 0.40;
+//    double Du = 0.08;
 //    double Cv = 0.0000;
 //    double Cu = 0.0001;
 //    double a = 0.010;
@@ -191,6 +190,7 @@ std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
 ROBOTLOG robotlog[50][10000] = {};
+
 
 double input_ave = 0;
 
@@ -410,8 +410,6 @@ void ROBO::init() {
     tsensor[LEFT].y = TRANGE * r * sin(60.0 / 180.0 * PI);
     tsensor[RIGHT].x = TRANGE * r * cos(-60.0 / 180.0 * PI); //正面が０度なので、右は－６０度
     tsensor[RIGHT].y = TRANGE * r * sin(-60.0 / 180.0 * PI);
-
-
 }
 
 void ROBO::draw() {
@@ -578,7 +576,7 @@ void ROBO::nearrobotsensor() {
 
                 double tx;
 
-                tx = du * (activator - i.activator);
+                tx = Du * (activator - i.activator);
 
                 sum_activator += activator - tx;
                 i.sum_activator += i.activator + tx;
@@ -592,7 +590,7 @@ void ROBO::nearrobotsensor() {
 
                 double ty;
 
-                ty = dv * (inhibitor - i.inhibitor);
+                ty = Dv * (inhibitor - i.inhibitor);
 
                 sum_inhibitor += inhibitor - ty;
                 i.sum_inhibitor += i.inhibitor + ty;
@@ -646,7 +644,6 @@ void idle() {
     if (epoch > 10000) {
         glutLeaveMainLoop();
     }
-//    cout << epoch << ";;;;";
 }
 
 void save_robot_loging() {
@@ -654,11 +651,16 @@ void save_robot_loging() {
     for (int i = 0; i < 50; ++i) {
         robotlog[i][epoch].x = robo[i].x;
         robotlog[i][epoch].y = robo[i].y;
-        robotlog[i][epoch].distance =
-                sqrt(
-                        (robo[i].x - robo[0].x) * (robo[i].x - robo[0].x) +
-                        (robo[i].y - robo[0].y) * (robo[i].y - robo[0].y)
-                );
+        if (epoch == 0) {
+            robotlog[i][epoch].distance = 0.0;
+        } else {
+            robotlog[i][epoch].distance =
+                    sqrt(
+                            (robo[i].x - robotlog[i][0].x) * (robo[i].x - robotlog[i][0].x) +
+                            (robo[i].y - robotlog[i][0].y) * (robo[i].y - robotlog[i][0].y)
+                    );
+
+        }
     }
 }
 
@@ -674,8 +676,6 @@ void save_grid_concentration() {
             }
         }
     }
-
-//    cout << Sxy << "," << Sx << "," << Sy << "," << r << endl;
 }
 
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
@@ -685,9 +685,6 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
             fStart = 0;
         else
             fStart = 1;
-        for (auto &i: robo) {
-            i.init();
-        }
     }
 }
 
@@ -723,7 +720,6 @@ void Initialize() {
     epoch = 0;
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
-
 }
 
 double calculate_input_ave() {
@@ -747,9 +743,8 @@ void input_turingpattern() {
             for (int y = 0; y < map_gridline; ++y) {
                 //あらかじめ設定されたパターんを酔いこみ
                 if (i.map_glid_x == x && i.map_glid_y == y) {
-//                    cout<<i.map_glid_x<<","<<i.map_glid_y<<endl;
                     i.activator = input_concentration[y][x];
-                    i.inhibitor = 0;
+                    i.inhibitor = input_concentration[y][x];
                 }
             }
         }
@@ -765,7 +760,6 @@ void calculate_autocorr() {
         for (int j = 0; j < N * 2; ++j) {
             ave[i] += save_grid_activater[j][i] / (N * 2);
         }
-//        save_autocorr[i]=sum
     }
 
     //自己共分散
@@ -777,7 +771,6 @@ void calculate_autocorr() {
                          (save_grid_activater[j + i][k] - ave[k]));
             }
         }
-//        save_autocorr[i]=sum
     }
 
     for (int i = 1; i < N; ++i) {
@@ -786,6 +779,7 @@ void calculate_autocorr() {
             save_autocorr_fin[i] += save_autocorr[i][j] / tmp;
         }
     }
+
 /***************************
  * 出力部
  ***************************/
@@ -803,17 +797,17 @@ void calculate_autocorr() {
 
     ofstream robot_distance_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\robot_distance_log.csv");
 
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < 50; ++j) { robot_distance_log << robotlog[i][j].distance << ","; }
+    for (int i = 0; i < N * 2; ++i) {
+        for (int j = 0; j < 50; ++j) { robot_distance_log << robotlog[j][i].distance << ","; }
         robot_distance_log << endl;
     }
     robot_distance_log.close();
 
     ofstream robot_point_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\robot_point_log.csv");
 
-    for (int i = 0; i < N; ++i) {
+    for (int i = 0; i < N * 2; ++i) {
         for (int j = 0; j < 50; ++j) {
-            robot_point_log << "robot_point num[" << i << "]," << robotlog[i][j].x << "," << robotlog[i][j].y;
+            robot_point_log << ",robot_point num[" << i << "]," << robotlog[j][i].x << "," << robotlog[j][i].y;
         }
         robot_point_log << endl;
     }
