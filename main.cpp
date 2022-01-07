@@ -73,7 +73,7 @@ double input_concentration[15][15] = {
 
 using namespace std;
 
-typedef struct ROBOTLOG {
+struct ROBOTLOG {
     double x;
     double y;
     double distance;
@@ -110,7 +110,6 @@ typedef struct ROBO {
     double inhibitor = 0;
     double sum_activator = 0;
     double sum_inhibitor = 0;
-    int touch_counter = 0;
     int act_touch_counter = 0;
     int inh_touch_counter = 0;
 
@@ -210,12 +209,6 @@ void save_grid_concentration();
 
 double calculate_input_ave();
 
-double calculate_GL_ave();
-
-double stdd_now();
-
-double stdd_target();
-
 void calculate_autocorr();
 
 void save_robot_loging();
@@ -294,7 +287,6 @@ void calculate_grid_concentration() {
             sum_glid_activator = 0;
             sum_glid_inhibitor = 0;
             for (int i = 0; i < ROBOS; i++) {// i point
-//                cout << x << ";" << robo[i].map_glid_x <<  ";" << y << ";"<< robo[i].map_glid_y<< endl;
                 if (x == robo[i].map_glid_x && y == robo[i].map_glid_y) {
                     counter++;
                     sum_glid_activator += robo[i].activator;
@@ -394,7 +386,6 @@ void ROBO::init() {
 
     sum_activator = 0;
     sum_inhibitor = 0;
-    touch_counter = 0;
     activator = rando(mt);
     inhibitor = rando(mt);
 
@@ -609,7 +600,6 @@ void ROBO::nearrobotsensor() {
                 }
                 sum_activator = 0;
                 sum_inhibitor = 0;
-                touch_counter = 0;
                 act_touch_counter = 0;
                 inh_touch_counter = 0;
                 step_counter = 0;
