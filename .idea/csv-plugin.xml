@@ -24,6 +24,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\cmake-build-debug\autocorr.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\cmake-build-debug\robot_distance_log.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\debug_log.csv">
           <value>
             <Attribute>
@@ -32,6 +46,20 @@
           </value>
         </entry>
         <entry key="\debug_log_new.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\robot_distance_log.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\robot_point_log.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

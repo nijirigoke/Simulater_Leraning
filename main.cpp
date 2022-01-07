@@ -22,9 +22,14 @@
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
 #define N 5000
-#define MAPDENSITY 80
+#define MAPDENSITY 40
 #define FORWARD 0.6
 #define RADIUS 10
+#define step 10000
+#define GLID 15
+#define GLIDGLID 225
+#define AUTOCORR 1000
+#define SAMPLEROBOT 10000
 
 double input_concentration[15][15] = {
         {0.5,     0.00001, 0.00001, 0.00001, 0.00001, 1,       1,       1,   0.5, 0.00001, 0.00001, 1,       1,       1,   1},
@@ -181,14 +186,14 @@ int half_map_gridline = map_gridline / 2;
 
 int windows[2];
 
-double save_grid_activater[100000][225] = {};
-double save_autocorr[N][225] = {};
+double save_grid_activater[100000][1000] = {};
+double save_autocorr[N][1000] = {};
 double save_autocorr_fin[N] = {};
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
-ROBOTLOG robotlog[50][10000] = {};
+ROBOTLOG robotlog[50][step] = {};
 
 
 double input_ave = 0;
@@ -256,6 +261,12 @@ void display() {
     for (auto &i: robo) {
         i.draw();
     }
+    glColor3d(1, 1, 1);
+    glRasterPos3d(-point + 10, -point + 10, 0.0);
+    string epoch_num = to_string(epoch);
+    for (char &c: epoch_num) {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, c);
+    }
     glutSwapBuffers();
 }
 
@@ -264,7 +275,14 @@ void grid_display() {
     graphics();
     draw_grid_density_map();
     grid_wall_draw();
+    glColor3d(1, 1, 1);
 
+
+    glRasterPos3d(-point + 10, -point + 10, 0.0);
+    string epoch_num = to_string(epoch);
+    for (char &c: epoch_num) {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, c);
+    }
     glutSwapBuffers();
 }
 
@@ -297,7 +315,7 @@ void calculate_grid_concentration() {
             GL[x][y].ave_inhibitor = sum_glid_inhibitor / counter;
         }
     }
-    cout << "epoch," << epoch << endl;
+//    cout << "epoch," << epoch << endl;
 }
 
 void draw_grid_density_map() {
@@ -531,6 +549,7 @@ int ROBO::check_cross_others(POSITION p) {
             distance_x = another_robo_x - sensor_x;
             distance_y = another_robo_y - sensor_y;
 
+
             l = sqrt(distance_x * distance_x + distance_y * distance_y);
             if (l < i.r) {
                 return 1;
@@ -614,11 +633,11 @@ void idle() {
 
     for (auto &i: robo) i.action();
 
-    if (epoch == 0) {
-        input_turingpattern();
-        input_ave = calculate_input_ave();
-        cout << "input_ave," << input_ave << endl;
-    }
+//    if (epoch == 0) {
+//        input_turingpattern();
+//        input_ave = calculate_input_ave();
+//        cout << "input_ave," << input_ave << endl;
+//    }
 
     calculate_grid_concentration();
     save_grid_concentration();
@@ -660,7 +679,7 @@ void save_grid_concentration() {
         for (int y = 0; y < map_gridline; ++y) {
             if (GL[x][y].ave_activator != GL[x][y].ave_activator) {
                 save_grid_activater[epoch][x * (map_gridline) + y] = input_concentration[y][x];
-                cout << "なんなん？" << endl;
+//                cout << "なんなん？" << endl;
             } else {
                 save_grid_activater[epoch][x * (map_gridline) + y] = GL[x][y].ave_activator;
             }
@@ -757,8 +776,8 @@ void calculate_autocorr() {
         for (int j = 0; j < N; ++j) {
             for (int k = 0; k < tmp; ++k) {
                 save_autocorr[i][k] +=
-                        ((save_grid_activater[j][k] - ave[k]) *
-                         (save_grid_activater[j + i][k] - ave[k]));
+                        ((save_grid_activater[j][k]) *
+                         (save_grid_activater[j + i][k]));
             }
         }
     }
@@ -771,21 +790,21 @@ void calculate_autocorr() {
     }
 
 /***************************
- * 出力部
+ * 出力部 ファイルはcmake-build-debug下に作られる。
  ***************************/
 
-    ofstream output_autocorr_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\autocorr.csv");
+    ofstream output_autocorr_log("autocorr.csv");
 
     for (int i = 0; i < N; ++i) {
         output_autocorr_log << save_autocorr_fin[i];
-        for (int j = 0; j < 225; ++j) {
+        for (int j = 0; j < GLIDGLID; ++j) {
             output_autocorr_log << "," << save_autocorr[i][j];
         }
         output_autocorr_log << endl;
     }
     output_autocorr_log.close();
 
-    ofstream robot_distance_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\robot_distance_log.csv");
+    ofstream robot_distance_log("robot_distance_log.csv");
 
     for (int i = 0; i < N * 2; ++i) {
         for (int j = 0; j < 50; ++j) { robot_distance_log << robotlog[j][i].distance << ","; }
@@ -793,10 +812,10 @@ void calculate_autocorr() {
     }
     robot_distance_log.close();
 
-    ofstream robot_point_log("C:\\Users\\Jun\\CLionProjects\\Simulater_Leraning\\robot_point_log.csv");
+    ofstream robot_point_log("robot_point_log.csv");
 
     for (int i = 0; i < N * 2; ++i) {
-        for (int j = 0; j < 50; ++j) {
+        for (int j = 0; j < ROBOS; ++j) {
             robot_point_log << ",robot_point num[" << i << "]," << robotlog[j][i].x << "," << robotlog[j][i].y;
         }
         robot_point_log << endl;
