@@ -121,14 +121,14 @@ typedef struct ROBO {
     double dx = 0;
     double dy = 0;
 
-    double Dv = 0.40;
-    double Du = 0.08;
-    double Cv = 0.0000;
-    double Cu = 0.00010;
-    double a = 0.010;
-    double b = 0.011;
-    double c = 0.008;
-    double d = 0.009;
+//    double Dv = 0.40;
+//    double Du = 0.08;
+//    double Cv = 0.0000;
+//    double Cu = 0.00010;
+//    double a = 0.010;
+//    double b = 0.011;
+//    double c = 0.008;
+//    double d = 0.009;
 
 //    double Du = 0.000;
 //    double Dv = 0.000;
@@ -140,14 +140,14 @@ typedef struct ROBO {
 //    double d = 0.0000;
 
 //
-//    double Dv = 0.40;
-//    double Du = 0.08;
-//    double Cv = 0.0000;
-//    double Cu = 0.0001;
-//    double a = 0.010;
-//    double b = 0.02;
-//    double c = 0.010;
-//    double d = 0.015;
+    double Dv = 0.40;
+    double Du = 0.08;
+    double Cv = 0.0000;
+    double Cu = 0.00010;
+    double a = 0.010;
+    double b = 0.011;
+    double c = 0.008;
+    double d = 0.009;
 
 
     POSITION tsensor[3]{}; //構造体変数の追加
