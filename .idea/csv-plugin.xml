@@ -3,27 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\RANGE50INHIBITOR50.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\RANGE50INHIBITOR60.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\RANGE50INHIBITOR90.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\cmake-build-debug\autocorr.csv">
           <value>
             <Attribute>
@@ -38,6 +17,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\cmake-build-debug\robot_histgramdata.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\debug_log.csv">
           <value>
             <Attribute>
@@ -46,20 +32,6 @@
           </value>
         </entry>
         <entry key="\debug_log_new.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\robot_distance_log.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\robot_point_log.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

@@ -16,8 +16,8 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 50 //通信レンジ の半径
-#define INHIBITOR_RANGE 70
+#define RANGE 30 //通信レンジ の半径
+#define INHIBITOR_RANGE 42
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
 #define ROBOS  1500 //ロボット台数　10台
@@ -25,7 +25,7 @@
 #define MAPDENSITY 40
 #define FORWARD 0.6
 #define RADIUS 10
-#define step 10000
+#define step 10020
 #define GLID 15
 #define GLIDGLID 225
 #define AUTOCORR 1000
@@ -121,14 +121,14 @@ typedef struct ROBO {
     double dx = 0;
     double dy = 0;
 
-    double Dv = 0.40;
-    double Du = 0.08;
-    double Cv = 0.0000;
-    double Cu = 0.00010;
-    double a = 0.010;
-    double b = 0.011;
-    double c = 0.008;
-    double d = 0.009;
+//    double Dv = 0.40;
+//    double Du = 0.08;
+//    double Cv = 0.0000;
+//    double Cu = 0.00010;
+//    double a = 0.010;
+//    double b = 0.011;
+//    double c = 0.008;
+//    double d = 0.009;
 
 //    double Du = 0.000;
 //    double Dv = 0.000;
@@ -140,14 +140,14 @@ typedef struct ROBO {
 //    double d = 0.0000;
 
 //
-//    double Dv = 0.40;
-//    double Du = 0.08;
-//    double Cv = 0.0000;
-//    double Cu = 0.0001;
-//    double a = 0.010;
-//    double b = 0.02;
-//    double c = 0.010;
-//    double d = 0.015;
+    double Dv = 0.40;
+    double Du = 0.08;
+    double Cv = 0.0000;
+    double Cu = 0.00010;
+    double a = 0.0095;
+    double b = 0.011;
+    double c = 0.008;
+    double d = 0.009;
 
 
     POSITION tsensor[3]{}; //構造体変数の追加
@@ -189,11 +189,12 @@ int windows[2];
 double save_grid_activater[100000][1000] = {};
 double save_autocorr[N][1000] = {};
 double save_autocorr_fin[N] = {};
+int save_sum_distance[step][30] = {};
 
 std::random_device rnd;     // 非決定的な乱数生成器
 std::mt19937 mt(rnd());
 GLID_STRUCT GL[100][100];
-ROBOTLOG robotlog[50][step] = {};
+ROBOTLOG robotlog[ROBOS][step] = {};
 
 
 double input_ave = 0;
@@ -217,6 +218,10 @@ double calculate_input_ave();
 void calculate_autocorr();
 
 void save_robot_loging();
+
+void calculate_sum_distance();
+
+void input_grid_point();
 
 void wall_draw() {
     glBegin(GL_LINES);
@@ -650,14 +655,14 @@ void idle() {
 
     epoch++;
 
-    if (epoch > 10000) {
+    if (epoch > step) {
         glutLeaveMainLoop();
     }
 }
 
 void save_robot_loging() {
 
-    for (int i = 0; i < 50; ++i) {
+    for (int i = 0; i < ROBOS; ++i) {
         robotlog[i][epoch].x = robo[i].x;
         robotlog[i][epoch].y = robo[i].y;
         if (epoch == 0) {
@@ -690,11 +695,23 @@ void save_grid_concentration() {
 void mouse(int button, int state, int x, int y) //マウスボタンの処理
 {
     if (state == GLUT_DOWN) { //ボタンが押されたら...
-        if (fStart == 1)
+        if (fStart == 1) {
             fStart = 0;
-        else
+        } else {
             fStart = 1;
+        }
     }
+}
+
+void input_grid_point() {
+
+    for (int i = 1; i <= 38; ++i) {
+        for (int j = 0; j < 38; ++j) {
+            robo[(i - 1) * 38 + j].x = -point + 15 + 39 * (i - 1);
+            robo[(i - 1) * 38 + j].y = -point + 15 + 39 * j;
+        }
+    }
+
 }
 
 int main(int argc, char *argv[]) {
@@ -729,6 +746,8 @@ void Initialize() {
     epoch = 0;
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
+//    input_grid_point();
+
 }
 
 double calculate_input_ave() {
@@ -792,6 +811,9 @@ void calculate_autocorr() {
 /***************************
  * 出力部 ファイルはcmake-build-debug下に作られる。
  ***************************/
+    calculate_sum_distance();
+    cout << "f1-finish" << endl;
+
 
     ofstream output_autocorr_log("autocorr.csv");
 
@@ -803,14 +825,28 @@ void calculate_autocorr() {
         output_autocorr_log << endl;
     }
     output_autocorr_log.close();
+    cout << "f2-finish" << endl;
+
 
     ofstream robot_distance_log("robot_distance_log.csv");
-
     for (int i = 0; i < N * 2; ++i) {
-        for (int j = 0; j < 50; ++j) { robot_distance_log << robotlog[j][i].distance << ","; }
+        for (int j = 0; j < ROBOS; ++j) { robot_distance_log << robotlog[j][i].distance << ","; }
         robot_distance_log << endl;
     }
     robot_distance_log.close();
+
+    cout << "f3-finish" << endl;
+
+    ofstream robot_histgramdata("robot_histgramdata.csv");
+    for (int i = 0; i < step; ++i) {
+        for (int j = 0; j < 30; ++j) {
+            robot_histgramdata << save_sum_distance[i][j] << ",";
+        }
+        robot_histgramdata << endl;
+    }
+    robot_histgramdata.close();
+    cout << "f4-finish" << endl;
+
 
     ofstream robot_point_log("robot_point_log.csv");
 
@@ -821,6 +857,21 @@ void calculate_autocorr() {
         robot_point_log << endl;
     }
     robot_point_log.close();
+    cout << "f4-finish" << endl;
 
     cout << "calcfinish" << endl;
+}
+
+void calculate_sum_distance() {
+
+    for (int i = 0; i < step; ++i) {
+        for (int j = 0; j < ROBOS; ++j) {
+            for (int k = 0; k < 30; ++k) {
+                if ((k * 50) <= robotlog[j][i].distance && robotlog[j][i].distance < ((k + 1) * 50)) {
+                    save_sum_distance[i][k]++;
+                }
+            }
+        }
+    }
+
 }
