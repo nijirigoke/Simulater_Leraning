@@ -16,14 +16,14 @@
 #define CENTER 1
 #define RIGHT  2
 #define TRANGE 1.5 //タッチセンサーのレンジ 半径の倍数
-#define RANGE 30 //通信レンジ の半径
-#define INHIBITOR_RANGE 42
+#define RANGE 50 //通信レンジ の半径
+#define INHIBITOR_RANGE 70
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  1500 //ロボット台数　10台
+#define ROBOS  1444 //ロボット台数　10台
 #define N 5000
-#define MAPDENSITY 40
-#define FORWARD 0.6
+#define MAPDENSITY 80
+#define FORWARD 0.0
 #define RADIUS 10
 #define step 10020
 #define GLID 15
@@ -51,30 +51,6 @@ double input_concentration[15][15] = {
         {1,       1,       1,       1,       1,       1,       1,       1,   0.5, 0.00001, 0.00001, 0.00001, 0.00001, 0.5, 1},
 };
 
-
-
-/**
- grid_memo.md
-
- | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | .5 |  |  |  | 1 | 1 | 1 | .5 |  |  |  |  | 1 | 1 | 1 |
-| 2 | .5 | .5 |  |  | 1 | 1 | 1 |  |  |  |  | 1 | 1 | 1 | 1 |
-| 3 |  | 1 | 1 | 1 | 1 | .5 | 1 | 1 |  |  |  | .5 | 1 |  | .5 |
-| 4 |  | .5 | 1 | 1 | 1 |  | .5 | 1 | 1 |  | .5 | 1 | 1 |  |  |
-| 5 |  |  | 1 | 1 | 1 |  |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  |
-| 6 |  | .5 | 1 | 1 | .5 |  |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| 7 |  | .5 | 1 | 1 |  |  |  | 1 | .5 | 1 |  |  |  | .5 | 1 |
-| 8 |  | 1 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |  |
-| 9 |  | 1 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |  |
-| 10 |  |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  |  |  |  |  |
-| 11 |  |  |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  |  |  | 1 | .5 |
-| 12 | .5 |  |  |  | 1 | 1 | 1 | 1 | 1 | 1 |  |  | .5 | 1 | 1 |
-| 13 | 1 |  |  |  |  |  | 1 | 1 | 1 | 1 |  |  |  | 1 | 1 |
-| 14 | 1 | .5 |  |  |  |  |  | 1 | 1 |  |  |  |  | 1 | 1 |
-| 15 | 1 | .5 |  |  |  |  |  |  | 1 |  |  |  |  | .5 | 1 |
-
- */
 
 using namespace std;
 
@@ -121,14 +97,14 @@ typedef struct ROBO {
     double dx = 0;
     double dy = 0;
 
-//    double Dv = 0.40;
-//    double Du = 0.08;
-//    double Cv = 0.0000;
-//    double Cu = 0.00010;
-//    double a = 0.010;
-//    double b = 0.011;
-//    double c = 0.008;
-//    double d = 0.009;
+    double Dv = 0.40;
+    double Du = 0.08;
+    double Cv = 0.0000;
+    double Cu = 0.00010;
+    double a = 0.010;
+    double b = 0.011;
+    double c = 0.008;
+    double d = 0.009;
 
 //    double Du = 0.000;
 //    double Dv = 0.000;
@@ -139,15 +115,14 @@ typedef struct ROBO {
 //    double c = 0.0000;
 //    double d = 0.0000;
 
-//
-    double Dv = 0.40;
-    double Du = 0.08;
-    double Cv = 0.0000;
-    double Cu = 0.00010;
-    double a = 0.0095;
-    double b = 0.011;
-    double c = 0.008;
-    double d = 0.009;
+//    double Dv = 0.90;
+//    double Du = 0.08;
+//    double Cv = 0.0000;
+//    double Cu = 0.00010;
+//    double a = 0.010;
+//    double b = 0.011;
+//    double c = 0.008;
+//    double d = 0.009;
 
 
     POSITION tsensor[3]{}; //構造体変数の追加
@@ -403,7 +378,7 @@ void ROBO::action() {
 
 void ROBO::init() {
 
-    std::uniform_int_distribution<int> distr(-point + 1, point - 1);    // 非決定的な乱数生成器
+    std::uniform_int_distribution<int> distr(-point + 10, point - 10);    // 非決定的な乱数生成器
     std::uniform_real_distribution<> dir_gen(0, 360);
     std::uniform_real_distribution<> rando(0.0, 1.0);
 
@@ -638,11 +613,6 @@ void idle() {
 
     for (auto &i: robo) i.action();
 
-//    if (epoch == 0) {
-//        input_turingpattern();
-//        input_ave = calculate_input_ave();
-//        cout << "input_ave," << input_ave << endl;
-//    }
 
     calculate_grid_concentration();
     save_grid_concentration();
@@ -707,8 +677,8 @@ void input_grid_point() {
 
     for (int i = 1; i <= 38; ++i) {
         for (int j = 0; j < 38; ++j) {
-            robo[(i - 1) * 38 + j].x = -point + 15 + 39 * (i - 1);
-            robo[(i - 1) * 38 + j].y = -point + 15 + 39 * j;
+            robo[(i - 1) * 38 + j].x = -point + 15 + 31.5 * (i - 1);
+            robo[(i - 1) * 38 + j].y = -point + 15 + 31.5 * j;
         }
     }
 
@@ -746,7 +716,7 @@ void Initialize() {
     epoch = 0;
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
-//    input_grid_point();
+    input_grid_point();
 
 }
 
@@ -873,5 +843,4 @@ void calculate_sum_distance() {
             }
         }
     }
-
 }

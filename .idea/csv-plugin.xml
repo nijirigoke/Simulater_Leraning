@@ -3,21 +3,14 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\cmake-build-debug\autocorr.csv">
+        <entry key="\RANGE50INHIBITOR50.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="\cmake-build-debug\robot_distance_log.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\cmake-build-debug\robot_histgramdata.csv">
+        <entry key="\basegrid.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
