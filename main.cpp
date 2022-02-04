@@ -20,10 +20,10 @@
 #define INHIBITOR_RANGE 70
 #define RIGHT_TURN -0.1        //右回転 0.1ラジアンの定義
 #define LEFT_TURN    0.1        //左回転 0.1ラジアンの定義
-#define ROBOS  1444 //ロボット台数　10台
+#define ROBOS  1500 //ロボット台数　10台
 #define N 5000
 #define MAPDENSITY 80
-#define FORWARD 0.0
+#define V 0.6
 #define RADIUS 10
 #define step 10020
 #define GLID 15
@@ -106,17 +106,8 @@ typedef struct ROBO {
     double c = 0.008;
     double d = 0.009;
 
-//    double Du = 0.000;
-//    double Dv = 0.000;
-//    double Cu = 0.000000;
-//    double Cv = 0.0000;
-//    double a = 0.000;
-//    double b = 0.000;
-//    double c = 0.0000;
-//    double d = 0.0000;
-
-//    double Dv = 0.90;
-//    double Du = 0.08;
+//    double Dv = 0.40;
+//    double Du = 0.1;
 //    double Cv = 0.0000;
 //    double Cu = 0.00010;
 //    double a = 0.010;
@@ -302,11 +293,8 @@ void draw_grid_density_map() {
     for (int i = 0; i < map_gridline; ++i) {
         for (int j = 0; j < map_gridline; ++j) {
             glBegin(GL_TRIANGLE_STRIP);
-
-
             glColor3d(GL[i][j].ave_activator, GL[i][j].ave_inhibitor,
                       1 - 0.5 * (GL[i][j].ave_activator + GL[i][j].ave_inhibitor));
-
             glColor3d(GL[i][j].ave_activator, 0, 0);
             glVertex2d(-point + (MAPDENSITY * i), -point + (MAPDENSITY * j));
             glVertex2d(-point + (MAPDENSITY * (i + 1)), -point + (MAPDENSITY * j));
@@ -367,7 +355,7 @@ void ROBO::action() {
             stack++;
         } else    //いずれの条件も当てはまらないのは全てのタッチセンサが０のとき
         {
-            forward(FORWARD);//前進1.0ステップ
+            forward(V);//前進1.0ステップ
             stack = 0;
         }
     } else {
@@ -388,7 +376,6 @@ void ROBO::init() {
     inhibitor = rando(mt);
 
     dir = dir_gen(mt);
-//    printf("%f", dir);
     x = distr(mt);
     y = distr(mt);
     r = RADIUS;
@@ -407,13 +394,17 @@ void ROBO::draw() {
     glTranslated(x, y, 0);              //ロボットの現在座標へ座標系をずらす
     glRotated(dir / PI * 180, 0, 0, 1); //進行方向へZ軸回転
 
-//    glColor3d(activator, inhibitor, 1 - 0.5 * (activator + inhibitor));
-//    glColor3d(activator, inhibitor, 0);
-    glColor3d(activator, 0, 0);
+    glColor3d(activator, 0, 0); //ロボットに対して活性化因子に応じた色をつける。
     draw_robo_circle(0, 0, r);
     glColor3d(0.5, 0.5, 0.5);
     draw_circle(0, 0, r); //本体外形円の描画　現在の座標系の原点に対して描くことに注意
-//
+
+
+    /*
+     * 以下のゾーンは通信範囲を目視したい場合に利用する。
+     * 通常シミュレーション中はごちゃごちゃするのでオフにすること推奨。
+     * */
+
 //    glColor3d(0, 0, 0.5);
 //    draw_circle(0, 0, RANGE); //通信範囲の描画
 
@@ -422,6 +413,11 @@ void ROBO::draw() {
 
 //    glColor3d(0.3, 0.3, 0.3);
 //    glBegin(GL_LINES);
+
+    /*
+     * おわり
+     * */
+
     glVertex2d(0, 0); //左センサーの描画
     glVertex2d(tsensor[LEFT].x, tsensor[LEFT].y);
     glVertex2d(0, 0); //正面センサーの描画
@@ -505,18 +501,20 @@ int ROBO::check_cross_wall(POSITION p1, POSITION p2) {
 }
 
 int ROBO::check_cross_others(POSITION p) {
+    /*
+     * 自機と他のロボットの接触チェック
+     */
 
     double l;
     double sensor_x;
     double sensor_y;
 
-// 各ロボの座標 for:
-// 自他の区別 ？？？
-// 区別したらそいつとの距離を産出すること
     sensor_x = p.x;
     sensor_y = p.y;
 
     for (auto &i: robo) {
+
+        // 全ロボットに対して自機と近接したグリッドにいるか検索。
         if (
                 (glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
                 (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)
@@ -529,7 +527,6 @@ int ROBO::check_cross_others(POSITION p) {
             distance_x = another_robo_x - sensor_x;
             distance_y = another_robo_y - sensor_y;
 
-
             l = sqrt(distance_x * distance_x + distance_y * distance_y);
             if (l < i.r) {
                 return 1;
@@ -540,17 +537,18 @@ int ROBO::check_cross_others(POSITION p) {
 }
 
 void ROBO::nearrobotsensor() {
-
+    /*
+     * 通信範囲に誰がいるのかをチェックし、確認出来たら値の更新を行う。
+     */
     double l;
     double distance_x;
     double distance_y;
 
-    //自身の座標から一定レンジを探索？ 計算量ちゃん…。
+    // 全ロボットに対して自機と近接したグリッドにいるか検索。
     for (auto &i: robo) {
         if ((glid_x == i.glid_x || glid_x == i.glid_x + 1 || glid_x == i.glid_x - 1) &&
             (glid_y == i.glid_y || glid_y == i.glid_y + 1 || glid_y == i.glid_y - 1)) {
 
-            //他のロボットのちゃん座標
             double another_robo_x = i.x;
             double another_robo_y = i.y;
 
@@ -559,7 +557,8 @@ void ROBO::nearrobotsensor() {
 
             l = sqrt(distance_x * distance_x + distance_y * distance_y);
 
-
+            //近接グリッドにいたので、実際に通信範囲内にいるのか探索。
+            //二つの通信範囲に応じて場合分け
             if (l < RANGE) {
                 act_touch_counter++;
                 i.act_touch_counter++;
@@ -608,7 +607,7 @@ void ROBO::nearrobotsensor() {
 }
 
 void idle() {
-
+    //ループするシミュレーション全体の動きを定義
     if (fStart == 0) return;
 
     for (auto &i: robo) i.action();
@@ -631,7 +630,9 @@ void idle() {
 }
 
 void save_robot_loging() {
-
+    /*
+     * 全ロボットの座標をstepごとに全て記憶する。
+     */
     for (int i = 0; i < ROBOS; ++i) {
         robotlog[i][epoch].x = robo[i].x;
         robotlog[i][epoch].y = robo[i].y;
@@ -649,7 +650,10 @@ void save_robot_loging() {
 }
 
 void save_grid_concentration() {
-
+    /*
+     * 全グリッドの濃度をstepごとに全て記憶する。
+     * のちの自己相関であったり、OpenCVの利用へつなげる。
+     */
     for (int x = 0; x < map_gridline; ++x) {
         for (int y = 0; y < map_gridline; ++y) {
             if (GL[x][y].ave_activator != GL[x][y].ave_activator) {
@@ -674,7 +678,10 @@ void mouse(int button, int state, int x, int y) //マウスボタンの処理
 }
 
 void input_grid_point() {
-
+    /*
+     * ロボットの初期配置を行う関数。この38のマジックナンバーの2乗がグリッド配置できる数になる。
+     * 15なども配置調整のためのマジックナンバーなのでここの数値を変えたら調整すること。
+     */
     for (int i = 1; i <= 38; ++i) {
         for (int j = 0; j < 38; ++j) {
             robo[(i - 1) * 38 + j].x = -point + 15 + 31.5 * (i - 1);
@@ -716,40 +723,16 @@ void Initialize() {
     epoch = 0;
     make_circle();//円図形データの作成
     for (auto &i: robo) i.init();
-    input_grid_point();
+//    input_grid_point();
 
-}
-
-double calculate_input_ave() {
-    double sum = 0;
-
-    for (int i = 0; i < map_gridline; ++i) {
-        for (int j = 0; j < map_gridline; ++j) {
-            sum += input_concentration[i][j];
-        }
-    }
-    return sum / (gridline * gridline);
-}
-
-void input_turingpattern() {
-
-    //ロボットすべてに対して濃度のinputを開始
-    for (auto &i: robo) {
-        //X軸検索
-        for (int x = 0; x < map_gridline; ++x) {
-            //y軸検索
-            for (int y = 0; y < map_gridline; ++y) {
-                //あらかじめ設定されたパターんを酔いこみ
-                if (i.map_glid_x == x && i.map_glid_y == y) {
-                    i.activator = input_concentration[y][x];
-                    i.inhibitor = input_concentration[y][x];
-                }
-            }
-        }
-    }
 }
 
 void calculate_autocorr() {
+    /*
+     *　記憶した濃度を利用して自己相関を求める関数。
+     *  考え方とすれば一次元である波長の自己相関をn*nまで拡張したものと思ってほしい。
+     *  1ピクセル（グリッドのセルのこと）1波長入っている。
+     */
     double tmp = map_gridline * map_gridline;
     double ave[N] = {};
 
@@ -771,6 +754,7 @@ void calculate_autocorr() {
         }
     }
 
+    //平均分引いて値を調整
     for (int i = 1; i < N; ++i) {
         for (int j = 0; j < tmp; ++j) {
             save_autocorr[i][j] = save_autocorr[i][j] / (save_autocorr[0][j]);
@@ -784,7 +768,7 @@ void calculate_autocorr() {
     calculate_sum_distance();
     cout << "f1-finish" << endl;
 
-
+    //自己相関の結果
     ofstream output_autocorr_log("autocorr.csv");
 
     for (int i = 0; i < N; ++i) {
@@ -797,7 +781,8 @@ void calculate_autocorr() {
     output_autocorr_log.close();
     cout << "f2-finish" << endl;
 
-
+    //各ロボットの初期位置からの移動距離計算。
+    //何かを間違えていて1step目が計算されてない。けど本来はゼロです。
     ofstream robot_distance_log("robot_distance_log.csv");
     for (int i = 0; i < N * 2; ++i) {
         for (int j = 0; j < ROBOS; ++j) { robot_distance_log << robotlog[j][i].distance << ","; }
@@ -807,6 +792,8 @@ void calculate_autocorr() {
 
     cout << "f3-finish" << endl;
 
+    //ロボットの移動距離を分類わけしてヒストグラム（作成のための集計）を作る。
+    //ヒストグラム作りたい場合はexcelとかでやってね。
     ofstream robot_histgramdata("robot_histgramdata.csv");
     for (int i = 0; i < step; ++i) {
         for (int j = 0; j < 30; ++j) {
@@ -817,9 +804,8 @@ void calculate_autocorr() {
     robot_histgramdata.close();
     cout << "f4-finish" << endl;
 
-
+    //各ロボットの生の座標ログ。
     ofstream robot_point_log("robot_point_log.csv");
-
     for (int i = 0; i < N * 2; ++i) {
         for (int j = 0; j < ROBOS; ++j) {
             robot_point_log << ",robot_point num[" << i << "]," << robotlog[j][i].x << "," << robotlog[j][i].y;
